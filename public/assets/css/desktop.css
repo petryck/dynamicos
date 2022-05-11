@@ -463,3 +463,49 @@ right: 90px;
     cursor: url('../img/link-select.svg'), auto !important;
 }
 
+.menu_box{
+    position: absolute;
+    margin-top: 6px;
+}
+.container_menu{
+    position: absolute;
+    margin-top: 1.5px;
+    display: block;
+    min-width: 16rem;
+    width: max-content;
+    padding: 0.5rem;
+    position: relative;
+    user-select: none;
+    background-color: hsla(240,3%,11%,.3);
+    backdrop-filter: blur(25px);
+    border-radius: 0.5rem;
+    box-shadow: rgba(0,0,0,.3) 0 0 11px 0,inset 0 0 0 0.9px hsla(240,24%,100%, 0.3),0 0 0 1.2px hsla(240,3%,11%, 0.3);;
+}
+
+.container_menu button {
+    --alpha: 1;
+    text-decoration: none;
+    border: none;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0.2rem 0.4rem;
+    font-weight: 600!important;
+    margin: 0.1rem;
+    letter-spacing: .4px;
+    font-size: 13px!important;
+    border-radius: 0.3rem;
+    transition: none;
+    color: hsla(240, 24%, 100%,var(--alpha));
+    background: transparent;
+}
+
+.container_menu button:hover{
+background-color: #0a85ff;
+}
+
+/* .header button {
+    position: relative;
+    height: 100%;
+    text-shadow: 0 0 1px rgb(0 0 0 / 10%);
+} */
