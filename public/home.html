@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <link href="https://rsms.me/inter/inter.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/desktop.css">
+    <title>DynamicOS</title>
+</head>
+<body>
+    <body background="assets/img/wall.svg">
+        <div id="hiop" onclick="hidefun()"></div>
+
+        <div id="top-bar">
+            <div class="menu">Comercial</div>
+            <div class="menu">Financeiro</div>
+            <div class="menu">Administrativo</div>
+        </div>
+            <div class="startmenu blackglass" id="startmenu">
+                <div class="topsec">
+                    <div class="boxes whiteglass">
+                        <div class="same">
+                            <div class="temp">Tempreatue<br>
+                                <font size="5px">24°</font>
+                            </div>
+                            <div class="infor">
+                                <div class="tex">Sunny</div>
+                                <div class="icone"><img src="assets/img/sun.svg"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="boxes whiteglass">
+                        <center class="o">Today</center>
+                        <div class="bel">
+                            <ul>
+                                <li>12:00 - 13:00 <br>Subscreibe to my Channel</li>
+                                <li>17:00 - 18:00 <br>Make New videos</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="boxes whiteglass flex">
+                        <div class="devices">
+                            <center>
+                                <div class="dv">
+                                    <div class="deviceicon blackglass">
+                                        <ion-icon name="phone-portrait-outline"></ion-icon>
+                                    </div>
+                                    <div class="devicename">Phone</div>
+                                    <div class="charged">
+                                        <ion-icon name="flash"></ion-icon>25%
+                                    </div>
+                                    <div class="progressbar">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="devices">
+                            <div class="dv">
+                                <div class="deviceicon blackglass">
+                                    <ion-icon name="watch-outline"></ion-icon>
+                                </div>
+                                <div class="devicename">Watch</div>
+                                <div class="charged">
+                                    <ion-icon name="flash"></ion-icon>85%
+                                </div>
+                                <div class="progressbar">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="25"
+                                            aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+        
+                        </div>
+                        <div class="devices">
+                            <center>
+                                <div class="dv">
+                                    <div class="deviceicon blackglass">
+                                        <ion-icon name="car-sport-outline"></ion-icon>
+                                    </div>
+                                    <div class="devicename">Car</div>
+                                    <div class="charged">
+                                        <ion-icon name="flash"></ion-icon>55%
+                                    </div>
+                                    <div class="progressbar">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 55%;" aria-valuenow="25"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                        </div>
+                    </div>
+                </div>
+                <div class="middlesec">
+                    <div class="leftsubsec">
+                        <div class="pinnedapps">
+                            <div class="title">Pinned Apps</div>
+                            <div class="boxcontainer">
+                                <div class="apps" onclick="files()">
+                                    <center><img src="assets/img/SVG/Explorer.svg" alt="">
+                                        <div class="appname">Files</div>
+                                    </center>
+                                </div>
+                                <div class="apps" onclick="mail()">
+                                    <center><img src="assets/img/SVG/mail.svg">
+                                        <div class="appname">Mail</div>
+                                    </center>
+                                </div>
+                                <div class="apps" onclick="browser()">
+                                    <center><img src="assets/img/SVG/Lale.svg">
+                                        <div class="appname">Lale</div>
+                                    </center>
+                                </div>
+                                <div class="apps" onclick="calculator()">
+                                    <center><img src="assets/img/SVG/calculator.svg">
+                                        <div class="appname">Gallery</div>
+                                    </center>
+                                </div>
+                                <div class="apps" onclick="files()">
+                                    <center><img src="assets/img/SVG/Calendar.svg">
+                                        <div class="appname">Calender</div>
+                                    </center>
+                                </div>
+                                <div class="apps" onclick="vscode()">
+                                    <center><img src="assets/img/SVG/notes.svg">
+                                        <div class="appname">Notes</div>
+                                    </center>
+                                </div>
+                                <div class="apps" onclick="games()">
+                                    <center><img src="assets/img/SVG/settings.svg">
+                                        <div class="appname">Settings</div>
+                                    </center>
+                                </div>
+                                <div class="apps" onclick="music()">
+                                    <center><img src="assets/img/SVG/music.svg">
+                                        <div class="appname">Music</div>
+                                    </center>
+                                </div>
+        
+                            </div>
+                        </div>
+        
+                    </div>
+                    <div class="rightsubsec">
+                        <div class="title">Pick where you left off</div>
+                        <div class="verboxes whiteglass" onclick="music()">
+                            <div class="appimage"><img src="assets/img/SVG/music.svg"></div>
+                            <div class="upperniche">
+                                <div class="mainchez"><b>Play music</b></div>
+                                <div class="sub">Listen to "its my life"</div>
+                            </div>
+                        </div>
+                        <div class="verboxes whiteglass" onclick="browser()">
+                            <div class="appimage"><img src="assets/img/SVG/Lale.svg"></div>
+                            <div class="upperniche">
+                                <div class="mainchez"><b>Chrome</b></div>
+                                <div class="sub">Resume browsing</div>
+                            </div>
+                        </div>
+                        <div class="verboxes whiteglass" onclick="games()">
+                            <div class="appimage"><img src="src/apps/scalable/applications-games.svg"></div>
+                            <div class="upperniche">
+                                <div class="mainchez"><b>Games</b></div>
+                                <div class="sub">Play games</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottomsec">
+                    <div class="leftsec">
+                        <div class="imagesec"><ion-icon name="person-circle-outline"></ion-icon></div>
+                        <div class="username">Dynamic code</div>
+                    </div>
+                    <div class="centersec">
+                        <div class="button"><ion-icon name="settings-outline"></ion-icon></div>
+                        <div class="button"><ion-icon name="apps-sharp"></ion-icon></div>
+                        <div class="button"><ion-icon name="power-outline"></ion-icon></div>
+                    </div>
+                    <div class="rightsec">
+                        <div class="flex">
+                            <div class="text"><font size="3px">Cloud storage <br> <font size="1px"> 262GB used of 500GB</font> </div>
+                            <div class="imageop"><img src="assets/img/cloud.svg" alt="cloud"></div>
+                        </div>
+                        <div class="gress">
+                            <div class="progress" style="height: 5px;">
+                                <div class="progress-bar" role="progressbar" style="width: 52.4%; background: dodgerblue;" aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="bottom">
+                <div class="center">
+                    <div class="containers">
+                        <div class="actionbuttons">
+                            <ion-icon name="search-outline" class="acicon"></ion-icon>
+                        </div>
+                        <div class="actionbuttons" onclick="strtmenu()" style="z-index: 1000;">
+                            <img src="assets/img/logo.png" class="acicon">
+                        </div>
+                        <div class="actionbuttons">
+                            <ion-icon name="copy-outline" class="acicon"></ion-icon>
+                        </div>
+                    </div>
+                    <div class="containers">
+                        <div class="apps" onclick="files()"><img src="assets/img/SVG/Explorer.svg" alt=""></div>
+                        <div class="apps" onclick="mail()"><img src="assets/img/SVG/mail.svg"></div>
+                        <div class="apps" onclick="browser()"><img src="assets/img/SVG/Lale.svg"></div>
+                        <div class="apps" onclick="calculator()"><img src="assets/img/SVG/calculator.svg"></div>
+                        <div class="apps" onclick="files()"><img src="assets/img/SVG/Calendar.svg"></div>
+                        <div class="apps" onclick="vscode()"><img src="assets/img/SVG/notes.svg"></div>
+                        <div class="apps" onclick="games()"><img src="assets/img/SVG/settings.svg"></div>
+                        <div class="apps" onclick="music()"><img src="assets/img/SVG/music.svg"></div>
+        
+                    </div>
+                    
+                    <div class="containers">
+                        <div class="dt">
+                            <div class="time" id="time">-</div>
+                            <div class="date" id="date">-</div>
+                        </div>
+                        <div class="weather">&nbsp; <img src="assets/img/sun.svg" id="tem">&nbsp;24°&nbsp;&nbsp; </div>
+                    </div>
+                    <!-- <div class="containers">
+                        <div class="noti">
+                            <ion-icon class="notify" name="wifi-outline"></ion-icon>
+                        </div>
+                        <div class="noti">
+                            <ion-icon class="notify" name="bluetooth-outline"></ion-icon>
+                        </div>
+                        <div class="noti">
+                            <ion-icon class="notify" name="volume-high-outline"></ion-icon>
+                        </div>
+                        <div class="noti">
+                            <ion-icon class="notify" name="battery-full-outline"></ion-icon>
+                        </div>
+                        <div class="noti">
+                            <ion-icon class="notify" name="chevron-up-outline"></ion-icon>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        
+        
+        
+        
+            <div class="windowmanager">
+        
+            </div>
+
+<script src="assets/js/libs/jquery.min.js" defer></script>
+<script src="assets/js/libs/bootstrap.min.js" defer></script>
+<script src="assets/js/libs/moment-with-locales.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script src="assets/js/libs/winbox.bundle.js" defer></script>
+<script src="assets/js/desktop.js"></script>
+</body>
+</html>
