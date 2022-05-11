@@ -1,1 +1,1 @@
-# dynamicos
+# DynamicOS
