@@ -509,7 +509,13 @@ background-color: #0a85ff;
     text-align: center;
     padding-left: 88px;
 }
+.wb-body{
+    background: transparent;
+}
 
+.wb-header{
+    border-bottom: 1px solid #ffffff0f;
+}
 /* .header button {
     position: relative;
     height: 100%;

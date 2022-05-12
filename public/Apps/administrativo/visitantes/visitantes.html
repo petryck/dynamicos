@@ -5,8 +5,87 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/libs/bootstrap.min.css">
 </head>
 <body>
-    <h2>teste visitante</h2>
+    <style>
+        .bodyApp{
+            margin: 0;
+            padding: 0;
+            width: calc(100% - 240px);
+            
+        }
+        .barraLateral{
+            position: fixed;
+            height: 100vh;
+            width: 240px !important;
+            max-width: 240px;
+            padding: 0;
+            margin: 0;
+            background-color: rgba(0, 0, 0, 0.2);
+          
+        }
+        .CorpoWin{
+            width: 100%;
+            margin-left: 240px;
+            height: 100vh;
+            padding: 0;
+           
+        }
+        body{
+            background: transparent;
+        }
+        .barraLateral ul{
+            padding: 14px;
+        }
+        .nav-tabs{
+          border-bottom: none;
+        }
+
+    </style>
+
+  
+<div class="bodyApp">
+  
+        <div class="barraLateral text-white">
+            <ul class="nav nav-pills flex-column mb-auto nav-tabs" role="tablist">
+
+                <li class="nav-item" role="presentation">
+                  <a href="#" class="nav-link active text-white" id="home-tab" data-bs-toggle="tab" data-bs-target="#visitantes" >
+                    Visitantes
+                  </a>
+                </li>
+
+                <li>
+                  <a href="#" class="nav-link text-white" data-bs-toggle="tab" data-bs-target="#cadastros" >
+                    Cadastros
+                  </a>
+                </li>
+              
+              </ul>
+        </div>
+        <div class="CorpoWin text-white">
+          <div class="tab-content" id="myTabContent">
+            
+            <div class="tab-pane fade show active" id="visitantes" role="tabpanel" aria-labelledby="home-tab">
+
+            </div>
+
+            <div class="tab-pane fade" id="cadastros" role="tabpanel" aria-labelledby="profile-tab">
+
+            </div>
+          </div>
+        </div>
+
+</div>
+
+    
+
+
+  
+
+
+
+    <script src="/assets/js/libs/bootstrap.bundle.min.js"></script>
 </body>
 </html>

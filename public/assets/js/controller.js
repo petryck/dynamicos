@@ -42,7 +42,7 @@ $.ajax({
             id: "window-"+retorno.id,
             top:28.8,
             bottom: 95,
-            background: "#000000b8",
+            background: "#120d19e3",
             max: false,
             class: ["no-full"],
             x: "center",
