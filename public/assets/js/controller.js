@@ -42,17 +42,13 @@ $.ajax({
             id: "window-"+retorno.id,
             top:28.8,
             bottom: 95,
-            background: "",
+            background: "#000000b8",
             max: false,
             class: ["no-full"],
             x: "center",
             y: "center",
             width: ""+retorno.w+"",
-            height: ""+retorno.h+"",
-            minimizable: function(){
-
-                alert('')
-            }
+            height: ""+retorno.h+""
         })
 
         // win.buttons = {
@@ -66,6 +62,8 @@ $.ajax({
         $('#window-'+retorno.id+'').click()
        }
         // dop();
+
+       
     }else{
         alert('você não tem acesso')
     }

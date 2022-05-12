@@ -50,10 +50,11 @@ var connection = mysql.createConnection({
   })
 
 
+
   app.get('/OpenApp', (req, res) => {
     var id = req.query.id;
 
-    var sql = `SELECT * FROM ANALUA.modulos WHERE IdModulo = ${id}`;
+    var sql = `SELECT * FROM SIRIUS.modulos WHERE IdModulo = ${id}`;
 
       connection.query(sql, function(err2, results){
 
@@ -61,7 +62,7 @@ var connection = mysql.createConnection({
   
           var saida = {
             id:results[0]['IdModulo'],
-            page:'pages/'+results[0]['Adress'],
+            page:'Apps/'+results[0]['Adress']+'.html',
             w:results[0]['w'],
             h:results[0]['h'],
             name:results[0]['Name'],

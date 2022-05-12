@@ -41,11 +41,6 @@ function Dock() {
 			icon: this.icFiles,
 			hover: false
 		},{
-			app: null,
-			name: "null",
-			icon: this.icMail,
-			hover: false
-		},{
 			app: LaleApp,
 			name: "LaleApp",
 			icon: this.icLale,
@@ -54,11 +49,6 @@ function Dock() {
 			app: PhotosApp,
 			name: "PhotosApp",
 			icon: this.icGallery,
-			hover: false
-		},{
-			app: null,
-			name: "null",
-			icon: this.icCalendar,
 			hover: false
 		},{
 			app: NotesApp,
@@ -115,8 +105,9 @@ function Dock() {
 		ctx.fillStyle = "#0002";
 		//fillRoundedRect(0, 0, this.w, this.h, 8);
 		
-		ctx.fillStyle = "#0008";
-		fillRoundedRect(ctx, 0, 0, 400, this.h, 8);
+		
+		var bar_apps = ctx.fillStyle = "#0008";
+		fillRoundedRect(ctx, 0, 0, this.pinnedApps.length*67, this.h, 8);
 		
 		ctx.fillStyle = "#0008";
 		fillRoundedRect(ctx, 416, 0, 128, this.h, 8);
@@ -131,6 +122,7 @@ function Dock() {
 		ctx.fillStyle = "#FFF1";
 		
 		this.pinnedApps.forEach((ic, i) => {
+			console.log(ic)
 			if (ic.hover) fillRoundedRect(ctx, 40 * i - 4, -4, 40, 40, 6);
 			
 			ctx.drawImage(ic.icon, 40 * i, 0);
@@ -193,8 +185,8 @@ function Dock() {
 		
 		//ctx.fillRect(0, 0, 32, 32);
 		
-		let daysWeek = ["Sunday", "Monday", "Thursday", "Wednesday", "Tuesday", "Friday", "Saturday"];
-		let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		let daysWeek = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sabado"];
+		let months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 		let date = new Date();
 		
 		setTextStyle(ctx, "#EEEEEE", "14px sans-serif", "left", "top");

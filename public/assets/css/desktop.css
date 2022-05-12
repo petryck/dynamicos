@@ -448,7 +448,8 @@ right: 90px;
     align-items: center;
     width: 100%;
     height: 28.8px;
-    background-color: hsla(240,3%,11%,0.3);
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.3)
 }
 #top-bar .menu{
     font-weight: 600 !important;

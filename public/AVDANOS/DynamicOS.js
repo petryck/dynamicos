@@ -119,7 +119,7 @@ function update() {
 			ctx.font = "24px sans-serif";
 			ctx.textAlign = "center";
 			ctx.textBaseline = "middle";
-			ctx.fillText("Avdan OS", width / 2, height / 2);
+			ctx.fillText("DynamicOS", width / 2, height / 2);
 			
 			showDrawables();
 			
@@ -176,7 +176,7 @@ function update() {
 			ctx.font = "18px sans-serif";
 			ctx.textAlign = "center";
 			ctx.textBaseline = "middle";
-			ctx.fillText("Loading AvdanOS UI", cx, cy + 240);
+			ctx.fillText("Loading DynamicOS", cx, cy + 240);
 		}
 	}
 	
