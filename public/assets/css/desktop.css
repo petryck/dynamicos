@@ -508,6 +508,7 @@ background-color: #0a85ff;
 .wb-title{
     text-align: center;
     padding-left: 88px;
+    font-weight: 800;
 }
 .wb-body{
     background: transparent;

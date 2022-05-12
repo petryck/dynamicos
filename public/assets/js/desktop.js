@@ -211,3 +211,15 @@ function dop(){
     
     // insert the element before target element
     // target.parentNode.insertBefore(elem, target);
+
+    // $('iframe').contents()[0]
+    $(document).on('click', $('iframe').contents()[0].body, function(e){
+
+
+        alert('dsa')
+      })
+
+      setInterval(() => {
+          var teste = $('iframe').contents()[0].body
+          console.log(teste)
+      }, 1000);
