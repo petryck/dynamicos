@@ -49,6 +49,39 @@ var connection = mysql.createConnection({
     res.sendFile(path.join(__dirname, '../public/home.html'))
   })
 
+
+  app.get('/OpenApp', (req, res) => {
+    var id = req.query.id;
+
+    var sql = `SELECT * FROM ANALUA.modulos WHERE IdModulo = ${id}`;
+
+      connection.query(sql, function(err2, results){
+
+        if(results.length > 0){
+  
+          var saida = {
+            id:results[0]['IdModulo'],
+            page:'pages/'+results[0]['Adress'],
+            w:results[0]['w'],
+            h:results[0]['h'],
+            name:results[0]['Name'],
+            status: true
+          }
+          res.json(saida)
+
+        }else{
+          var saida = {
+            status: false
+          }
+          res.json(saida);
+        }
+      
+      })
+
+  })
+
+
+
   server.listen(port, function () {
     console.log(`Servidor Carregado http://localhost:${server.address().port}`);
 });
