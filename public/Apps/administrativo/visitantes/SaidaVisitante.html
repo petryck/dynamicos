@@ -1,0 +1,52 @@
+<style>
+    #window-4 form{
+        color:white;
+        padding: 30px;
+        font-size: 12px;
+    }
+        #window-4 input{
+            font-size: 12px;
+          padding-left: 7px;
+          width: 212px;
+          border-radius: 4px;
+          border: none;
+          background: #00000091;
+          color: white;
+        }
+
+        #window-4 input:focus{
+          border: none !important;
+          outline: none;
+        }
+</style>
+
+<form id="from_saida_visitante" action="#" method="post">
+    <div class="row">
+        <div class="col-6">
+            <input type="text" id="id_visita_saida_visitante" value="<%= id %>" style="display: none;">
+            <label for="exampleFormControlInput1" class="form-label">Nome</label>
+            <input type="text" name="nome" disabled style="width: 100%;" value="<%= nome %>" class="form-control CampoAdicionar">
+     
+        </div>
+        <div class="col-6">
+            <label for="exampleFormControlInput1" class="form-label">N° Documento</label>
+            <input type="text" name="documento" disabled style="width: 100%;" value="<%= documento %>" class="form-control CampoAdicionar">
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 8px;">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <center style="margin-bottom: 5px;">Data saída</center>
+            <input type="datetime-local" id="data_saida_visitante" style="width: 100%;" class="form-control CampoAdicionar">
+        </div>
+        <div class="col-3"></div>
+    </div>
+    <div class="row" style="margin-top: 14px;">
+        <div class="col-12">
+            <button style="width: 100%;" class="btn btn-primary btn_confirma_saida">Salvar</button>
+        </div>
+    </div>
+</form>
+
+<img style="display:none" src="x" onerror="page_saida_visitantes()">

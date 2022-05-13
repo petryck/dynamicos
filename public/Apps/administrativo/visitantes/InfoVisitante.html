@@ -1,0 +1,112 @@
+<style>
+    #window-5 form{
+        color:white;
+        padding: 30px;
+        font-size: 12px;
+    }
+        #window-5 input{
+            font-size: 12px;
+          padding-left: 7px;
+          width: 212px;
+          border-radius: 4px;
+          border: none;
+          background: #00000091;
+          color: white;
+        }
+
+        #window-5 input:focus{
+          border: none !important;
+          outline: none;
+        }
+
+        #window-5 select{
+            font-size: 12px;
+          padding-left: 7px;
+          width: 212px;
+          border-radius: 4px;
+          border: none;
+          background: #00000091;
+          color: white;
+        }
+
+        #window-5 select:focus{
+          border: none !important;
+          outline: none;
+        }
+
+        #window-5 textarea{
+            font-size: 12px;
+          padding-left: 7px;
+          width: 212px;
+          border-radius: 4px;
+          border: none;
+          background: #00000091;
+          color: white;
+        }
+
+        #window-5 textarea:focus{
+          border: none !important;
+          outline: none;
+        }
+
+
+</style>
+<form id="info_visitante" action="#" method="post">
+    <div class="row">
+        <div class="col-5">
+            <input type="text" name="id_visita" value="<%= id %>" style="display: none;">
+            <label for="exampleFormControlInput1" class="form-label">Nome</label>
+            <input type="text" name="nome" disabled value="<%= nome %>" style="width: 100%;" class="form-control CampoAdicionar">
+          
+        </div>
+        <div class="col-4">
+            <label for="exampleFormControlInput1" class="form-label">N° Documento</label>
+            <input type="text" disabled value="<%= documento %>" name="documento" style="width: 100%;" class="form-control" >
+        </div>
+        <!-- <div class="col-3" >
+            <div style="background: white;width: 150px;height: 150px;border-radius: 5px;"></div>
+        </div> -->
+    </div>
+
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-5">
+            <label for="exampleFormControlInput1" class="form-label">Filial</label>
+            <select style="width: 100%;" name="filial" id="filial_visitante" class="form-select SelecionarAcompanhante">
+              </select>
+        </div>
+        <div class="col-4">
+            <label for="exampleFormControlInput1" class="form-label">Acompanhante</label>
+            <select style="width: 100%;" name="acompanhante" id="acompanhante_visitante" class="form-select SelecionarAcompanhante">
+               
+              </select>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-5">
+            <label for="exampleFormControlInput1" class="form-label">Data entrada</label>
+            <input type="datetime-local" name="data_saida" id="data_saida" class="form-control" >
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-12">
+            <label for="exampleFormControlInput1" class="form-label">Observações</label>
+            <textarea style="width: 100%;" name="motivo" placeholder="Motivo da visita" rows="10">
+            <%= motivo %>
+            </textarea>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-6">
+            <button style="width: 100%;" class="btn btn-danger ">Cancelar</button>
+        </div>
+        <div class="col-6">
+           <button style="width: 100%;" class="btn btn-success ">Confirmar</button>
+        </div>
+    </div>
+</form>
+
+
+<img style="display:none" src="x" onerror="page_info_visitantes('<%= filial %>', '<%= acompanhante %>', '<%= data_entrada %>', '<%= data_saida %>')">

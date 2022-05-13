@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/libs/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="assets/css/libs/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="assets/css/libs/bootstrap.min.css">
 
     <link href="https://rsms.me/inter/inter.css" rel="stylesheet">
 
@@ -31,7 +33,7 @@
                 <div data-menu="administrativo" class="menu">Administrativo</div>
                     <div data-box="administrativo" style="display:none;"class="menu_box">
                         <div class="container_menu">
-                            <button onclick="open_app('1')">Controle Visitantes</button>
+                            <button onclick="open_app('1', 'Visitantes', '65%', '70%')">Controle Visitantes</button>
                             <button>teste</button>
                             <button>teste</button>
                             <button>teste</button>
@@ -288,13 +290,28 @@
         
             </div>
 
+
+    <div class="container window_opt" style="min-width: 0;width: 125px;z-index: 999999;">
+
+    </div>
+
 <script src="assets/js/libs/jquery.min.js"></script>
-<script src="assets/js/libs/bootstrap.min.js" defer></script>
+<script src="assets/js/libs/jquery.dataTables.min.js"></script>
+<script src="assets/js/libs/bootstrap.bundle.min.js"></script>
 <script src="assets/js/libs/moment-with-locales.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<!-- <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script> -->
 <script src="assets/js/libs/winbox.bundle.js" defer></script>
+<script src="assets/js/Apps.js"></script>
 <script src="assets/js/desktop.js"></script>
 <script src="assets/js/controller.js"></script>
+
+
+
+
+ <!-- PROGRAMAS -->
+ <script src="assets/js/Apps/administrativo/visitantes/visitantes.js"></script>
+
+
 </body>
 </html>

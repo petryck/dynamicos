@@ -1,23 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/assets/css/libs/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="/assets/css/libs/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="/assets/css/libs/bootstrap.min.css">
-</head>
-<body>
+
     <style>
-        .bodyApp{
+        #window-1 .bodyApp{
             margin: 0;
             padding: 0;
             width: calc(100% - 240px);
             
         }
-        .barraLateral{
+        #window-1 .barraLateral{
             position: fixed;
             height: 100vh;
             width: 240px !important;
@@ -27,42 +16,35 @@
             background-color: rgba(0, 0, 0, 0.2);
           
         }
-        .CorpoWin{
+        #window-1 .CorpoWin{
+            overflow: auto;
             width: 100%;
             margin-left: 240px;
             height: 100vh;
             padding: 0;
            
         }
-        body{
-            background: transparent;
-        }
-        .barraLateral ul{
+
+        #window-1 .barraLateral ul{
             padding: 14px;
         }
-        .nav-tabs{
+        #window-1 .nav-tabs{
           border-bottom: none;
         }
-        .table{
+        #window-1 .table{
           font-size: 12px !important;
         }
-        /* .table td, th{
-          padding: 0 !important;
-        }
-        .table td{
-          padding: 0.5rem 0.5rem;
-        } */
-
-        .dataTables_filter{
+        #window-1 .dataTables_filter{
           display: none;
         }
-        .dataTables_length{
+        #window-1  .dataTables_length{
           display: none;
         }
-        .dataTables_paginate a{
+        #window-1 .dataTables_paginate a{
           color: white !important
         }
-        .input_search{
+        #window-1 .inputsearch{
+          padding-left: 7px;
           width: 212px;
           border-radius: 4px;
           border: none;
@@ -70,105 +52,34 @@
           color: white;
         }
 
-        .input_search:focus{
+        #window-1 .inputsearch:focus{
           border: none !important;
           outline: none;
         }
 
     
 
-        .table td{
+        #window-1 .table td{
           max-width: 12em;
           overflow: hidden;
           text-overflow: ellipsis;
         }
-        .window_opt{
-          display: none;
-        }
-        .window_opt {
-          --additional-shadow: inset 0 0 0 .9px hsla(240, 24%, 100%, .3), 0 0 0 1.2px hsla(240, 3%, 11%, .3);
-          z-index: 9;
-          width: 237px;
-          /* --additional-shadow: 0 0 0 0 white; */
-          min-width: 16rem;
-          padding: 0.5rem;
-          position: absolute;
-          -webkit-font-smoothing: antialiased;
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          user-select: none;
-          transition: transform .1s ease;
-          background-color: hsl(0deg 100% 42% / 0%);
-          -webkit-backdrop-filter: blur(15px);
-          backdrop-filter: blur(3px);
-          border-radius: 0.5rem;
-          box-shadow: #0000004d 0 0 11px,var(--additional-shadow);
-        }
-        .menu-item {
-        --alpha: 1;
-        display: flex;
-        justify-content: flex-start;
-        width: 100%;
-        padding: 0.3rem 0.4rem;
-        margin: 0.2rem 0;
-        letter-spacing: .4px;
-        font-weight: 400;
-        font-size: .9rem;
-        border-radius: 0.3rem;
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        transition: none;
-        color: hsla(240, 24%, 100%,var(--alpha));
-        }
-        .window_opt button{
-          padding-left: 9px !important;
-          color: white;
-            text-decoration: none;
-            vertical-align: middle;
-            font-family: inherit !important;
-            border: 0;
-            border-radius: 0;
-            outline: 0;
-            margin: 0;
-            padding: 0;
-            display: -webkit-inline-box;
-            display: -ms-inline-flexbox;
-            display: inline-flex;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            -ms-flex-pack: center;
-            /* justify-content: center; */
-            position: relative;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background-color: transparent;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .window_opt button:hover{
-          border-radius: 3px;
-          background: #0d6efd;
-        }
 
-        body::-webkit-scrollbar {
+        .CorpoWin::-webkit-scrollbar {
           width: 8px;               /* width of the entire scrollbar */
         }
 
-        body::-webkit-scrollbar-track {
+        .CorpoWin::-webkit-scrollbar-track {
           background: rgb(26, 25, 25);        /* color of the tracking area */
         }
 
-        body::-webkit-scrollbar-thumb {
+        .CorpoWin::-webkit-scrollbar-thumb {
           background-color: rgb(207, 206, 203);    /* color of the scroll thumb */
           border-radius: 20px;       /* roundness of the scroll thumb */
           border: 3px solid rgb(207, 206, 203);  /* creates padding around scroll thumb */
         }
+
+        
     </style>
 
   
@@ -177,20 +88,21 @@
         <div class="barraLateral text-white">
             <ul class="nav nav-pills flex-column mb-auto nav-tabs" role="tablist">
                 <li class="nav-item " role="presentation">
-                  <input class="input_search" type="text" placeholder="Pesquisa">
+                  <input class="inputsearch input_search_visitantes" type="text" placeholder="Pesquisa">
+                  <input class="inputsearch input_search_pessoas" style="display:none;" type="text" placeholder="Pesquisa">
                 </li>
                 <li class="nav-item " role="presentation" style="margin-top: 13px;">
-                  <button class="btn btn-danger" style="width: 100%;">Adicionar</button>
+                  <button class="btn btn-danger btn_adiciona_visitante" style="width: 100%;">Adicionar</button>
                 </li>
                 <hr>
                 <li class="nav-item" role="presentation" >
-                  <a href="#" class="nav-link active text-white" id="home-tab" data-bs-toggle="tab" data-bs-target="#visitantes" >
+                  <a href="#" class="nav-link active text-white"  data-input="input_search_visitantes" id="home-tab" data-bs-toggle="tab" data-bs-target="#visitantes" >
                     Visitas
                   </a>
                 </li>
 
                 <li>
-                  <a href="#" class="nav-link text-white" data-bs-toggle="tab" data-bs-target="#cadastros" >
+                  <a href="#" class="nav-link text-white" data-input="input_search_pessoas" data-bs-toggle="tab" data-bs-target="#cadastros" >
                     Pessoas
                   </a>
                 </li>
@@ -235,118 +147,13 @@
 <!-- <div class="teste" style="background: red; color:#FFF;">construa seu menu aqui</div> -->
 
 
-    <div class="container window_opt" style="min-width: 0;width: 125px;z-index: 999999;">
 
-      
+    <img style="display:none" src="x" onerror="TabelaVisitantes()">
 
-
-    </div>
-
-
-  
-
-
-    <script src="/assets/js/libs/jquery.min.js"></script>
-    <script src="/assets/js/libs/jquery.dataTables.min.js"></script>
-    <script src="/assets/js/libs/bootstrap.bundle.min.js"></script>
-   
-   
     <script>
-      var tabela_visitantes = $('#tabela_visitantes').DataTable({
-      "paging":   false,
-      "ordering": true,
-      "info":     false,
-      "lengthChange": false,
-      "rowId": "id",
-      "columns": [
-          {"data": "data"},
-          {"data": "visitante"},
-          {"data": "documento"},
-          {"data": "acompanhante"},
-          {"data": "filial"},
-          {"data": "motivo"},
-          {"data": "hora_entrada"},
-          {"data": "hora_saida"}
-       ],
-       "order": [ 0, "desc" ],
-      "ajax": {
-          "url": "/QueryTabelaVisitantes",
-          "type": "POST",
-      },
-  "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json"
-        }
-})
-
-//desabilita o botão secundário do mouse
-$(document).bind("contextmenu",function(e){
-    return false;
-});
-
-//ativa o menu alternativo para o aplicativo
-  $(document).on('mousedown', '#tabela_visitantes tr', function(e){
-    
-    $(document).find('.window_opt').css('display', 'none');
-
-  var el = $(this);
-      menu = 'div.window_opt';
-      H = el.height()-40;
-      posX = e.pageX;
-      posY = e.pageY;
-
-    if( e.button == 2 ) {
-      var id = $(this).attr('id')
-        $(menu).html('')
-
-        if(id){
-          var btn = `<button class="menu-item" data-id="${id}">Abrir</button>
-        <button class="menu-item" data-id="${id}">Saída</button>
-        <button class="menu-item" data-id="${id}">Excluir</button>
-        `
 
 
-        $(menu).append(btn)
-        $(menu).css({"position":"absolute", "top":posY-(H+H/2),"left":posX,"display":'block',"z-index":"9999"});
-        }
-        
-        
-       
-    }
-  
-});
-
-
-menuhide = function (menu) {
-    $(menu).css("display","none");
-};
-
-
-$(document).on('click', '.btn_tootle_open', function(e){
-
-idJanela = $(this).parent().parent();
-
-
-
-if($(idJanela).find('.window_opt').css('display') === 'none'){
-  $(document).find('.window_opt').css('display', 'none');
- $(idJanela).find('.window_opt').css('display', 'block');
-}else{
-
- $(document).find('.window_opt').css('display', 'none');
-}
-
-})
-
-$(document).on('keyup', '.input_search', function(e){
-  e.preventDefault()
-  tabela_visitantes.search($(this).val()).draw()
-
-});
-
-
-
+     
 
 
     </script>
-</body>
-</html>

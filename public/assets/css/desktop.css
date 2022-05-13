@@ -511,6 +511,7 @@ background-color: #0a85ff;
     font-weight: 800;
 }
 .wb-body{
+    overflow: hidden;
     background: transparent;
 }
 
@@ -522,3 +523,106 @@ background-color: #0a85ff;
     height: 100%;
     text-shadow: 0 0 1px rgb(0 0 0 / 10%);
 } */
+
+.window_opt{
+    display: none;
+  }
+  .window_opt {
+    --additional-shadow: inset 0 0 0 .9px hsla(240, 24%, 100%, .3), 0 0 0 1.2px hsla(240, 3%, 11%, .3);
+    z-index: 9;
+    width: 237px;
+    /* --additional-shadow: 0 0 0 0 white; */
+    min-width: 16rem;
+    padding: 0.5rem;
+    position: absolute;
+    -webkit-font-smoothing: antialiased;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: transform .1s ease;
+    background-color: hsl(0deg 100% 42% / 0%);
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(3px);
+    border-radius: 0.5rem;
+    box-shadow: #0000004d 0 0 11px,var(--additional-shadow);
+  }
+  .menu-item {
+  --alpha: 1;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 0.3rem 0.4rem;
+  margin: 0.2rem 0;
+  letter-spacing: .4px;
+  font-weight: 400;
+  font-size: .9rem;
+  border-radius: 0.3rem;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transition: none;
+  color: hsla(240, 24%, 100%,var(--alpha));
+  }
+  .window_opt button{
+    padding-left: 9px !important;
+    color: white;
+      text-decoration: none;
+      vertical-align: middle;
+      font-family: inherit !important;
+      border: 0;
+      border-radius: 0;
+      outline: 0;
+      margin: 0;
+      padding: 0;
+      display: -webkit-inline-box;
+      display: -ms-inline-flexbox;
+      display: inline-flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      /* justify-content: center; */
+      position: relative;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-color: transparent;
+      -webkit-tap-highlight-color: transparent;
+  }
+  .window_opt button:hover{
+    border-radius: 3px;
+    background: #0d6efd;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;               /* width of the entire scrollbar */
+  }
+
+  *::-webkit-scrollbar-track {
+    background: rgb(26, 25, 25);        /* color of the tracking area */
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: rgb(207, 206, 203);    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 3px solid rgb(207, 206, 203);  /* creates padding around scroll thumb */
+  }
+
+  .max-defined{
+    min-width: 768px;
+    min-height: 538px;
+    max-width: 768px;
+    max-height: 538px;
+  }
+  .max-saida_visitante{
+    min-width: 464px;
+    min-height: 245px;
+    max-width: 464px;
+    max-height: 245px;
+  }
+
+
+  
