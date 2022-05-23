@@ -1,12 +1,33 @@
+var info_users;
 
 var info_user = {
-    id:1,
-    name: 'Petryck William'
+  id:1,
+  name: 'Petryck William'
 }
 
 
+if(!localStorage.getItem("info_usuario_sirius_os")){
+  window.location.href = "/login";
+}else{
+  info_users = JSON.parse(localStorage.getItem("info_usuario_sirius_os"));
+  
+}
 
+console.log(info_users)
 
+setInterval(() => {
+  verifica_login()
+}, 30000);
+
+function verifica_login(){
+
+  if(!localStorage.getItem("info_usuario_sirius_os")){
+    window.location.href = "/login";
+  }else{
+    info_users = JSON.parse(localStorage.getItem("info_usuario_sirius_os"));
+    
+  }
+}
 
 
 

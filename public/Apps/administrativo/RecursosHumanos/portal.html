@@ -1,0 +1,299 @@
+
+    <style>
+        #window-6 .bodyApp{
+            margin: 0;
+            padding: 0;
+            width: calc(100% - 240px);
+            
+        }
+        #window-6 .barraLateral{
+            position: fixed;
+            height: 100vh;
+            width: 240px !important;
+            max-width: 240px;
+            padding: 0;
+            margin: 0;
+            background-color: rgba(0, 0, 0, 0.2);
+          
+        }
+        #window-6 .CorpoWin{
+            overflow: auto;
+            width: 100%;
+            margin-left: 240px;
+            height: 100%;
+            padding: 0;
+            overflow-x: hidden;
+           
+        }
+        #window-6 .nav-pills .show>.nav-link{
+            background-color: transparent;
+        }
+
+        #window-6 .barraLateral ul{
+            padding: 14px;
+        }
+        #window-6 .nav-tabs{
+          border-bottom: none;
+        }
+        #window-6 .table{
+          font-size: 12px !important;
+        }
+        #window-6 .dataTables_filter{
+          display: none;
+        }
+        #window-6  .dataTables_length{
+          display: none;
+        }
+        #window-6 .dataTables_paginate a{
+          color: white !important
+        }
+        #window-6 .inputsearch{
+        text-align: center;
+        height: 100%;
+        width: 100%;
+          border-radius: 4px;
+          border: none;
+          background: #00000091;
+          color: white;
+          margin: 0 auto;
+        }
+
+        #window-6 .bar_search{
+            padding-top: 15px;
+            position: fixed;
+            z-index: 99999;
+            margin-left: 1px;
+            background: #1d1132;
+            top: 0px;
+            width: calc(100% - 251px);
+            padding-bottom: 8px;
+        }
+
+        #window-6 .inputsearch:focus{
+          border: none !important;
+          outline: none;
+        }
+
+    
+
+        #window-6 .table td{
+          max-width: 12em;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        #window-6 .CorpoWin::-webkit-scrollbar {
+          width: 8px;               /* width of the entire scrollbar */
+        }
+
+        #window-6 .CorpoWin::-webkit-scrollbar-track {
+          background: rgb(26, 25, 25);        /* color of the tracking area */
+        }
+
+        #window-6 .CorpoWin::-webkit-scrollbar-thumb {
+          background-color: rgb(207, 206, 203);    /* color of the scroll thumb */
+          border-radius: 20px;       /* roundness of the scroll thumb */
+          border: 3px solid rgb(207, 206, 203);  /* creates padding around scroll thumb */
+        }
+        #window-6 .even{
+          background-color: #00000028 !important;
+        }
+
+        #window-6 tr:hover{
+          background-color: #00000066 !important;
+        }
+
+        #window-6 .submenu{
+            font-size: 14px;
+            padding-left: 15px;
+        }
+
+        
+        #window-6 .submenu .active{
+            background-color: #0d6dfd3b !important;
+        }
+
+        #window-6 table.dataTable{
+            margin-top: 60px !important;
+        }
+
+
+        
+        
+
+        
+    </style>
+
+  
+<div class="bodyApp">
+  
+        <div class="barraLateral text-white">
+            <ul class="nav nav-pills flex-column mb-auto nav-tabs" role="tablist">
+           
+                <li class="nav-item" role="presentation" >
+                  <a href="#" class="nav-link active text-white"  id="estatisticas-tab" data-bs-toggle="tab" data-bs-target="#estatisticas" >
+                    <i class="fa-solid fa-house"></i> Estatísticas
+                  </a>
+                </li>
+
+                 <li class="nav-item" role="presentation" >
+                    <a href="#" class="nav-link text-white"  id="home-tab" data-bs-toggle="tab" data-bs-target="#Colaboradores_PortalRH" >
+                        <i class="fa-solid fa-user-astronaut"></i> Colaboradores
+                    </a>
+                  </li>
+                  
+                <li class="nav-item" role="presentation" >
+
+                    <a class="nav-link text-white" style="width: 100%;text-align: left;" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <i class="fa-solid fa-ballot-check"></i> Relatórios
+                    </a>
+
+                      <div class="collapse submenu" id="collapseExample">
+            
+                                <a href="#" class="nav-link text-white"  id="home-tab" data-bs-toggle="tab" data-bs-target="#visitantes" >
+                                    <i class="fa-solid fa-user-astronaut"></i> 01
+                                </a>
+                  
+                
+                                <a href="#" class="nav-link text-white"  id="home-tab" data-bs-toggle="tab" data-bs-target="#visitantes" >
+                                    <i class="fa-solid fa-user-astronaut"></i> 02
+                                </a>
+                
+             
+
+                       
+                      </div>
+
+                   
+                </li>
+
+
+              </ul>
+        </div>
+        <div class="CorpoWin text-white">
+          <div class="tab-content" id="myTabContent">
+
+            <div class="tab-pane fade show active" id="estatisticas" role="tabpanel" aria-labelledby="profile-tab">
+
+                <div class="row" style="margin-top: 10px;padding:10px">
+
+                    <div class="col-md-3">
+                        <div class="card text-white bg-dark" style="background-color: #0000002e !important;border: none;">
+                            <div class="card-body">
+                            <h5 class="card-title" style="text-align: center;">
+                                <i style="font-size: 50px;" class="fas fa-users"></i>
+                            </h5>
+                            <h5 class="card-title" style="text-align: center;font-size: 50px;font-weight: 800;">
+                              35
+                            </h5>
+                              <p class="card-text" style="text-align: center;">Funcionários ativos</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card text-white bg-dark" style="background-color: #0000002e !important;border: none;">
+                            <div class="card-body">
+                            <h5 class="card-title" style="text-align: center;">
+                                <i style="font-size: 50px;" class="fas fa-users"></i>
+                            </h5>
+                            <h5 class="card-title" style="text-align: center;font-size: 50px;font-weight: 800;">
+                              35
+                            </h5>
+                              <p class="card-text" style="text-align: center;">Funcionários ativos</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card text-white bg-dark" style="background-color: #0000002e !important;border: none;">
+                            <div class="card-body">
+                            <h5 class="card-title" style="text-align: center;">
+                                <i style="font-size: 50px;" class="fas fa-users"></i>
+                            </h5>
+                            <h5 class="card-title" style="text-align: center;font-size: 50px;font-weight: 800;">
+                              35
+                            </h5>
+                              <p class="card-text" style="text-align: center;">Funcionários ativos</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-3">
+                        <div class="card text-white bg-dark" style="background-color: #0000002e !important;border: none;">
+                            <div class="card-body">
+                            <h5 class="card-title" style="text-align: center;">
+                                <i style="font-size: 50px;" class="fas fa-users"></i>
+                            </h5>
+                            <h5 class="card-title" style="text-align: center;font-size: 50px;font-weight: 800;">
+                              35
+                            </h5>
+                              <p class="card-text" style="text-align: center;">Funcionários ativos</p>
+                            </div>
+                        </div>
+                    </div>
+
+                 
+                    
+
+                    
+
+                    
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade " id="Colaboradores_PortalRH" role="tabpanel" aria-labelledby="home-tab">
+
+                <div class="row bar_search">
+                    <div class="col-3">
+                        <button class="btn btn-primary btn_add_colaborador" style="width: 100%;">Novo</button>
+                    </div>
+                    <div class="col-6"></div>
+                    <div class="col-3">
+                        <input class="inputsearch input_pesquisa_colaboradores_portal_rh" placeholder="Pesquisar" type="text">
+                    </div>
+                    
+                    
+                </div>
+
+              <table id="tabela_colaboradoresRH" class="table table-dark table-striped" style="width:100%;--bs-table-bg: #1a1b1c40;">
+                <thead>
+              <tr>
+                <th scope="col">Foto</th>
+                <th scope="col">Nome</th>
+                <th scope="col">CPF</th>
+                <th scope="col">Escritório</th>
+                <th scope="col">Email</th>
+                <th scope="col">Sistema</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+          
+            </table>
+
+            </div>
+
+            
+          </div>
+        </div>
+
+</div>
+
+    
+<!-- <div class="teste" style="background: red; color:#FFF;">construa seu menu aqui</div> -->
+
+
+
+    <img style="display:none" src="x" onerror="TabelaColaboradoresRH()">
+
+    <script>
+
+
+     
+
+
+    </script>

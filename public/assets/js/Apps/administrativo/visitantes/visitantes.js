@@ -2,7 +2,9 @@
 
 //ativa o menu alternativo para o aplicativo
   $(document).on('mousedown', '#tabela_visitantes tr', function(e){
-
+    var saida = $(this).find('td')[7];
+   
+    
     $(document).find('.window_opt').css('display', 'none');
 
   var el = $(this);
@@ -16,11 +18,22 @@
         $(menu).html('')
 
         if(id){
-          var btn = `
+
+          if($(saida).text() == ''){
+
+            var btn = `
         <button class="menu-item InfoVisitante" data-id="${id}">Abrir</button>
         <button class="menu-item SaidaVisitante" data-id="${id}">Saída</button>
-        <button class="menu-item" data-id="${id}">Excluir</button>
+        <button class="menu-item btn_exclui_visitante" data-id="${id}">Excluir</button>
         `
+          }else{
+          
+            var btn = `
+        <button class="menu-item InfoVisitante" data-id="${id}">Abrir</button>
+        <button class="menu-item btn_exclui_visitante" data-id="${id}">Excluir</button>
+        `
+          }
+          
 
 
         $(menu).append(btn)
@@ -33,6 +46,78 @@
   
 });
 
+
+
+$(document).on('click', '.confirma_remove_visitante', function(e){
+  e.preventDefault()
+  var id = $(this).attr('id');
+
+
+  $.ajax({
+    url:"/remove_visita",
+    type:'post',
+    data:{
+         id : id,
+    },
+    beforeSend : function(){
+         
+    }
+})
+.done(function(retorno){
+  $('#alerta_cert').remove();
+  tabela_visitantes.ajax.reload();
+  if(retorno == 'sucesso'){
+
+  macOSNotif({autoDismiss:5,title:'Sucesso',subtitle:'Visita removida dos registros.', btn2Text:null})
+  }else{
+    macOSNotif({autoDismiss:5,title:'Erro',subtitle:'Falha ao remover visita.', btn2Text:null})   
+  }
+
+})
+
+});
+
+$(document).on('click', '.cancela_alerta', function(e){
+  e.preventDefault()
+
+$('#alerta_cert').remove();
+});
+
+
+$(document).on('click', '.nav-link', function(e){
+  e.preventDefault()
+  var pai = $(this).parent().parent().parent()
+  
+  var achou = pai.find('.nav-link')
+  achou.removeClass('active')
+ $(this).addClass('active')
+
+
+
+
+});
+
+
+
+
+
+
+$(document).on('click', '.btn_exclui_visitante', function(e){
+  e.preventDefault()
+  var id = $(this).attr('data-id');
+
+var alerta = `<div class="dialog svelte-1g5ktxe" id="alerta_cert" tabindex="0" role="dialog" aria-labelledby="info-title" aria-describedby="info-description" style="">
+            <section class="theme-warning-section svelte-1pwt7pn">
+              <h3 class="svelte-1pwt7pn">Remover registro do visitante</h3>
+              <p class="svelte-1pwt7pn">Você realmente gostaria de remover o registro de entrada e saída do visitante?</p>
+              <div class="buttons svelte-1pwt7pn"><button class="svelte-1pwt7pn cancela_alerta">Não, cancelar</button> <button id="${id}" class="confirm svelte-1pwt7pn confirma_remove_visitante">Sim, remover</button></div>
+            </section>
+</div>`;
+
+$('.confirm_notificacao').html(alerta)
+
+
+});
 
 
 $(document).on('keyup', '.input_search_visitantes', function(e){
@@ -118,7 +203,7 @@ $(document).on('click', '.InfoVisitante', function(e){
 
 
        if(id_janela == 0){
-        var win = new WinBox('Saída', {
+        var win = new WinBox('Informações sobre a visita', {
             html: ""+retorno+"",
             id: "window-5",
             top:28.8,
@@ -162,6 +247,46 @@ $(document).on('click', '.btn_close_adiciinarVisistante', function(e){
 
 });
 
+$(document).on('click', '.btn_close_infoVisistante', function(e){
+  e.preventDefault()
+
+  $('#window-5').remove()
+
+});
+
+
+
+$(document).on('click', '#btn_confirma_visita', function(e){
+  e.preventDefault()
+
+  form = $("#from_edita_visita").serialize();
+
+
+  $.ajax({
+    type: 'POST',
+    url: '/edita_visita',
+    data: form,
+    processData: false,
+    success: function (data) {
+
+
+      if(data == 'sucesso'){
+
+        $('#modal_geral').css('display', 'none')
+        $('.corpo_modal').html('')
+        tabela_visitantes.ajax.reload();
+        var teste = macOSNotif({autoDismiss:5,title:'Sucesso',subtitle:'Os dados do visitante foram alterados', btn2Text:null})
+     
+
+      }
+    
+    }
+
+  })
+
+});
+
+
 
 $(document).on('click', '.btn_confirma_visitante', function(e){
   e.preventDefault()
@@ -181,6 +306,7 @@ form = $("#from_cad_visitante").serialize();
 
         $('#window-3').remove();
         tabela_visitantes.ajax.reload();
+        macOSNotif({autoDismiss:5,title:'Sucesso',subtitle:'Visitante adicionado com sucesso, monitore sua saída.', btn2Text:null})
 
       }
     
@@ -210,6 +336,7 @@ $(document).on('click', '.btn_confirma_saida', function(e){
         $('.corpo_modal').html('')
         tabela_visitantes.ajax.reload();
         $('#window-4').remove()
+        macOSNotif({autoDismiss:5,title:'Sucesso',subtitle:'Saída confirmada', btn2Text:null})
 
       }
     
@@ -239,6 +366,8 @@ $(document).on('click', '#btn_confirma_visita', function(e){
         $('#modal_geral').css('display', 'none')
         $('.corpo_modal').html('')
         tabela_visitantes.ajax.reload();
+
+        // macOSNotif({title:'Sucesso',subtitle:'Visitante alterado com sucesso', btn2Text:null})
 
       }
     

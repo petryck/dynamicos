@@ -2,12 +2,15 @@ import mysql from 'mysql'
 import express from 'express'
 const app = express()
 import path from 'path'
+import fs from 'fs'
 import cors from 'cors'
 import http from 'http'
+import formidable from 'formidable'
 import bodyParser from 'body-parser';
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import ejs from 'ejs';
+import { Console } from 'console'
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -45,8 +48,67 @@ var connection = mysql.createConnection({
     }
   }); 
 
+
+  app.post('/login_email', (req, res) => {
+    var email = req.body.email;
+  
+  
+    var sql = `SELECT * FROM colaboradores WHERE email_sistema = '${email}'`;
+    connection.query(sql, function(err2, results){
+  
+      if(results.length > 0){
+        res.json(results);
+      }else{
+        res.json('error');
+      }
+  
+    })
+  
+  })
+
+  app.post('/login_senha', (req, res) => {
+    var email = req.body.email;
+    var senha = req.body.senha;
+  
+    var sql = `SELECT * FROM colaboradores WHERE email_sistema = '${email}' AND senha_sistema = '${senha}'`;
+    connection.query(sql, function(err2, results){
+  
+      if(results.length > 0){
+        res.json(results);
+      }else{
+        res.json('error');
+      }
+  
+    })
+  
+  })
+
+  app.post('/info_user', (req, res) => {
+    var id = req.body.id;
+  
+    var sql = `SELECT * FROM colaboradores WHERE id_colaboradores = '${id}'`;
+    connection.query(sql, function(err2, results){
+  
+      if(results.length > 0){
+        res.json(results);
+      }else{
+        res.json('error');
+      }
+  
+    })
+  
+  })
+
   app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/home.html'))
+  })
+
+  app.get('/home', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/home.html'))
+  })
+
+  app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/login.html'))
   })
 
 
@@ -82,6 +144,93 @@ var connection = mysql.createConnection({
       
       })
 
+  })
+
+  app.post('/remove_visita', (req, res) => {
+    var id_visita = req.body.id;
+    var sql = `DELETE FROM visitas WHERE (id_visitas = ${id_visita})`;
+    connection.query(sql, function(err2, results){
+      console.log(err2)
+      res.json('sucesso');
+    })
+  })
+
+
+
+  app.post('/edita_visita', (req, res) => {
+    var id_visita = req.body.id_visita;
+    var filial = req.body.filial;
+    var acompanhante = req.body.acompanhante;
+    var data_saida = '';
+    var motivo = req.body.motivo;
+  
+    if(req.body.data_saida != null && req.body.data_saida != ''){
+      data_saida = req.body.data_saida+'Z';
+      data_saida = new Date(data_saida).getTime();
+    }
+    console.log(data_saida)
+    
+  
+    var sql = `UPDATE visitas 
+                  SET data_saida = '${data_saida}',
+                      motivo = '${motivo}',
+                      acompanhante = '${acompanhante}',
+                      filial = '${filial}'
+                  WHERE (id_visitas = ${id_visita})`;
+  
+    connection.query(sql, function(err2, results){
+      console.log(err2)
+      res.json('sucesso');
+    })
+  
+  
+  
+  })
+
+
+  
+
+  app.post('/cadastro_new_colaborador', (req, res) => {
+    const form = new formidable.IncomingForm();
+    form.parse(req, (err, fields, files) => {
+
+    const extensaoArquivo = files.imgColaborador.originalFilename.split('.')[1];
+    const oldpath = files.imgColaborador.filepath;
+
+    const newpath = path.join(__dirname, '../public/assets/UPLOAD/colaboradores', Math.random()+'.'+extensaoArquivo);
+
+    var url_img = 'assets/UPLOAD/colaboradores/'+files.imgColaborador.originalFilename
+      
+    fs.renameSync(oldpath, newpath);
+
+   
+        var sql = `INSERT INTO colaboradores (nome, nascimento, pai, mae, naturalidade, nacionalidade, raca_cor, cep, endereco, bairro, municipio, cpf, rg, orgao, estado, emissao_rg, telefone, email_corporativo, email_pessoal,nr_cnh, categoria_cnh, validade_cnh, cargo, admissao, pis, escala, moda_pagamento, remuneracao, observacoes, sistema_status, email_sistema, senha_sistema, img_sistema, filial) 
+        VALUES 
+        ('${fields.nome}','${fields.data_nascimento}','${fields.pai}','${fields.mae}','${fields.naturalidade}','${fields.nacionalidade}','${fields.raca_cor}','${fields.cep}','${fields.endereco}','${fields.bairro}','${fields.municipio}','${fields.cpf}','${fields.rg}','${fields.orgao}','${fields.estado}','${fields.emissao_rg}','${fields.telefone}','${fields.email_corporativo}','${fields.email_pessoal}','${fields.nr_cnh}','${fields.categoria_cnh}','${fields.validade_cnh}','${fields.cargo}','${fields.admissao}','${fields.pis}','${fields.escala}','${fields.moda_pagamento}','${fields.remuneracao}','${fields.observacoes}',${fields.status_sistema},'${fields.login_sistema}','${fields.senha_sistema}','${url_img}',${fields.filial})`;
+
+        connection.query(sql, function(err2, results){
+       
+
+          if(results){
+            var url_img = 'assets/UPLOAD/colaboradores/'+results.insertId+'.'+extensaoArquivo
+
+            const newpath2 = path.join(__dirname, '../public/assets/UPLOAD/colaboradores', results.insertId+'.'+extensaoArquivo);
+
+            fs.renameSync(newpath, newpath2);
+            var sql = `UPDATE colaboradores SET img_sistema = '${url_img}' WHERE (id_colaboradores = ${results.insertId})`
+            connection.query(sql, function(err2, results){})
+            res.json(results.insertId);
+          }
+
+          
+          
+        })
+  
+       
+      
+    });
+
+  
   })
 
   app.post('/lista_colaboradores', (req, res) => {
@@ -265,6 +414,58 @@ var connection = mysql.createConnection({
       res.json('sucesso');
     })
   
+  })
+
+
+  
+  app.post('/QueryTabelaColaboradoresRH', function (req, res) {
+    var arrayLiteral2 = [];
+    
+    var sql = `SELECT SIRIUS.filial.nome as NomeFilial,
+                      SIRIUS.colaboradores.nome as NomeColaborador,
+                      SIRIUS.colaboradores.cpf as CpfColaborador,
+                      SIRIUS.colaboradores.email_sistema as EmailSistema,
+                      SIRIUS.colaboradores.img_sistema as ImagemColaborador,
+                      SIRIUS.filial.id_filial as IdFilial,
+                        Case 
+                          when SIRIUS.colaboradores.sistema_status = 0 Then 'Inativo'
+                          when SIRIUS.colaboradores.sistema_status = 1 Then 'Ativo' End as StatusSistema,
+                      SIRIUS.colaboradores.id_colaboradores as IdColaborador FROM SIRIUS.colaboradores
+                      JOIN SIRIUS.filial ON SIRIUS.colaboradores.filial = SIRIUS.filial.id_filial`;
+  
+            connection.query(sql, function(err2, results){
+                
+              results.forEach(e => {
+         
+                
+                
+               var objeto = {
+                  id: e.IdColaborador,
+                  foto:'<img src="'+e.ImagemColaborador+'" style="width: 45px;border-radius: 17%; max-height: 45px;background: white;">',
+                  nome: '<span style="white-space: nowrap;">'+capitalizeFirst(e.NomeColaborador)+'</span>',
+                  cpf:e.CpfColaborador,
+                  filial:e.NomeFilial,
+                  email_sistema:e.EmailSistema,
+                  StatusSistema:e.StatusSistema,
+              }
+            
+  
+  
+              arrayLiteral2.push(objeto);
+              })
+              
+              
+              
+              let saida = {
+                "draw": 1,
+                "recordsTotal": results.length,
+                "recordsFiltered": results.length,
+                "data": arrayLiteral2
+              } 
+  
+  
+              res.json(saida)
+            })
   })
 
   app.post('/QueryTabelaVisitantes', function (req, res) {

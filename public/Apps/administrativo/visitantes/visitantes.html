@@ -65,18 +65,25 @@
           text-overflow: ellipsis;
         }
 
-        .CorpoWin::-webkit-scrollbar {
+        #window-1 .CorpoWin::-webkit-scrollbar {
           width: 8px;               /* width of the entire scrollbar */
         }
 
-        .CorpoWin::-webkit-scrollbar-track {
+        #window-1 .CorpoWin::-webkit-scrollbar-track {
           background: rgb(26, 25, 25);        /* color of the tracking area */
         }
 
-        .CorpoWin::-webkit-scrollbar-thumb {
+        #window-1 .CorpoWin::-webkit-scrollbar-thumb {
           background-color: rgb(207, 206, 203);    /* color of the scroll thumb */
           border-radius: 20px;       /* roundness of the scroll thumb */
           border: 3px solid rgb(207, 206, 203);  /* creates padding around scroll thumb */
+        }
+        #window-1 .even{
+          background-color: #00000028 !important;
+        }
+
+        #window-1 tr:hover{
+          background-color: #00000066 !important;
         }
 
         
@@ -101,11 +108,11 @@
                   </a>
                 </li>
 
-                <li>
+                <!-- <li>
                   <a href="#" class="nav-link text-white" data-input="input_search_pessoas" data-bs-toggle="tab" data-bs-target="#cadastros" >
                     Pessoas
                   </a>
-                </li>
+                </li> -->
               
               </ul>
         </div>

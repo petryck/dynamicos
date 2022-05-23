@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://rsms.me/inter/inter.css" rel="stylesheet">
+    <title>Login Sirius-OS</title>
+</head>
+<body>
+
+    <style>
+
+
+* {
+  font-family: "Inter",sans-serif;;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  animation: fade .5s;
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+body {
+  animation: fade 1s;
+  overflow: hidden;
+  font-family: "Inter",sans-serif;;
+  color: #fff;
+}
+
+img.bg {
+  /* height: 100%;
+  transform: scale(1.1); */
+  width: 100%;
+  height: 100%;
+  /* filter: blur(10px); */
+  z-index: -1;
+}
+
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  text-align: center;
+  max-width: 170px;
+}
+
+.login-password {
+  height: 245px;
+}
+
+.login img.user-img {
+  height: 137px;
+  width: 130px;
+  max-height: 137px;
+  max-width: 130px;
+  min-height: 137px;
+  min-width: 130px;
+  border-radius: 50%;
+  animation: fade .5s;
+}
+
+
+
+
+.login p {
+  color: #fff;
+  font-size: 22px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.login input {
+
+  outline: none;
+  margin-top: 25px;
+  border: none;
+  background-color: rgba(127, 116, 101, 0.76);
+  backdrop-filter: blur(.5rem);
+  color: #ffffff;
+  font-family: "Inter",sans-serif;;
+  width: 170px;
+  padding: 10px;
+  border-radius: 4px;
+}
+input::placeholder {
+  color: #fff;
+}
+    </style>
+
+
+
+
+
+    <!-- <img class="bg" src="https://screenshots.macupdate.com/JPG/48313/48313_scr_uc1.jpg"> -->
+<img class="bg" src="assets/img/wallpapers/login.jpg">
+
+<div class="login" id="login">
+  <input autocomplete="off" type="text"  placeholder="Email" id="username">
+  <!--   <img style="display: none; width: 30px; filter: blur(1px); margin-top: 15px;" src="https://www.easypdfcloud.com/Images/loading-256-0001.gif" id="loading-user"> -->
+</div>
+
+<div class="login login-password" id="login-password" style="display: none;">
+  <img id="img_perfil" src="#" class="user-img">
+  <p class="name" id="name">Petryck William</p>
+  <input autocomplete="off" type="password" placeholder="Sua senha" id="password">
+  <img style="display: none; width: 30px; filter: blur(1px); margin-top: 25px;" src="https://www.easypdfcloud.com/Images/loading-256-0001.gif" id="loading-pass">
+  <h1 id="welcome"></h1>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+    
+var input_email = document.getElementById("username");
+var input_senha = document.getElementById("password");
+
+input_email.focus();
+input_email.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+
+      $.ajax({
+    type: 'POST',
+    url: '/login_email',
+    data: {email:input_email.value},
+    success: function (data) {
+
+   
+      
+      
+
+      
+      if(data != 'error'){
+        document.getElementById('img_perfil').src = data[0]['img_sistema'];
+        document.getElementById("name").innerText = data[0]['nome'];
+        input_email.style.display = "none";
+      // document.getElementById('loading-user').style.display = "block";
+      setTimeout(function () {
+        // document.getElementById('loading-user').style.display = "none";
+        document.getElementById('login').style.display = "none";
+        document.getElementById('login-password').style.display = "block";
+        // input.style.display = "block";
+        input_senha.focus();
+      }, 200);
+      }
+     
+
+
+    }
+
+  })
+
+
+      
+    }
+});
+
+
+
+
+var input_senha = document.getElementById("password");
+input_senha.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+
+      input_senha.style.display = "none";
+      document.getElementById('loading-pass').style.display = "inline-block";
+      $.ajax({
+    type: 'POST',
+    url: '/login_senha',
+    data: {email:input_email.value, senha:input_senha.value},
+    success: function (data) {
+
+      if(data != 'error'){
+        
+        localStorage.setItem('info_usuario_sirius_os', JSON.stringify(data));
+
+        setTimeout(function () {
+        document.getElementById('loading-pass').style.display = "none";      
+
+        window.location.href = "/";
+      }, 600);
+      
+      
+      }else{
+        
+        setTimeout(function () {
+
+          document.getElementById('loading-pass').style.display = "none";
+          document.getElementById('welcome').innerHTML = "Senha incorreta";
+
+            setTimeout(function () {
+              document.getElementById('welcome').innerHTML = "";
+              input_senha.style.display = "block";
+              input_senha.focus();
+            }, 600);
+      
+      }, 600);
+
+        
+        
+      }
+      
+    }
+})
+
+
+      
+    }
+});
+</script>
+</body>
+</html>

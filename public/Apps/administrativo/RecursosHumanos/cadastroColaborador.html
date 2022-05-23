@@ -1,0 +1,412 @@
+<style>
+    #window-7 .nav-item .active{
+            background-color: #0d6efd !important;
+            border: none;
+    }
+    #window-7 .nav-item button{
+            padding-bottom: 9px;
+            color: white !important;
+            border: none;
+    }
+   
+    #window-7 .tab-pane{
+        color:white;
+        padding: 30px;
+        font-size: 12px;
+    }
+    #window-7 input{
+            font-size: 12px;
+          padding-left: 7px;
+          width: 212px;
+          border-radius: 4px;
+          border: none;
+          background: #00000091;
+          color: white;
+        }
+
+        #window-7 input:focus{
+          border: none !important;
+          outline: none;
+        }
+
+        #window-7 select{
+            font-size: 12px;
+          padding-left: 7px;
+          width: 212px;
+          border-radius: 4px;
+          border: none;
+          background: #00000091;
+          color: white;
+        }
+
+        #window-7 select:focus{
+          border: none !important;
+          outline: none;
+        }
+
+        #window-7 textarea{
+            font-size: 12px;
+          padding-left: 7px;
+          width: 212px;
+          border-radius: 4px;
+          border: none;
+          background: #00000091;
+          color: white;
+        }
+
+        #window-7 textarea:focus{
+          border: none !important;
+          outline: none;
+        }
+        #window-7 .btn_funcoes{
+        margin-left: 17px;
+        bottom: 9px;
+        position: absolute;
+        width: calc(100% - 30px);
+        }
+
+        #window-7 .btn_funcoes{
+            bottom: 9px;
+            position: absolute;
+            width: calc(100% - 30px);
+        }
+
+        #window-7 .tabela_bancos{
+            margin-top: 23px;
+        }
+
+        #window-6 .table td{
+          max-width: 12em;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        #window-7 .CorpoWin::-webkit-scrollbar {
+          width: 8px;               /* width of the entire scrollbar */
+        }
+
+        #window-7 .CorpoWin::-webkit-scrollbar-track {
+          background: rgb(26, 25, 25);        /* color of the tracking area */
+        }
+
+        #window-7 .CorpoWin::-webkit-scrollbar-thumb {
+          background-color: rgb(207, 206, 203);    /* color of the scroll thumb */
+          border-radius: 20px;       /* roundness of the scroll thumb */
+          border: 3px solid rgb(207, 206, 203);  /* creates padding around scroll thumb */
+        }
+        #window-7 .even{
+          background-color: #00000028 !important;
+        }
+
+        #window-7 tr:hover{
+          background-color: #00000066 !important;
+        }
+        #window-7 .table{
+          font-size: 12px !important;
+          color: white !important
+        }
+        #window-7 .table td{
+          color: white !important
+        }
+        #window-7 .dataTables_filter{
+          display: none;
+        }
+        #window-7  .dataTables_length{
+          display: none;
+        }
+        #window-7 .dataTables_paginate a{
+          color: white !important
+        }
+
+</style>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#CadColabPessoal" type="button" role="tab" aria-controls="home" aria-selected="true">Pessoal</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link"  data-bs-toggle="tab" data-bs-target="#CadColabInterno" type="button" role="tab" aria-controls="profile" aria-selected="false">Interno</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#CadColabConta" type="button" role="tab" aria-controls="contact" aria-selected="false">Conta</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#CadColabSistema" type="button" role="tab" aria-controls="contact" aria-selected="false">Sistema</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#CadColabPerfil" type="button" role="tab" aria-controls="contact" aria-selected="false">Perfil</button>
+    </li>
+   
+  </ul>
+
+<form id="form_new_colaborador" action="">
+  <div class="tab-content" id="myTabContent">
+
+    <div class="tab-pane fade show active" id="CadColabPessoal" role="tabpanel" aria-labelledby="home-tab">
+        <div class="row">
+            <div class="col-6">
+          
+                <label for="exampleFormControlInput1" class="form-label">Nome</label>
+                <input type="text" name="nome" autocomplete="off" name="nome" style="width: 100%;" class="form-control CampoAdicionar">
+          
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Data de Nascimento</label>
+                <input type="date" name="data_nascimento" autocomplete="off" id="documento" name="documento" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Sexo</label>
+                <select style="width: 100%;" name="sexo" class="form-select" >
+                  <option value="1">Masculino</option>
+                  <option value="2">Feminino</option>
+                  </select>
+            </div>
+        </div>
+    
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-6">
+                <label for="exampleFormControlInput1" class="form-label">Pai</label>
+                <input type="text" autocomplete="off"  name="pai" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-6">
+                <label for="exampleFormControlInput1" class="form-label">Mãe</label>
+                <input type="text" autocomplete="off" name="mae" style="width: 100%;" class="form-control" >
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Estado Civil</label>
+                <select style="width: 100%;" name="estado_civil" class="form-select" >
+                    <option value="1">Casado(a)</option>
+                    <option value="2">Solteiro(a)</option>
+                    <option value="3">Divorciado(a)</option>
+                    <option value="4">Viuvo(a)</option>
+                    <option value="5">União Estavel(a)</option>
+                </select>
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Naturalidade</label>
+                <input type="text" autocomplete="off"  name="naturalidade" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Nacionalidade</label>
+                <input type="text" autocomplete="off"  name="nacionalidade" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Raça/Cor</label>
+                <input type="text" autocomplete="off" name="raca_cor" style="width: 100%;" class="form-control" >
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">CEP</label>
+                <input type="text" autocomplete="off"  name="cep" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Endereço</label>
+                <input type="text" autocomplete="off"  name="endereco" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Bairro</label>
+                <input type="text" autocomplete="off"  name="bairro" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Município</label>
+                <input type="text" autocomplete="off" name="municipio" style="width: 100%;" class="form-control" >
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">CPF</label>
+                <input type="text" autocomplete="off"  name="cpf" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">RG</label>
+                <input type="text" autocomplete="off"  name="rg" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Órgão</label>
+                <input type="text" autocomplete="off"  name="orgao" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Estado</label>
+                <input type="text" autocomplete="off" name="estado" style="width: 100%;" class="form-control" >
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Emissão RG</label>
+                <input type="text" autocomplete="off" name="emissao_rg" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Telefone</label>
+                <input type="text" autocomplete="off"  name="telefone" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Email Coporativo</label>
+                <input type="text" autocomplete="off"  name="email_corporativo" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Email Pessoal</label>
+                <input type="text" autocomplete="off"  name="email_pessoal" style="width: 100%;" class="form-control" >
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">N° CNH</label>
+                <input type="text" autocomplete="off" name="nr_cnh" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Categoria CNH</label>
+                <input type="text" autocomplete="off" name="categoria_cnh" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Validade CNH</label>
+                <input type="text" autocomplete="off" name="validade_cnh" style="width: 100%;" class="form-control" >
+            </div>
+            
+        </div>
+    
+       
+    
+    
+        
+    </div>
+
+    <div class="tab-pane fade" id="CadColabSistema" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="row">
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Login</label>
+                <input type="text "autocomplete="off" name="login_sistema" id="ColabBanco" style="width: 100%;" class="form-control CampoAdicionar">
+           
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Senha</label>
+                <input type="text" autocomplete="off"  name="senha_sistema" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-2">
+                <label for="exampleFormControlInput1" class="form-label">Status Sistema</label>
+                <select style="width: 100%;" name="status_sistema" class="form-select" >
+                  <option value="1">Ativo</option>
+                  <option value="0" selected>Inativo</option>
+                  </select>
+            </div>
+
+           
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="CadColabInterno" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="row">
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Cargo</label>
+                <input type="text "autocomplete="off" name="cargo" style="width: 100%;" class="form-control CampoAdicionar">
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Admissão</label>
+                <input type="date" autocomplete="off" name="admissao" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">PIS</label>
+                <input type="text" autocomplete="off" name="pis" style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Escala</label>
+                <input type="text" autocomplete="off" name="escala" style="width: 100%;" class="form-control" >
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Modo Pagamento</label>
+                <input type="text" autocomplete="off" name="moda_pagamento" style="width: 100%;" class="form-control CampoAdicionar">
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Filial</label>
+                <select style="width: 100%;" name="filial" class="form-select" >
+                  <option value="1">RG</option>
+                  </select>
+            </div>
+            <div class="col-3">
+           
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Remuneração</label>
+                <input type="text" id="documento" name="remuneracao" style="width: 100%;" class="form-control" >
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="CadColabConta" role="tabpanel" aria-labelledby="contact-tab">
+        <div class="row">
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Banco</label>
+                <input type="text "autocomplete="off" id="ColabBanco" style="width: 100%;" class="form-control CampoAdicionar">
+           
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Conta</label>
+                <input type="date" autocomplete="off" id="ColabConta"  style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Digito</label>
+                <input type="text" autocomplete="off" id="ColabDigito"  style="width: 100%;" class="form-control" >
+            </div>
+            <div class="col-3">
+                <label for="exampleFormControlInput1" class="form-label">Agência</label>
+                <input type="text" autocomplete="off" id="ColabAgencia"  style="width: 100%;" class="form-control" >
+            </div>
+        </div>
+
+
+        <table class="tabela_bancos table table-striped" style="width:100%;--bs-table-bg: #1a1b1c40;">
+                <thead>
+                    <tr>
+                    <th scope="col">Banco</th>
+                    <th scope="col">Conta</th>
+                    <th scope="col">Digito</th>
+                    <th scope="col">Agência</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nubank</td>
+                        <td>0000</td>
+                        <td>8</td>
+                        <td>3262</td>
+                    </tr>
+                </tbody>
+        </table>
+
+    </div>
+    <div class="tab-pane fade" id="CadColabPerfil" role="tabpanel" aria-labelledby="contact-tab">
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-3">
+                <input id="imgColaborador" name="imgColaborador" type="file" style="display: none;">
+              <img id="janelaIMG" style="max-width: 216px;max-height: 176px;min-width: 216px;min-height: 176px;margin-top: 27px;" src="https://cdn.dribbble.com/users/45389/screenshots/2909418/dt_avatars.gif" alt="">
+            </div>
+            <div class="col-9">
+                <label for="exampleFormControlInput1" class="form-label">Observações</label>
+                <textarea name="observacoes" style="width: 100%;" rows="10"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="row btn_funcoes" style="margin-top: 10px;">
+        <div class="col-6">
+            <button style="width: 100%;" class="btn btn-danger btn_close_newColaborador">Cancelar</button>
+        </div>
+        <div class="col-6">
+           <button style="width: 100%;" class="btn btn-success btn_cadstroNewColab">Cadastrar</button>
+        </div>
+    </div>
+
+
+  </div>
+</form>
+
+<img style="display:none" src="x" onerror="cadastro_colaborador()">
+<script src="assets/js/libs/jquery.maskedinput.js"></script>

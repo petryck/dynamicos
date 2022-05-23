@@ -4,17 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/img/logo_sirius.png">
     <link rel="stylesheet" href="assets/css/libs/jquery.dataTables.min.css">
     <link rel="stylesheet" href="assets/css/libs/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="assets/css/libs/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/libs/macOSNotif.min.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">
+    
+
+    <style>
+        #macOSNotifJS_n0_Outer{
+            top: 24px !important;
+        }
+    </style>
 
     <link href="https://rsms.me/inter/inter.css" rel="stylesheet">
 
     <link rel="stylesheet" href="assets/css/desktop.css">
-    <title>DynamicOS</title>
+    <title>SiriusOS</title>
 </head>
 <body>
     <body background="assets/img/wallpapper.jpg">
+        
+        <div class="confirm_notificacao"></div>
+
         <div id="hiop" onclick="hidefun()"></div>
 
         <div id="top-bar">
@@ -22,10 +35,7 @@
                 <div data-menu="comercial" class="menu">Comercial</div>
                     <div data-box="comercial" style="display:none;"class="menu_box">
                         <div class="container_menu">
-                            <button onclick="open_app('1')">teste</button>
-                            <button>teste</button>
-                            <button>teste</button>
-                            <button>teste</button>
+                        
                         </div>
                     </div>
             </div>
@@ -34,12 +44,14 @@
                     <div data-box="administrativo" style="display:none;"class="menu_box">
                         <div class="container_menu">
                             <button onclick="open_app('1', 'Visitantes', '65%', '70%')">Controle Visitantes</button>
-                            <button>teste</button>
-                            <button>teste</button>
-                            <button>teste</button>
+                            <button onclick="open_app('6', 'Portal RH', '65%', '70%')">Recursos Humanos</button>
+                            <button onclick="open_app('6', 'Visitantes', '65%', '70%')">Marketing</button>
+                      
                         </div>
                     </div>
             </div>
+       
+          
 
             <div class="">
                 <div data-menu="template" class="menu">Template</div>
@@ -234,11 +246,11 @@
             <div class="bottom">
                 <div class="center">
                     <div class="containers">
-                        <div class="actionbuttons">
+                        <!-- <div class="actionbuttons">
                             <ion-icon name="s2earch-outline" class="acicon"></ion-icon>
-                        </div>
-                        <div class="actionbuttons" onclick="strtmenu()" style="z-index: 1000;">
-                            <img src="assets/img/logo.png" class="acicon">
+                        </div> -->
+                        <div class="actionbuttons" onclick="strtmenu2()" style="z-index: 1000;">
+                            <img src="assets/img/logo_sirius.png" style="width: 54px;margin-top: -4px;padding-left: 0px;padding-right: 0px;" class="acicon">
                         </div>
                         <div class="actionbuttons">
                             <ion-icon name="copy-outline" class="acicon"></ion-icon>
@@ -250,8 +262,8 @@
                         <!-- <div class="apps" onclick="browser()"><img src="assets/img/SVG/Lale.svg"></div> -->
                         <div class="apps" onclick="calculator()"><img src="assets/img/SVG/calculator.svg"></div>
                         <!-- <div class="apps" onclick="files()"><img src="assets/img/SVG/Calendar.svg"></div> -->
-                        <div class="apps" onclick="vscode()"><img src="assets/img/SVG/notes.svg"></div>
-                        <div class="apps" onclick="games()"><img src="assets/img/SVG/settings.svg"></div>
+                        <!-- <div class="apps" onclick="vscode()"><img src="assets/img/SVG/notes.svg"></div>
+                        <div class="apps" onclick="games()"><img src="assets/img/SVG/settings.svg"></div> -->
                         <!-- <div class="apps" onclick="music()"><img src="assets/img/SVG/music.svg"></div> -->
         
                     </div>
@@ -296,6 +308,8 @@
     </div>
 
 <script src="assets/js/libs/jquery.min.js"></script>
+<script src="assets/js/libs/jquery.maskedinput.js"></script>
+<script src="assets/js/libs/macOSNotif.min.js"></script>
 <script src="assets/js/libs/jquery.dataTables.min.js"></script>
 <script src="assets/js/libs/bootstrap.bundle.min.js"></script>
 <script src="assets/js/libs/moment-with-locales.js"></script>
@@ -311,7 +325,8 @@
 
  <!-- PROGRAMAS -->
  <script src="assets/js/Apps/administrativo/visitantes/visitantes.js"></script>
-
+ <script src="assets/js/Apps/administrativo/RecursosHumanos/portalrh.js"></script>
+ 
 
 </body>
 </html>
