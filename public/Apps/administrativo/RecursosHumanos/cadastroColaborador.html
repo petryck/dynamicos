@@ -66,9 +66,9 @@
         }
 
         #window-7 .btn_funcoes{
-            bottom: 9px;
-            position: absolute;
-            width: calc(100% - 30px);
+          bottom: -1px;
+          position: absolute;
+          width: calc(100% - 0px);
         }
 
         #window-7 .tabela_bancos{
@@ -117,7 +117,63 @@
         #window-7 .dataTables_paginate a{
           color: white !important
         }
+        #window-7 .form-switch .form-check-input {
+            width: 2em !important;
+            margin-left: -2.5em !important;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e");
+            background-position: left center !important;
+            border-radius: 2em !important;
+            transition: background-position .15s ease-in-out !important;
+        }
+    
+        #window-7 .form-check-input {
+            width: 1em;
+            height: 1em;
+            margin-top: 0.25em;
+            vertical-align: top;
+            background-color: #fff;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            border: 1px solid rgba(0,0,0,.25);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            -webkit-print-color-adjust: exact;
+            color-adjust: exact;
+        }
+        #window-7 .form-switch .form-check-input:checked {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            background-position: right center !important;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+        }
+        #window-7 .bordas_portal {
+            padding-left: 39px;
+            border: 2px solid;
+            margin-left: 41px;
+            width: 180px;
+            border-radius: 6px;
+            padding-top: 7px;
+            height: 100%;
+        }
+        .max-heigth100{
+        min-height: 180px !important
+        }
 
+        #window-7  .btn-apple{
+            border-top: 1px solid  #2b2b2e;
+            text-align: center;
+            font-size: 12pt;
+            font-weight: bold;
+            height: 37px;
+        }
+
+        #window-7 .btn-apple:hover{
+              background-color: #22182e;
+              color: white;
+              font-weight: bold;
+          }
 </style>
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -132,6 +188,9 @@
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#CadColabSistema" type="button" role="tab" aria-controls="contact" aria-selected="false">Sistema</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#acessos" type="button" role="tab" aria-controls="contact" aria-selected="false">Acessos</button>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#CadColabPerfil" type="button" role="tab" aria-controls="contact" aria-selected="false">Perfil</button>
@@ -240,7 +299,7 @@
         <div class="row" style="margin-top: 10px;">
             <div class="col-3">
                 <label for="exampleFormControlInput1" class="form-label">Emissão RG</label>
-                <input type="text" autocomplete="off" name="emissao_rg" style="width: 100%;" class="form-control" >
+                <input type="date" autocomplete="off" name="emissao_rg" style="width: 100%;" class="form-control" >
             </div>
             <div class="col-3">
                 <label for="exampleFormControlInput1" class="form-label">Telefone</label>
@@ -267,7 +326,7 @@
             </div>
             <div class="col-3">
                 <label for="exampleFormControlInput1" class="form-label">Validade CNH</label>
-                <input type="text" autocomplete="off" name="validade_cnh" style="width: 100%;" class="form-control" >
+                <input type="date" autocomplete="off" name="validade_cnh" style="width: 100%;" class="form-control" >
             </div>
             
         </div>
@@ -299,6 +358,7 @@
 
            
         </div>
+      
     </div>
 
     <div class="tab-pane fade" id="CadColabInterno" role="tabpanel" aria-labelledby="profile-tab">
@@ -327,7 +387,7 @@
             </div>
             <div class="col-3">
                 <label for="exampleFormControlInput1" class="form-label">Filial</label>
-                <select style="width: 100%;" name="filial" class="form-select" >
+                <select style="width: 100%;" name="filial" id="filial" class="form-select" >
                   <option value="1">RG</option>
                   </select>
             </div>
@@ -382,6 +442,157 @@
         </table>
 
     </div>
+    <div class="tab-pane fade" id="acessos" role="tabpanel" aria-labelledby="contact-tab">
+        <form style="padding-left: 1rem;">
+            
+            <div class="row" style="margin-bottom: 4rem; margin-left: 0rem;margin-top: 12px;">
+                <div class="form-check form-switch col-3 bordas_portal" style="margin-left: 0 !important;">
+                  <input class="form-check-input switch_acessos" type="checkbox" id="flexSwitchCheckDefault">
+                  <label class="form-check-label" for="flexSwitchCheckDefault">Sistema</label>
+                  <hr style="width: 179px;margin-top: 10px;margin-left: -41px;margin-bottom: 0;">
+                  <div class="row corpo_acessos" style="margin-top: 1rem; display: none;">Módulos
+                    <div class="col-12">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Tarifário</label>
+                      <br>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Comercial
+                      <br>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Operacional</label>
+                      <br>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Financeiro</label>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-check form-switch col-3 bordas_portal">
+                  <input class="form-check-input switch_acessos" type="checkbox" id="flexSwitchCheckDefault">
+                  <label class="form-check-label" for="flexSwitchCheckDefault">E-mail</label>
+                  <hr style="width: 179px;margin-top: 10px;margin-left: -41px;margin-bottom: 0;">
+                  <div class="row corpo_acessos" style="margin-top: 1rem; display: none;">Grupos
+                    <div class="col-12">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Export</label>
+                      <br>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Import</label>
+                      <br>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Comercial</label>
+                      <br>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Todos</label>
+                      
+                    </div>
+                  </div>
+                </div>
+                  <div class="form-check form-switch col-3 bordas_portal">
+                    <input class="form-check-input switch_acessos" type="checkbox" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Skype</label>
+                    <hr style="width: 179px;margin-top: 10px;margin-left: -41px;margin-bottom: 0;">
+                    <div class="row corpo_acessos" style="margin-top: 1rem; display: none;">Grupos
+                      <div class="col-12">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Todos</label>
+                        <br>
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Itajaí</label>
+                        <br>
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">São Paulo</label>
+                        <br>
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Novo Hamburgo</label>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-check form-switch col-3 bordas_portal">
+                    <input class="form-check-input switch_acessos" type="checkbox" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Pastas na rede</label>
+                    <hr style="width: 179px;margin-top: 10px;margin-left: -41px;margin-bottom: 0;">
+                    <div class="row corpo_acessos" style="margin-top: 1rem; display: none;">Acesso
+                      <div class="col-12">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Direção</label>
+                        <br>
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Comercial</label>
+                        <br>
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Documental</label>
+                        <br>
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Financeiro</label>
+                        <br>
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Geral</label>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-check form-switch col-3 bordas_portal">
+                    <input class="form-check-input switch_acessos" type="checkbox" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Chave</label>
+                    <hr style="width: 179px;margin-top: 10px;margin-left: -41px;margin-bottom: 0;">
+                    <div class="row corpo_acessos" style="margin-top: 1rem; display: none;">Salas
+                      <div class="col-12">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Financeiro</label>
+                        <br>
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">TI</label>
+                        <br>
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">CPD</label>
+                        <br>
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Recepção</label>
+                        <br>
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Avocet</label>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-check form-switch col-3 bordas_portal" style="margin-left: 0 !important;">
+                    <input class="form-check-input switch_acessos" type="checkbox" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Crachá</label>
+                    <hr style="width: 179px;margin-top: 10px;margin-left: -41px;margin-bottom: 0;">
+                    <div class="row corpo_acessos" style="margin-top: 1rem; display: none;">Portas
+                      <div class="col-12">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Recepção/Comercial</label>
+                        <br>
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Recepção/Operacional</label>
+                        <br>
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Corredor/Reunião</label>
+                       
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-check form-switch col-3 bordas_portal">
+                    <input class="form-check-input switch_acessos" type="checkbox" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Tag</label>
+                    <hr style="width: 179px;margin-top: 10px;margin-left: -41px;margin-bottom: 0;">
+                    <div class="row corpo_acessos" style="margin-top: 1rem; display: none;">Locais
+                      <div class="col-12">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Garagem</label>
+                        
+                        
+                      </div>
+                    </div>
+                  </div>
+            </div>
+          
+        </form>
+    </div>
     <div class="tab-pane fade" id="CadColabPerfil" role="tabpanel" aria-labelledby="contact-tab">
         <div class="row" style="margin-top: 10px;">
             <div class="col-3">
@@ -395,18 +606,18 @@
         </div>
     </div>
 
-    <div class="row btn_funcoes" style="margin-top: 10px;">
-        <div class="col-6">
-            <button style="width: 100%;" class="btn btn-danger btn_close_newColaborador">Cancelar</button>
-        </div>
-        <div class="col-6">
-           <button style="width: 100%;" class="btn btn-success btn_cadstroNewColab">Cadastrar</button>
-        </div>
-    </div>
+    <div class="row btn_funcoes" style="/* border-radius: 58px 62px 62px 62px !important; *//* margin-top: 10px; */margin-right: 0px;margin-left: 0;">
+      <div class="col-6" style="margin: 0 !important;padding: 0 !important;">
+          <button style="width: 100%;border-radius: 0px 0px 0px 9px;color: white;" class="btn-apple btn  btn_close_newColaborador">Cancelar</button>
+      </div>
+      <div class="col-6" style="margin: 0 !important;padding: 0 !important;">
+         <button style="width: 100%;width: 100%;border-radius: 0px 0px 9px 0px;color: white;border-left: 1px solid  #2b2b2e;" class="btn-apple btn btn_cadstroNewColab">Cadastrar</button>
+      </div>
+  </div>
 
 
   </div>
 </form>
 
 <img style="display:none" src="x" onerror="cadastro_colaborador()">
-<script src="assets/js/libs/jquery.maskedinput.js"></script>
+

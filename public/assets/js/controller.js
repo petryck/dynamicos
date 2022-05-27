@@ -82,7 +82,7 @@ $.ajax({
             id: "window-"+id,
             top:28.8,
             bottom: 95,
-            background: "#120d19e3",
+            background: "#120d19fc",
             max: false,
             class: classes2,
             x: "center",

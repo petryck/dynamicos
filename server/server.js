@@ -10,7 +10,10 @@ import bodyParser from 'body-parser';
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import ejs from 'ejs';
+import * as compressImage from '../server/src/imgcompress.js';
 import { Console } from 'console'
+
+// compressImage
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -187,10 +190,11 @@ var connection = mysql.createConnection({
   
   })
 
+  // var local = path.join(__dirname, '../public/assets/UPLOAD/colaboradores');
+  // compressImage.compressImage(path.join(__dirname, '../public/assets/UPLOAD/colaboradores/118.jpg'), local)
 
-  
 
-  app.post('/cadastro_new_colaborador', (req, res) => {
+  app.post('/cadastro_new_colaborador', async (req, res) => {
     const form = new formidable.IncomingForm();
     form.parse(req, (err, fields, files) => {
 
@@ -212,14 +216,21 @@ var connection = mysql.createConnection({
        
 
           if(results){
-            var url_img = 'assets/UPLOAD/colaboradores/'+results.insertId+'.'+extensaoArquivo
+            var url_img = 'assets/UPLOAD/colaboradores/'+results.insertId+'.webp'
 
             const newpath2 = path.join(__dirname, '../public/assets/UPLOAD/colaboradores', results.insertId+'.'+extensaoArquivo);
+
+            const convertido = path.join(__dirname, '../public/assets/UPLOAD/colaboradores', results.insertId+'.webp');
 
             fs.renameSync(newpath, newpath2);
             var sql = `UPDATE colaboradores SET img_sistema = '${url_img}' WHERE (id_colaboradores = ${results.insertId})`
             connection.query(sql, function(err2, results){})
-            res.json(results.insertId);
+
+              compressImage.compressImage(newpath2, convertido).then(function(valor) {
+              res.json(results.insertId);
+             })
+
+            
           }
 
           
@@ -231,6 +242,159 @@ var connection = mysql.createConnection({
     });
 
   
+  })
+
+
+
+
+  app.post('/salvar_colaborador', async (req, res) => {
+    const form = new formidable.IncomingForm();
+    form.parse(req, (err, fields, files) => {
+ 
+    
+      if(files.imgColaborador.size > 0){
+        console.log('tem imagem')
+
+        const extensaoArquivo = files.imgColaborador.originalFilename.split('.')[1];
+        const oldpath = files.imgColaborador.filepath;
+    
+        const newpath = path.join(__dirname, '../public/assets/UPLOAD/colaboradores', Math.random()+'.'+extensaoArquivo);
+    
+        var url_img = 'assets/UPLOAD/colaboradores/'+files.imgColaborador.originalFilename
+          
+        fs.renameSync(oldpath, newpath);
+    
+       
+        //     var sql = `INSERT INTO colaboradores (nome, nascimento, pai, mae, naturalidade, nacionalidade, raca_cor, cep, endereco, bairro, municipio, cpf, rg, orgao, estado, emissao_rg, telefone, email_corporativo, email_pessoal,nr_cnh, categoria_cnh, validade_cnh, cargo, admissao, pis, escala, moda_pagamento, remuneracao, observacoes, sistema_status, email_sistema, senha_sistema, img_sistema, filial) 
+        //     VALUES 
+        //     ('${fields.nome}','${fields.data_nascimento}','${fields.pai}','${fields.mae}','${fields.naturalidade}','${fields.nacionalidade}','${fields.raca_cor}','${fields.cep}','${fields.endereco}','${fields.bairro}','${fields.municipio}','${fields.cpf}','${fields.rg}','${fields.orgao}','${fields.estado}','${fields.emissao_rg}','${fields.telefone}','${fields.email_corporativo}','${fields.email_pessoal}','${fields.nr_cnh}','${fields.categoria_cnh}','${fields.validade_cnh}','${fields.cargo}','${fields.admissao}','${fields.pis}','${fields.escala}','${fields.moda_pagamento}','${fields.remuneracao}','${fields.observacoes}',${fields.status_sistema},'${fields.login_sistema}','${fields.senha_sistema}','${url_img}',${fields.filial})`;
+            
+        var sql = `UPDATE SIRIUS.colaboradores 
+        SET 
+        nome = '${fields.nome}',
+        nascimento = '${fields.data_nascimento}',
+        pai = '${fields.pai}',
+        mae = '${fields.mae}',
+        naturalidade = '${fields.naturalidade}',
+        nacionalidade = '${fields.nacionalidade}',
+        raca_cor = '${fields.raca_cor}',
+        cep = '${fields.cep}',
+        endereco = '${fields.endereco}',
+        bairro = '${fields.bairro}',
+        municipio = '${fields.municipio}',
+        cpf = '${fields.cpf}',
+        rg = '${fields.rg}',
+        orgao = '${fields.orgao}',
+        estado = '${fields.estado}',
+        emissao_rg = '${fields.emissao_rg}',
+        telefone = '${fields.telefone}',
+        email_corporativo = '${fields.email_corporativo}',
+        email_pessoal = '${fields.email_pessoal}',
+        nr_cnh = '${fields.nr_cnh}',
+        categoria_cnh = '${fields.categoria_cnh}',
+        validade_cnh = '${fields.validade_cnh}',
+        cargo = '${fields.cargo}',
+        admissao = '${fields.admissao}',
+        pis = '${fields.pis}',
+        escala = '${fields.escala}',
+        moda_pagamento = '${fields.moda_pagamento}',
+        remuneracao = '${fields.remuneracao}',
+        observacoes = '${fields.observacoes}',
+        sistema_status = '${fields.status_sistema}',
+        email_sistema = '${fields.login_sistema}',
+        senha_sistema = '${fields.senha_sistema}',
+        img_sistema = '${url_img}',
+        filial = '${fields.filial}'
+        WHERE (id_colaboradores = '${fields.id_colaborador}')`
+
+            connection.query(sql, function(err2, results){
+           
+    
+              if(results){
+                var url_img = 'assets/UPLOAD/colaboradores/'+fields.id_colaborador+'.webp'
+    
+                const newpath2 = path.join(__dirname, '../public/assets/UPLOAD/colaboradores', fields.id_colaborador+'.'+extensaoArquivo);
+    
+                const convertido = path.join(__dirname, '../public/assets/UPLOAD/colaboradores', fields.id_colaborador+'.webp');
+    
+                fs.renameSync(newpath, newpath2);
+                var sql = `UPDATE colaboradores SET img_sistema = '${url_img}' WHERE (id_colaboradores = ${fields.id_colaborador})`
+                connection.query(sql, function(err2, results){})
+    
+                  compressImage.compressImage(newpath2, convertido).then(function(valor) {
+                    
+                  res.json(fields.id_colaborador);
+
+                 })
+    
+                
+              }
+    
+              
+              
+            })
+      
+
+      }else{
+        console.log('nao tem imagem')
+        var sql = `UPDATE SIRIUS.colaboradores 
+        SET 
+        nome = '${fields.nome}',
+        nascimento = '${fields.data_nascimento}',
+        pai = '${fields.pai}',
+        mae = '${fields.mae}',
+        naturalidade = '${fields.naturalidade}',
+        nacionalidade = '${fields.nacionalidade}',
+        raca_cor = '${fields.raca_cor}',
+        cep = '${fields.cep}',
+        endereco = '${fields.endereco}',
+        bairro = '${fields.bairro}',
+        municipio = '${fields.municipio}',
+        cpf = '${fields.cpf}',
+        rg = '${fields.rg}',
+        orgao = '${fields.orgao}',
+        estado = '${fields.estado}',
+        emissao_rg = '${fields.emissao_rg}',
+        telefone = '${fields.telefone}',
+        email_corporativo = '${fields.email_corporativo}',
+        email_pessoal = '${fields.email_pessoal}',
+        nr_cnh = '${fields.nr_cnh}',
+        categoria_cnh = '${fields.categoria_cnh}',
+        validade_cnh = '${fields.validade_cnh}',
+        cargo = '${fields.cargo}',
+        admissao = '${fields.admissao}',
+        pis = '${fields.pis}',
+        escala = '${fields.escala}',
+        moda_pagamento = '${fields.moda_pagamento}',
+        remuneracao = '${fields.remuneracao}',
+        observacoes = '${fields.observacoes}',
+        sistema_status = '${fields.status_sistema}',
+        email_sistema = '${fields.login_sistema}',
+        senha_sistema = '${fields.senha_sistema}',
+        filial = '${fields.filial}'
+        WHERE (id_colaboradores = '${fields.id_colaborador}')`
+
+        connection.query(sql, function(err2, results){
+          console.log(err2)
+       console.log(results)
+          res.json(results)
+        })
+
+      }
+
+       
+      
+    });
+
+  
+  })
+
+  app.post('/excluir_colaborador', (req, res) => {
+    var id_colab = req.body.id;
+    var sql = `DELETE FROM SIRIUS.colaboradores WHERE (id_colaboradores = '${id_colab}');`;
+    connection.query(sql, function(err2, results){
+      res.json(results);
+    })
   })
 
   app.post('/lista_colaboradores', (req, res) => {
@@ -329,7 +493,28 @@ var connection = mysql.createConnection({
   
   })
 
+  app.get('/InfoColaborador', (req, res) => {
+
+    var id = req.query.id;
+
+    var sql = `SELECT *
+    FROM SIRIUS.colaboradores 
+    WHERE id_colaboradores = ${id}`;
+
+
+    connection.query(sql, function(err2, results){
+
+      res.render(path.join(__dirname, '../public/Apps/administrativo/RecursosHumanos/infoColaborador.html'), {
+        colabs:results
+      });
+    })
+
+    
+
   
+})
+
+
   app.get('/InfoVisitante', (req, res) => {
 
     var id = req.query.id;
@@ -424,7 +609,7 @@ var connection = mysql.createConnection({
     var sql = `SELECT SIRIUS.filial.nome as NomeFilial,
                       SIRIUS.colaboradores.nome as NomeColaborador,
                       SIRIUS.colaboradores.cpf as CpfColaborador,
-                      SIRIUS.colaboradores.email_sistema as EmailSistema,
+                      SIRIUS.colaboradores.email_corporativo as EmailSistema,
                       SIRIUS.colaboradores.img_sistema as ImagemColaborador,
                       SIRIUS.filial.id_filial as IdFilial,
                         Case 
