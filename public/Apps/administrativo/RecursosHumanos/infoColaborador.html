@@ -66,9 +66,9 @@
         }
 
         #window-8 .btn_funcoes{
-            bottom: 9px;
+            bottom: 0px;
             position: absolute;
-            width: calc(100% - 30px);
+            width: 100%
         }
 
         #window-8 .tabela_bancos{
@@ -117,6 +117,20 @@
         #window-8 .dataTables_paginate a{
           color: white !important
         }
+
+        .btn-apple{
+            border-top: 1px solid  #2b2b2e;
+            text-align: center;
+            font-size: 12pt;
+            font-weight: bold;
+            height: 37px;
+        }
+
+        .btn-apple:hover{
+              background-color: #22182e;
+              color: white;
+              font-weight: bold;
+          }
 
 </style>
 
@@ -397,12 +411,12 @@
         </div>
     </div>
 
-    <div class="row btn_funcoes" style="margin-top: 10px;">
-        <div class="col-6">
-            <button style="width: 100%;" class="btn btn-danger btn_close_newColaborador">Cancelar</button>
+    <div class="row btn_funcoes" style="/* border-radius: 58px 62px 62px 62px !important; *//* margin-top: 10px; */margin-right: 0px;margin-left: 0;">
+        <div class="col-6" style="margin: 0 !important;padding: 0 !important;">
+            <button style="width: 100%;border-radius: 0px 0px 0px 9px;color: white;" class="btn-apple btn btn_close_newColaborador">Cancelar</button>
         </div>
-        <div class="col-6">
-           <button style="width: 100%;" class="btn btn-success btn_salvacolab">Salvar</button>
+        <div class="col-6" style="margin: 0 !important;padding: 0 !important;">
+           <button style="width: 100%;border-radius: 0px 0px 9px 0px;color: white;border-left: 1px solid  #2b2b2e;" class="btn-apple btn btn_salvacolab">Salvar</button>
         </div>
     </div>
 
