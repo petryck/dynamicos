@@ -339,29 +339,29 @@ $(document).on('click', '#window-8 .btn_salvacolab', function(e) {
 });
 
 
-$(document).on('change', '#window-7 .switch_acessos', function(e) {
-  var switch_ = $(this).prop("checked");
+// $(document).on('change', '#window-7 .switch_acessos', function(e) {
+//   var switch_ = $(this).prop("checked");
   
-  if($(this).parent().hasClass('max-heigth100')){
+//   if($(this).parent().hasClass('max-heigth100')){
 
-    $(this).parent().removeClass('max-heigth100')
-  }else{
-    $(this).parent().addClass('max-heigth100')
-  }
+//     $(this).parent().removeClass('max-heigth100')
+//   }else{
+//     $(this).parent().addClass('max-heigth100')
+//   }
  
   
-  if(switch_ == true){
+//   if(switch_ == true){
   
-  $(this).parent().find('.corpo_acessos').css('display', 'block')
+//   $(this).parent().find('.corpo_acessos').css('display', 'block')
   
-  }else{
+//   }else{
   
-  $(this).parent().find('.corpo_acessos').css('display', 'none')
+//   $(this).parent().find('.corpo_acessos').css('display', 'none')
   
-  }
+//   }
   
   
-  });
+//   });
 
 
 
