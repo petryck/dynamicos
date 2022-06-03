@@ -49,6 +49,41 @@
           outline: none;
         }
 
+        #window-5 .btn-apple{
+            border-top: 1px solid  #2b2b2e;
+            text-align: center;
+            font-size: 12pt;
+            font-weight: bold;
+            color: white;
+            height: 37px;
+        }
+
+        #window-5 .btn-apple:hover{
+            background-color: #22182e;
+            font-weight: bold;
+          }
+
+          #window-5 .btn_funcoes{
+        margin-left: 17px;
+        bottom: 9px;
+        position: absolute;
+        width: calc(100% - 30px);
+        }
+
+        #window-5 .btn_funcoes{
+          bottom: -1px;
+          position: absolute;
+          width: calc(100% - 0px);
+        }
+
+        .btn_close_infoVisistante:hover{
+            color: #ff4946 !important;
+        }
+
+        .btn_confirma_visita:hover{
+            color: #00ca4e !important;
+        }
+
 
 </style>
 <form id="from_edita_visita" action="#" method="post">
@@ -96,19 +131,19 @@
     <div class="row" style="margin-top: 10px;">
         <div class="col-12">
             <label for="exampleFormControlInput1" class="form-label">Observações</label>
-            <textarea style="width: 100%;" name="motivo" placeholder="Motivo da visita" rows="10"><%= motivo %></textarea>
-        </div>
-    </div>
-
-    <div class="row" style="margin-top: 10px;">
-        <div class="col-6">
-            <button style="width: 100%;" class="btn btn-danger btn_close_infoVisistante">Cancelar</button>
-        </div>
-        <div class="col-6">
-           <button style="width: 100%;" class="btn btn-success btn_confirma_visita" id="btn_confirma_visita">Confirmar</button>
+            <textarea style="width: 100%; max-height: 196px;" name="motivo" placeholder="Motivo da visita" rows="10"><%= motivo %></textarea>
         </div>
     </div>
 </form>
+
+    <div class="row btn_funcoes" style="/* border-radius: 58px 62px 62px 62px !important; *//* margin-top: 10px; */margin-right: 0px;margin-left: 0;">
+        <div class="col-6" style="margin: 0 !important;padding: 0 !important;">
+            <button style="width: 100%;border-radius: 0px 0px 0px 9px;" class="btn-apple btn btn_close_infoVisistante">Cancelar</button>
+        </div>
+        <div class="col-6" style="margin: 0 !important;padding: 0 !important;">
+            <button style="width: 100%;width: 100%;border-radius: 0px 0px 9px 0px;border-left: 1px solid  #2b2b2e;" class="btn-apple btn btn_confirma_visita" id="btn_confirma_visita">Confirmar</button>
+        </div>
+    </div>
 
 
 <img style="display:none" src="x" onerror="page_info_visitantes('<%= filial %>', '<%= acompanhante %>', '<%= data_entrada %>', '<%= data_saida %>')">
