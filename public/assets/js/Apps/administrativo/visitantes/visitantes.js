@@ -208,7 +208,7 @@ $(document).on('click', '.InfoVisitante', function(e){
             id: "window-5",
             top:28.8,
             bottom: 95,
-            background: "#120d19e3",
+            background: "#120d19fc",
             max: false,
             class: ["no-full", "max-defined"],
             x: "center",
