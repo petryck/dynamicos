@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-const port = 6150
+const port = 6050
 
 app.engine('html', ejs.renderFile);
 app.set('view engine', 'ejs');
