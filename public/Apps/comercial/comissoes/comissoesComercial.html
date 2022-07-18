@@ -1,0 +1,310 @@
+<style>
+#window-9 .bodyApp{
+    margin: 0;
+    padding: 0;
+    width: calc(100% - 240px);
+    
+}
+#window-9 .barraLateral{
+    position: fixed;
+    height: 100vh;
+    width: 240px !important;
+    max-width: 240px;
+    padding: 0;
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+  
+}
+#window-9 .CorpoWin{
+  overflow: auto;
+  width: 100%;
+  margin-left: 240px;
+  height: 100%;
+  padding: 0;
+  overflow-x: hidden;
+    
+}
+
+#window-9 .barraLateral ul{
+    padding: 14px;
+}
+#window-9 .nav-tabs{
+  border-bottom: none;
+}
+#window-9 .table{
+  font-size: 12px !important;
+}
+#window-9 .dataTables_filter{
+  display: none;
+}
+#window-9  .dataTables_length{
+  display: none;
+}
+#window-9 .dataTables_paginate a{
+  color: white !important
+}
+#window-9 .inputsearch{
+  padding-left: 7px;
+  width: 212px;
+  border-radius: 4px;
+  border: none;
+  background: #00000091;
+  color: white;
+}
+
+#window-9 .inputsearch:focus{
+  border: none !important;
+  outline: none;
+}
+
+
+
+#window-9 .table td{
+  max-width: 12em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#window-9 .CorpoWin::-webkit-scrollbar {
+  width: 8px;               /* width of the entire scrollbar */
+}
+
+#window-9 .CorpoWin::-webkit-scrollbar-track {
+  background: rgb(26, 25, 25);        /* color of the tracking area */
+}
+
+#window-9 .CorpoWin::-webkit-scrollbar-thumb {
+  background-color: rgb(207, 206, 203);    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 3px solid rgb(207, 206, 203);  /* creates padding around scroll thumb */
+}
+#window-9 .even{
+  background-color: #00000028 !important;
+}
+
+#window-9 tr:hover{
+  background-color: #00000066 !important;
+}
+
+#window-9  .btn-apple{
+  border: 1px solid  #2b2b2e;
+  /* border-bottom: 1px solid  #2b2b2e; */
+  text-align: center;
+  color: white;
+  font-size: 12pt;
+  font-weight: bold;
+  height: 37px;
+  background-color: #22182e;
+}
+
+#window-9 .btn-apple:hover{
+  background-color: #3b007e;
+  font-weight: bold;
+}
+
+#window-9 .btn_funcoes{
+  margin-bottom: 10px;
+}
+
+#window-9 .CampoEscrito{
+  padding-left: 7px;
+  width: 212px;
+  border-radius: 4px;
+  border: none;
+  height: 24px;
+  background: #00000091;
+  color: white;
+}
+
+#window-9 .btn_funcoes_fim{
+  /* margin-left: 17px; */
+  bottom: 0px;
+  position: absolute;
+  width: calc(100% - 240px);
+}
+
+</style>
+
+<div class="bodyApp">
+  
+  <div class="barraLateral text-white">
+      <ul class="nav nav-pills flex-column mb-auto nav-tabs" role="tablist">
+          <li class="nav-item " role="presentation">
+            <input class="inputsearch input_search_visitantes" type="text" placeholder="Pesquisa">
+            <input class="inputsearch input_search_pessoas" style="display:none;" type="text" placeholder="Pesquisa">
+          </li>
+          <hr>
+          <li class="nav-item" role="presentation" >
+            <a href="#" class="nav-link active text-white"  data-input="input_search_visitantes" id="home-tab" data-bs-toggle="tab" data-bs-target="#visitantes" >
+              Comissão comercial
+            </a>
+          </li>
+        
+        </ul>
+  </div>
+
+  <div class="CorpoWin text-white">
+    <div class="tab-content" id="myTabContent">
+
+      <div class="row" style="margin-bottom: 5px; font-size: 12px; padding-left: 10px">
+        <div class="col">
+          De:
+          <input id="startDate" class="form-control CampoEscrito" type="date" style="font-size: 12px;"/>
+          Até:
+          <input id="endDate" class="form-control CampoEscrito" type="date" style="font-size: 12px;"/>
+        </div>
+        <div class="col">
+          Recebimento:
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Pendente
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+            <label class="form-check-label" for="flexCheckChecked">
+              Sem recebimento
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+            <label class="form-check-label" for="flexCheckDefault">
+              Recebido
+            </label>
+          </div>
+        </div>
+        <div class="col">
+          Pagamento:
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Pendente
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+            <label class="form-check-label" for="flexCheckChecked">
+              Sem pagamento
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+            <label class="form-check-label" for="flexCheckDefault">
+              Pago
+            </label>
+          </div>
+        </div>
+        <div class="col">
+          Agente:
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+            <label class="form-check-label" for="flexCheckDefault">
+              Pendente
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+            <label class="form-check-label" for="flexCheckChecked">
+              Sem pagamento
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Pago
+            </label>
+          </div>
+        </div>
+        <div class="col">
+          Vendedor
+          <input type="text" id="seleciona_vendedor" placeholder="Nome" list="lista_vendedor" autocomplete="off" name="nome" style="width: 100%;font-size: 12px;" class="form-control CampoEscrito">
+          <datalist id="lista_vendedor"></datalist>
+
+          Inside sales
+          <input type="text" id="seleciona_IS" placeholder="Nome" list="lista_IS" autocomplete="off" name="nome" style="width: 100%; font-size: 12px;" class="form-control CampoEscrito">
+          <datalist id="lista_IS"></datalist>
+        </div>
+        <div class="col">
+          Comissão vendedor:
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Pago
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+            <label class="form-check-label" for="flexCheckChecked">
+              Sem pagamento
+            </label>
+          </div>
+        </div>
+        <div class="col">
+          Comissão IS:
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Pago
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+            <label class="form-check-label" for="flexCheckChecked">
+              Sem pagamento
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row btn_funcoes" style="margin-right: 0px;margin-left: 0;">
+        <div class="col-12" style="margin: 0 !important;padding: 0 !important; text-align: center;">
+            <button style="width: 30%;" class="btn-apple btn btn_close_adiciinarVisistante">Filtrar</button>
+        </div>
+    </div>
+      
+
+      <div class="tab-pane fade show active" id="visitantes" role="tabpanel" aria-labelledby="home-tab">
+
+        <table id="tabela_visitantes" class="table table-dark table-striped" style="width:100%;--bs-table-bg: #1a1b1c40;">
+          <thead>
+        <tr>
+          <th scope="col">
+            <button style="border: none; background: transparent; font-size: 14px; color: #fff;" id="MyTableCheckAllButton">
+            <i class="far fa-square"></i>  
+            </button>
+          </th>
+          <th scope="col">Modalidade</th>
+          <th scope="col">N° Processo</th>
+          <th scope="col">Data compensação</th>
+          <th scope="col">Tipo carga</th>
+          <th scope="col">Cliente</th>
+          <th scope="col">Vendedor</th>
+          <th scope="col">Inside sales</th>
+          <th scope="col">Importador</th>
+          <th scope="col">Exportador</th>
+          <th scope="col">Comissão vendedor</th>
+          <th scope="col">Comissão IS</th>
+          <th scope="col">Valor Estimado</th>
+          <th scope="col">Valor Efetivo</th>
+          <th scope="col">Restante</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    
+      </table>
+
+      </div>
+
+      <div class="tab-pane fade" id="cadastros" role="tabpanel" aria-labelledby="profile-tab">
+
+      </div>
+      <div class="row btn_funcoes_fim" style="margin-right: 0px;margin-left: 0;">
+        <div class="col-12" style="margin: 0 !important;padding: 0 !important;">
+            <button style="width: 100%;border-radius: 0px 0px 0px 0px;" class="btn-apple btn">Enviar para pagamento</button>
+        </div>
+      </div>
+    </div>    
+  </div>
+</div>
