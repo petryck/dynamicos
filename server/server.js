@@ -10,6 +10,7 @@ import bodyParser from 'body-parser';
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import ejs from 'ejs';
+import sql from 'mssql'
 import * as compressImage from '../server/src/imgcompress.js';
 import { Console } from 'console'
 
@@ -30,6 +31,36 @@ app.set('views', __dirname);
 const server = http.Server(app);
 
 app.use('/', express.static(path.join(__dirname, '../public')))
+
+
+
+
+const connStr = {
+  user: 'hc_conline_consulta',
+  password: '3C23D35C-84F4-4205-80A2-D59D58A81BEF',
+  database: 'headcargo_conline',
+  requestTimeout: 130000,
+  port:9322,
+  server: 'CONLINE.SQL.HEADCARGO.COM.BR',
+  pool: {
+    max: 99999,
+    min: 0,
+    idleTimeoutMillis: 130000
+  },
+  options: {
+    encrypt: true, // for azure
+    trustServerCertificate: true, // change to true for local dev / self-signed certs
+    enableArithAbort: true,
+    idleTimeoutMillis: 130000
+  }
+}
+
+sql.connect(connStr).then(conn => {
+  global.conn = conn
+  console.log('🤖 CONECTADO A DB --> HEADCARGO ')
+
+
+}).catch(err => console.log(err));
 
 
     // conexao banco de dados
@@ -149,13 +180,82 @@ var connection = mysql.createConnection({
 
   })
 
-  app.post('/remove_visita', (req, res) => {
+
+
+
+
+
+
+app.post('/remove_visita', (req, res) => {
+  var id_visita = req.body.id;
+  var sql = `DELETE FROM visitas WHERE (id_visitas = ${id_visita})`;
+  connection.query(sql, function(err2, results){
+    console.log(err2)
+    res.json('sucesso');
+  })
+})
+
+  
+
+  app.post('/vis_Fechamento_Processo', (req, res) => {
     var id_visita = req.body.id;
-    var sql = `DELETE FROM visitas WHERE (id_visitas = ${id_visita})`;
-    connection.query(sql, function(err2, results){
-      console.log(err2)
-      res.json('sucesso');
-    })
+    var arrayLiteral2 = [];
+      var sql = `Select * From vis_Fechamento_Processo`;
+
+        global.conn.request()
+        .query(sql)
+        .then(result => {
+
+
+
+
+          result.recordset.forEach(e => {
+         
+                
+                
+            var objeto = {
+               Id: e.IdLogistica_House,
+               Modalidade: e.Modalidade,
+               NumeroProcesso: e.Numero_Processo,
+               DataCompensacao: e.Data_Compensacao,
+               TipoCarga: e.Tipo_Carga,
+               Cliente: e.Cliente,
+               Vendedor: e.Vendedor,
+               InsideSales: e.Inside_Sales,
+               Importador: e.Importador,
+               Exportador: e.Exportador,
+               ComissaoVendedor: e.Comissao_Vendedor_Pago,
+               ComissaoIS: e.Comissao_Inside_Sales_Pago,
+               ValorEstimado: e.Valor_Estimado,
+               ValorEfetivo: e.Valor_Efetivo,
+               Restante: e.Restante
+           }
+         
+
+
+           arrayLiteral2.push(objeto);
+           })
+
+           let saida = {
+            "draw": 1,
+            "recordsTotal": result.recordset.length,
+            "recordsFiltered": result.recordset.length,
+            "data": arrayLiteral2
+          } 
+
+
+          res.json(saida)
+
+      
+      
+      //  res.json(result.recordset)
+        })
+        .catch(err => {
+          console.log(err)
+          return err;
+        });
+
+
   })
 
 
