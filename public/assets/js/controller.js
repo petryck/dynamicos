@@ -254,6 +254,13 @@ $(document).on('click', '.btn-abrir-tela-teste', function(e){
   $('.formularioColaborador').css('display', 'block')
 });
 
+$(document).on('click', '#clone_formularioColaborador', function(e){
+  e.preventDefault()
+
+  $('.formularioColaborador').css('display', 'none')
+
+})
+
 
 function lista_vendedores_comissao_comercial(){
   // <option value="1">Petryck William Silva Leite</option>
