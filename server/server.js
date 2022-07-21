@@ -12,7 +12,8 @@ import { fileURLToPath } from 'url'
 import ejs from 'ejs';
 import sql from 'mssql'
 import * as compressImage from '../server/src/imgcompress.js';
-import { Console } from 'console'
+import nodemailer from 'nodemailer'
+import * as json2csv  from 'json2csv';
 
 // compressImage
 
@@ -81,6 +82,330 @@ var connection = mysql.createConnection({
         console.log('CONECTADO DB --> MYSQL')
     }
   }); 
+
+
+  function send_email(mailOptions){
+
+    var remetente = nodemailer.createTransport({
+      name: 'marketing@conline-news.com',
+      host: 'mail.conline-news.com',
+      service:'mail.conline-news.com',
+      port: 465,
+      maxMessages: 10,
+      secure: true,
+      pool:true,
+      rateDelta:1000,
+      rateLimit: 1000,
+      auth:{
+      user: 'marketing@conline-news.com',
+      pass: 'conline191919aA@' },
+      tls: {
+        rejectUnauthorized: false
+      },
+      debug : true
+      });
+
+  //  var mailOptions = {
+  //         from: 'Marketing ConLine <marketing@conline-news.com>',
+  //         to: element.Email,
+  //         subject: '[ConLine]-Calendário de Feriados',
+  //         html: modelo_html
+  //       };
+
+
+  remetente.sendMail(mailOptions, function(error, info){
+    if (error) {
+    // console.log(error);
+    console.log('erro ao enviar email para: '+element.Email)
+  
+    } else {
+
+    console.log('Email enviado com sucesso.');
+    }
+
+    
+    // console.log(info)
+    // sleep(4000)
+  });
+
+
+
+}
+function padTo2Digits(num) {
+  return num.toString().padStart(2, '0');
+}
+
+function formatDate(date) {
+  return [
+    padTo2Digits(date.getDate()),
+    padTo2Digits(date.getMonth() + 1),
+    date.getFullYear(),
+  ].join('-');
+}
+
+app.get('/export_csv', (req, res) => {
+
+console.log(req.query.processos)
+
+var arrayLiteral2 = [];
+var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${req.query.processos}) ORDER BY IdLogistica_House asc`;
+      console.log(sql)
+
+        global.conn.request()
+        .query(sql)
+        .then(result => {
+
+
+          result.recordset.forEach(e => {
+
+            let Data_Compensacao_Convertido = new Date(e.Data_Compensacao_Convertido)
+          
+            Data_Compensacao_Convertido.setDate(Data_Compensacao_Convertido.getDate() + 1);
+            Data_Compensacao_Convertido = Data_Compensacao_Convertido.toLocaleDateString("pt-US") 
+
+            var objeto = {
+              Modalidade: e.Modalidade,
+              NumeroProcesso: e.Numero_Processo,
+              DataCompensacao: Data_Compensacao_Convertido,
+              TipoCarga: e.Tipo_Carga,
+              Cliente: e.Cliente == '' || e.Cliente == null ? 'Sem Seleção' : titleize(e.Cliente, 'cliente'),
+              Vendedor: e.Vendedor == '' || e.Vendedor == null ? 'Sem Seleção' : titleize(e.Vendedor, 'vendedor'),
+              InsideSales: e.Inside_Sales == '' || e.Inside_Sales == null ? 'Sem Seleção' : titleize(e.Inside_Sales, 'inside'),
+              Importador: e.Importador == '' || e.Importador == null ? 'Sem Seleção' : titleize(e.Importador, 'importador'),
+              Exportador: e.Exportador == '' || e.Exportador == null ? 'Sem Seleção' : titleize(e.Exportador, 'exportador'),
+              ComissaoVendedor: e.Comissao_Vendedor_Pago == 1 ? 'Pago' : 'Pendente',
+              ComissaoIS: e.Comissao_Inside_Sales_Pago == 1 ? 'Pago' : 'Pendente',
+              ValorEstimado: e.Valor_Estimado,
+              ValorEfetivo: e.Valor_Efetivo,
+              Restante: e.Restante
+          }
+
+          arrayLiteral2.push(objeto);
+          })
+
+          const myData = arrayLiteral2;
+
+    const fields = ['Modalidade', 'Processo', 'DataCompensacao', 'TipoCarga',
+                    'Cliente', 'Vendedor', 'InsideSales', 'Importador', 'Exportador', 
+                    'ComissaoVendedor','ComissaoIS','ValorEstimado',
+                    'ValorEfetivo','Restante'];
+    
+    const opts = { 
+      delimiter: ';',
+      fields 
+    };
+
+    const parser = new json2csv.Parser(opts);
+    
+    const csv = parser.parse(myData);
+    console.log(csv);
+    res.setHeader('Content-Length', 5);
+    res.attachment('filename.csv');
+    res.status(200).send(csv);
+
+   })
+
+   
+
+
+})
+
+app.post('/send_mail_comissoes', (req, res) => {
+  var data = formatDate(new Date())
+
+  var processos = JSON.parse(req.body.processos);
+
+// console.log(processos)
+
+processos.forEach(element => {
+
+  console.log(element)
+});
+
+
+  res.send('ok')
+
+  return false;
+
+  var html = `<center style="width: 100%; table-layout: fixed;">
+  <div style="background-color: #f8f9fa; width: 100%; max-width: 600px; margin: 0 auto;">
+    <table class="m_-284055676835661507container" style="max-width: 600px; width: 600px; word-break: break-word; margin: 0 auto;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center" bgcolor="#FFFFFF">
+      <tbody>
+        <tr>
+          <td id="m_-284055676835661507moduleContainer" style="background-color: #ffffff;" align="center" valign="top" bgcolor="#ffffff">
+            <table id="m_-284055676835661507headerLogoCTAModulefea5f133-4261-4101-ace3-f19e2be0486d" style="max-width: 600px; width: 100%; background: #f8f9fa;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
+              <tbody>
+                <tr>
+                  <td id="m_-284055676835661507header-Logo-cta0a4e22de-622c-4c98-9dc7-25eb34d738f0" class="m_-284055676835661507header" dir="ltr" style="padding: 24px 24px 24px 30px;" valign="top">
+                    <table style="max-width: 600px; width: 100%;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="left">
+                      <tbody>
+                        <tr>
+                          <td class="m_-284055676835661507width50 m_-284055676835661507pad-l0" style="font-family: 'Google Sans', 'Noto Sans JP', Arial, sans-serif; padding-left: 20px; font-size: 14px; vertical-align: middle; width: 99.6283%; text-align: right;" align="left" valign="middle" width="300">
+                            <p>
+                              <img class="m_-284055676835661507logo m_-284055676835661507no-arrow CToWUd" style="float: left;" src="https://conlinebr.com.br/logosirius_preta.png" alt="Google Cloud" width="154" height="61" />Rafael Magalh&atilde;es
+                            </p>
+                            <p>${data}</p>
+                          </td>
+                          <td class="m_-284055676835661507showMobileHeaderCTA" style="font-family: 'Google Sans', 'Noto Sans JP', Arial, sans-serif; font-size: 14px; vertical-align: middle; width: 55.7621%; text-align: right; display: none;" align="right" valign="middle" width="300">
+                            <table role="presentation" border="0" cellspacing="0" cellpadding="0" align="right">
+                              <tbody>
+                                <tr>
+                                  <td dir="ltr" style="border-radius: 4px;" align="right" bgcolor="#1a73e8">
+                                    <a class="m_-284055676835661507whiteText" style="font-family: 'Google Sans','Noto Sans JP',Arial,sans-serif; color: #ffffff; text-decoration: none; font-size: 14px; letter-spacing: 1px; font-weight: bold; border-radius: 4px; border: 1px solid #1a73e8; margin: 0; padding: 14px 16px 14px 16px; display: inline-block;" href="https://go.cloudplatformonline.com/ODA4LUdKVy0zMTQAAAGFu64YaFlB_CTrqKZdd6nw54VKpoijqn9z6z0Iu0R9XB3LClbCbQUq9KfEltcl-sGBc-Vrseo=" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://go.cloudplatformonline.com/ODA4LUdKVy0zMTQAAAGFu64YaFlB_CTrqKZdd6nw54VKpoijqn9z6z0Iu0R9XB3LClbCbQUq9KfEltcl-sGBc-Vrseo%3D&amp;source=gmail&amp;ust=1658425432932000&amp;usg=AOvVaw0E7TcrfN_UKeM4UpxY7Zhq">Baixe agora</a>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+            <table id="m_-284055676835661507salutationModule" style="max-width: 600px; width: 100%;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
+              <tbody>
+                <tr>
+                  <td class="m_-284055676835661507inner-container" dir="ltr" style="padding: 16px 50px 4px 50px;" valign="top">
+                    <p id="m_-284055676835661507greeting" style="font-family: 'Google Sans Text&rsquo;,&rsquo;Noto Sans JP',Arial,sans-serif; font-size: 14px; line-height: 24px; color: #5f6368; text-align: left; margin: 0; padding: 0; font-weight: bold;">Ol&aacute;,</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table id="m_-284055676835661507bodyCopyModule" style="max-width: 600px; width: 100%;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
+              <tbody>
+                <tr>
+                  <td class="m_-284055676835661507inner-container" dir="ltr" style="padding: 8px 50px 8px 50px;" valign="top">
+                    <p id="m_-284055676835661507bodyCopy" style="font-family: 'Google Sans Text&rsquo;,&rsquo;Noto Sans JP',Arial,sans-serif; font-size: 14px; line-height: 24px; color: #5f6368; margin: 0; padding: 0; text-align: left;">
+                      <strong>Segue processos liberados para pagamento de comiss&otilde;es</strong>
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table id="m_-284055676835661507unorderedListModule1af4d590-54fa-4d56-80f6-d6af431bf449" style="max-width: 600px; width: 100%;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
+              <tbody>
+                <tr>
+                  <td class="m_-284055676835661507inner-container" dir="ltr" style="padding: 8px 50px 8px 50px;" valign="top">
+                    <div id="m_-284055676835661507UnorderedListf36fcae2-6463-4656-9a43-947d2d199022" style="font-family: 'Google Sans Text&rsquo;,&rsquo;Noto Sans JP',Arial,sans-serif; font-size: 14px; line-height: 24px; color: #5f6368; margin: 0; padding: 0; text-align: left;">
+                      <ul style="padding: 0; margin: 0;">
+                        <li>
+                        <strong>Pr&aacute;ticas de seguran&ccedil;a:</strong>
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+       
+            <br />
+            <table id="m_-284055676835661507footerModule" style="max-width: 600px; width: 100%; background: #f8f9fa;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
+              <tbody>
+                <tr>
+                  <td class="m_-284055676835661507inner-container" style="padding: 40px 50px 0 50px;" valign="top">
+                    <table style="max-width: 600px; width: 100%;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" <tbody>
+                      <tr>
+                        <td>
+                          <table style="width: 100%;" role="presentation" border="0" cellspacing="0" cellpadding="0">
+                            <tbody>
+                              <tr>
+                                <td dir="ltr" style="padding-bottom: 16px;" align="left">
+                                  <table style="width: 100%;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                      <tr>
+                                        <td dir="ltr" style="vertical-align: middle;" align="left" valign="middle">
+                                          <img id="m_-284055676835661507footerLogo" class="m_-284055676835661507no-arrow CToWUd" style="width: 109px; display: block; margin: 0px; border: none;" src="https://conlinebr.com.br/logosirius_preta.png" alt="Google Cloud" width="140" height="43" />
+                                        </td>
+                                        <td dir="ltr" style="vertical-align: middle; display: none!important;" align="right" valign="middle">
+                                          <img id="m_-284055676835661507footerIcons" class="m_-284055676835661507no-arrow CToWUd" style="width: 137px; display: none!important; margin: 0; border: none;" src="https://conlinebr.com.br/logosirius_preta.png" width="137" />
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td dir="ltr" style="font-family: 'Google Sans Text&rsquo;,&rsquo;Noto Sans JP',Arial,sans-serif; font-size: 12px; font-weight: 400; line-height: 18px; color: #5f6368; margin: 0; padding: 0; text-align: left; padding-bottom: 18px;">
+                                  <div id="m_-284055676835661507footer-copyright-address">&copy; 2022 SiriusOS</div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td class="m_-284055676835661507inner-container m_-284055676835661507social-container" style="padding: 0 50px 40px 35px;" valign="top">
+            <table style="max-width: 600px; width: 100%;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0">
+              <tbody>
+                <tr>
+                  <td>
+                    <table style="width: 100%;" role="presentation" border="0" cellspacing="0" cellpadding="0">
+                      <tbody>
+                        <tr>
+                          <td align="left">
+                            <div id="m_-284055676835661507footerlinks">
+                              <table style="width: auto;" role="presentation" border="0" cellspacing="0" cellpadding="0">
+                                <tbody>
+                                  <tr>
+                                    <td style="width: 48px; font-family: 'Roboto',Arial,sans-serif;" width="48">
+                                      <img class="CToWUd" style="height: 48px;" src="https://ci3.googleusercontent.com/proxy/Ocfa0OsbBWMHgEVhCXF-bJGFcmjvAkiFsEYOTxWqnt3zTERwMJ2y6Z1Gi09_bVpTaDZgOa1QIuOv-qIR4pbCfbeBMJxgCIvYEVwg7-g5xARbyNVS2PVVR2U=s0-d-e1-ft#https://lp.cloudplatformonline.com/rs/808-GJW-314/images/blog-a11y.png" alt="Blog" height="48" border="0" />
+                                    </td>
+                                    <td style="width: 48px; padding-left: 10px; font-family: 'Roboto',Arial,sans-serif;" width="48">
+                                      <img class="CToWUd" style="height: 48px;" src="https://ci5.googleusercontent.com/proxy/zYjPz8Z0RjuUpt9yF9HxxmDZo9_ACAJisQtVqZ7PpbcBOg8s0-qL678khRAjBHXR7JKFkUqhKxVagOdOIyU5RNH1Nq6dcI1LOZBDgZw8CjcFLvPKtIR3ryPe5g=s0-d-e1-ft#https://lp.cloudplatformonline.com/rs/808-GJW-314/images/github-a11y.png" alt="GitHub" height="48" border="0" />
+                                    </td>
+                                    <td style="width: 48px; padding-left: 10px; font-family: 'Roboto',Arial,sans-serif;" width="48">
+                                      <img class="CToWUd" style="height: 48px;" src="https://ci5.googleusercontent.com/proxy/P4-kMwIH20UTWoMxQXfuxS8bDbU4p1VpRUfQRv2lniW3lDiHdFR9bT8kp4XSx0jwuXRDahWAWYkSFDICDtRkizBCm_40dhv5jwaKogi2Rsq5yYrqR_Jn3377Thka=s0-d-e1-ft#https://lp.cloudplatformonline.com/rs/808-GJW-314/images/linkedin-a11y.png" alt="LinkedIn" height="48" border="0" />
+                                    </td>
+                                    <td style="width: 48px; padding-left: 10px; font-family: 'Roboto',Arial,sans-serif;" width="48">
+                                      <img class="CToWUd" style="height: 48px;" src="https://ci3.googleusercontent.com/proxy/RQaprs5bsnsypbF1Fk8FuGt0sK_SVYFedXHINuCu6LE8dC4lMjED0K_gEZReT8X1dHGaajLqlH7SbEdyN_kdJGF-qCO55wFB8xnX-pjwXhB93LFjMPMcZKyKcf8=s0-d-e1-ft#https://lp.cloudplatformonline.com/rs/808-GJW-314/images/twitter-a11y.png" alt="Twitter" height="48" border="0" />
+                                    </td>
+                                    <td style="width: 48px; padding-left: 10px; font-family: 'Roboto',Arial,sans-serif;" width="48">
+                                      <img class="CToWUd" style="height: 48px;" src="https://ci6.googleusercontent.com/proxy/fDUrH2Y9sy86_A6NCrvXTHsY7et3rBY5y9YARJ1pYcLpO4BZufjHoHYor-OrgtRVhP9fbjrplysF_xCiNGd-Zb6SugBhXYkyquMPNGNMPnkCCkzU2PkikQbH_sGn=s0-d-e1-ft#https://lp.cloudplatformonline.com/rs/808-GJW-314/images/facebook-a11y.png" alt="Facebook" height="48" border="0" />
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+  </div>
+</center>`;
+
+
+    var mailOptions = {
+          from: 'Sirius OS <marketing@conline-news.com>',
+          to: 'petryck.leite@conlinebr.com.br',
+          subject: '[Sirius]- Pagamento Vendedor',
+          html: html
+        };
+  send_email(mailOptions)
+
+  // path.join(__dirname, '../public/Apps/'+results[0]['Adress']+'.html')
+
+  res.send('ok')
+})
+
 
 
   app.post('/login_email', (req, res) => {
@@ -195,40 +520,449 @@ app.post('/remove_visita', (req, res) => {
   })
 })
 
+
+function titleize(text, onde) {
   
+  var loweredText = text.toLowerCase();
+  var words = loweredText.split(" ");
+  var words = loweredText.split("  ");
+  for (var a = 0; a < words.length; a++) {
+      var w = words[a];
+
+      var firstLetter = w[0];
+
+      w = firstLetter.toUpperCase() + w.slice(1);
+
+      words[a] = w;
+  }
+  return words.join(" ");
+}
+
+app.post('/lista_vendedores', (req, res) => {
+  // var page = req.query.page;
+
+  var sql = `Select
+  Fnc.IdPessoa,
+  Fnc.Nome,
+  Fnc.Foto
+From
+  vis_Funcionario Fnc
+Left Outer Join
+  cad_Equipe_Tarefa_Membro Etm on Etm.IdFuncionario = Fnc.IdPessoa
+Join
+  cad_Equipe_Tarefa Etr on Etr.IdEquipe_Tarefa = Etm.IdEquipe_Tarefa and (Etr.IdEquipe_Tarefa = 62)
+Where
+  Fnc.Ativo = 1`;
+      global.conn.request()
+      .query(sql)
+      .then(result => {
+
+        res.json(result.recordset)
+      })
+      .catch(err => {
+        console.log(err)
+        return err;
+      });
+
+
+})
 
   app.post('/vis_Fechamento_Processo', (req, res) => {
-    var id_visita = req.body.id;
+    // console.log(req.body)
     var arrayLiteral2 = [];
-      var sql = `Select * From vis_Fechamento_Processo`;
+    if(req.body.filtro){
+      var filtros = JSON.parse(req.body.filtro)
+      console.log(filtros)
+  
+    }
+
+
+  var where = `WHERE IdLogistica_House is not null `;
+
+// --------------------------------------------------------------------------------------------------------
+  if(filtros.comissaoIS.pago == true && filtros.comissaoIS.sem_recebimento == true){
+    where += `AND (Comissao_Inside_Sales_Pago = 1 OR Comissao_Inside_Sales_Pago = 0) `
+  }else if(filtros.comissaoIS.pago == false && filtros.comissaoIS.sem_recebimento == false){
+
+  }else if(filtros.comissaoIS.pago == true && filtros.comissaoIS.sem_recebimento == false){
+    where += `AND Comissao_Inside_Sales_Pago = 1 `
+  }else if(filtros.comissaoIS.pago == false && filtros.comissaoIS.sem_recebimento == true){
+    where += `AND Comissao_Inside_Sales_Pago = 0 `
+  }
+
+// --------------------------------------------------------------------------------------------------------
+
+  if(filtros.comissaoVendedor.pago == true && filtros.comissaoVendedor.sem_recebimento == true){
+    where += `AND (Comissao_Vendedor_Pago = 1 OR Comissao_Vendedor_Pago = 0) `
+  }else if(filtros.comissaoVendedor.pago == false && filtros.comissaoVendedor.sem_recebimento == false){
+
+  }else if(filtros.comissaoVendedor.pago == true && filtros.comissaoVendedor.sem_recebimento == false){
+    where += `AND Comissao_Vendedor_Pago = 1 `
+  }else if(filtros.comissaoVendedor.pago == false && filtros.comissaoVendedor.sem_recebimento == true){
+    where += `AND Comissao_Vendedor_Pago = 0 `
+  }
+
+// --------------------------------------------------------------------------------------------------------
+// PENDENTER - Em aberto / Parcialmente pago
+// SEM PAGAMENTO - Sem acerto agente
+// PAGO - Pago
+
+var codigo_agente = '';
+var conatgem_agente = 0;
+if(filtros.agente.pago == true){
+  if(conatgem_agente == 0){
+    codigo_agente += `3`
+    conatgem_agente++;
+  }else{
+    codigo_agente += `,3`
+  }
+  
+}
+
+if(filtros.agente.sem_recebimento == true){
+  if(conatgem_agente == 0){
+    codigo_agente += `0`
+    conatgem_agente++;
+  }else{
+    codigo_agente += `,0`
+  }
+}
+
+if(filtros.agente.pendente == true){
+  if(conatgem_agente == 0){
+    codigo_agente += `1,2`
+    conatgem_agente++;
+  }else{
+    codigo_agente += `,1,2`
+  }
+}
+
+if(filtros.agente.pendente == false && filtros.agente.sem_recebimento == false && filtros.agente.pago == false){
+  codigo_agente = `0,1,2,3`
+}
+
+where += `AND AgenteCodigo in (${codigo_agente}) `
+
+// --------------------------------------------------------------------------------------------------------
+var codigo_recebimento = '';
+var conatagem_recebimento = 0;
+
+if(filtros.recebimento.recebido == true){
+  if(conatagem_recebimento == 0){
+    codigo_recebimento += `3`
+    conatagem_recebimento++;
+  }else{
+    codigo_recebimento += `,3`
+  }
+  
+}
+
+if(filtros.recebimento.sem_recebimento == true){
+  if(conatagem_recebimento == 0){
+    codigo_recebimento += `0`
+    conatagem_recebimento++;
+  }else{
+    codigo_recebimento += `,0`
+  }
+}
+
+if(filtros.recebimento.pendente == true){
+  if(conatagem_recebimento == 0){
+    codigo_recebimento += `1,2`
+    conatagem_recebimento++;
+  }else{
+    codigo_recebimento += `,1,2`
+  }
+}
+
+if(filtros.recebimento.pendente == false && filtros.recebimento.sem_recebimento == false && filtros.recebimento.recebido == false){
+  codigo_recebimento = `0,1,2,3`
+}
+
+where += `AND RecebimentoCodigo in (${codigo_recebimento}) `
+
+// --------------------------------------------------------------------------------------------------------
+var codigo_pagamento = '';
+var conatagem_pagamento = 0;
+
+if(filtros.pagamento.pago == true){
+  if(conatagem_pagamento == 0){
+    codigo_pagamento += `3`
+    conatagem_pagamento++;
+  }else{
+    codigo_pagamento += `,3`
+  }
+  
+}
+
+if(filtros.pagamento.sem_recebimento == true){
+  if(conatagem_pagamento == 0){
+    codigo_pagamento += `0`
+    conatagem_pagamento++;
+  }else{
+    codigo_pagamento += `,0`
+  }
+}
+
+if(filtros.pagamento.pendente == true){
+  if(conatagem_pagamento == 0){
+    codigo_pagamento += `1,2`
+    conatagem_pagamento++;
+  }else{
+    codigo_pagamento += `,1,2`
+  }
+}
+
+if(filtros.pagamento.pendente == false && filtros.pagamento.sem_recebimento == false && filtros.pagamento.pago == false){
+  codigo_pagamento = `0,1,2,3`
+}
+
+where += `AND PagamentoCodigo in (${codigo_pagamento}) `
+
+where += `AND Data_Compensacao_Convertido between '${filtros.data.de}' and '${filtros.data.ate}' `
+
+// --------------------------------------------------------------------------------------------------------
+if(filtros.calaborador.vendedor != 0){
+  where += `AND IdVendedor = ${filtros.calaborador.vendedor} `
+}
+
+if(filtros.calaborador.inside != 0){
+  where += `AND IdInsideSales = ${filtros.calaborador.inside} `
+}
+
+// --------------------------------------------------------------------------------------------------------
+
+var element_contagem = 0;
+var teste_saida = filtros.modal;
+var modais_filtro = [];
+modais_filtro.push(filtros.modal.EA);
+modais_filtro.push(filtros.modal.EM);
+modais_filtro.push(filtros.modal.TE);
+modais_filtro.push(filtros.modal.IA);
+modais_filtro.push(filtros.modal.IM);
+modais_filtro.push(filtros.modal.TI);
+modais_filtro.push(filtros.modal.NA);
+modais_filtro.push(filtros.modal.CB);
+modais_filtro.push(filtros.modal.TN);
+
+
+modais_filtro.forEach(element => {
+
+    if(element == true){
+    element_contagem++;
+    }
+
+});
+// for (let index = 0; index < modais_filtro.length; index++) {
+
+//   console.log('dsa')
+// console.log(modais_filtro[index])
+//   // if(modais_filtro.modal[index] == true){
+//   //   element++;
+//   // }
+  
+// }
+
+
+
+
+
+
+var contagem_modal = 0
+var contagem_modal_or = 0
+
+if(filtros.modal.IM == true && contagem_modal == 0){
+  
+  if(element_contagem > 1){
+    where += `AND ( Modalidade = 'IM' `
+  }else{
+    where += `AND Modalidade = 'IM' `
+  }
+  contagem_modal++
+}else if(filtros.modal.IM == true && contagem_modal > 0){
+  if(contagem_modal_or == (element_contagem-2)){
+    where += `OR Modalidade = 'IM') `
+  }else{
+    where += `OR Modalidade = 'IM' `
+  }
+  
+  contagem_modal_or++
+}
+
+if(filtros.modal.IA == true && contagem_modal == 0){
+  if(element_contagem > 1){
+    where += `AND ( Modalidade = 'IA' `
+  }else{
+    where += `AND Modalidade = 'IA' `
+  }
+  contagem_modal++
+}else if(filtros.modal.IA == true && contagem_modal > 0){
+  if(contagem_modal_or == (element_contagem-2)){
+    where += `OR Modalidade = 'IA') `
+  }else{
+    where += `OR Modalidade = 'IA' `
+  }
+  contagem_modal_or++
+}
+
+if(filtros.modal.EM == true && contagem_modal == 0){
+  if(element_contagem > 1){
+    where += `AND ( Modalidade = 'EM' `
+  }else{
+    where += `AND Modalidade = 'EM' `
+  }
+  contagem_modal++
+}else if(filtros.modal.EM == true && contagem_modal > 0){
+  if(contagem_modal_or == (element_contagem-2)){
+    where += `OR Modalidade = 'EM') `
+  }else{
+    where += `OR Modalidade = 'EM' `
+  }
+  contagem_modal_or++
+}
+
+if(filtros.modal.EA == true && contagem_modal == 0){
+  if(element_contagem > 1){
+    where += `AND ( Modalidade = 'EA' `
+  }else{
+    where += `AND Modalidade = 'EA' `
+  }
+  contagem_modal++
+}else if(filtros.modal.EA == true && contagem_modal > 0){
+  if(contagem_modal_or == (element_contagem-2)){
+    where += `OR Modalidade = 'EA') `
+  }else{
+    where += `OR Modalidade = 'EA' `
+  }
+  contagem_modal_or++
+}
+
+//----
+if(filtros.modal.NA == true && contagem_modal == 0){
+  if(element_contagem > 1){
+    where += `AND ( Modalidade = 'NA' `
+  }else{
+    where += `AND Modalidade = 'NA' `
+  }
+  contagem_modal++
+}else if(filtros.modal.NA == true && contagem_modal > 0){
+  if(contagem_modal_or == (element_contagem-2)){
+    where += `OR Modalidade = 'NA') `
+  }else{
+    where += `OR Modalidade = 'NA' `
+  }
+  contagem_modal_or++
+}
+
+
+if(filtros.modal.CB == true && contagem_modal == 0){
+  if(element_contagem > 1){
+    where += `AND ( Modalidade = 'CB' `
+  }else{
+    where += `AND Modalidade = 'CB' `
+  }
+  contagem_modal++
+}else if(filtros.modal.CB == true && contagem_modal > 0){
+  if(contagem_modal_or == (element_contagem-2)){
+    where += `OR Modalidade = 'CB') `
+  }else{
+    where += `OR Modalidade = 'CB' `
+  }
+  contagem_modal_or++
+}
+
+if(filtros.modal.TE == true && contagem_modal == 0){
+  if(element_contagem > 1){
+    where += `AND ( Modalidade = 'TE' `
+  }else{
+    where += `AND Modalidade = 'TE' `
+  }
+  contagem_modal++
+}else if(filtros.modal.TE == true && contagem_modal > 0){
+  if(contagem_modal_or == (element_contagem-2)){
+    where += `OR Modalidade = 'TE') `
+  }else{
+    where += `OR Modalidade = 'TE' `
+  }
+  contagem_modal_or++
+}
+
+if(filtros.modal.TN == true && contagem_modal == 0){
+  if(element_contagem > 1){
+    where += `AND ( Modalidade = 'TN' `
+  }else{
+    where += `AND Modalidade = 'TN' `
+  }
+  contagem_modal++
+}else if(filtros.modal.TN == true && contagem_modal > 0){
+  if(contagem_modal_or == (element_contagem-2)){
+    where += `OR Modalidade = 'TN') `
+  }else{
+    where += `OR Modalidade = 'TN' `
+  }
+  contagem_modal_or++
+}
+
+if(filtros.modal.TI == true && contagem_modal == 0){
+  if(element_contagem > 1){
+    where += `AND ( Modalidade = 'TI' `
+  }else{
+    where += `AND Modalidade = 'TI' `
+  }
+  contagem_modal++
+}else if(filtros.modal.TI == true && contagem_modal > 0){
+  console.log('ors:'+contagem_modal_or, 'contagem:'+element_contagem)
+  if(contagem_modal_or == (element_contagem-2)){
+    where += `OR Modalidade = 'TI') `
+  }else{
+    where += `OR Modalidade = 'TI' `
+  }
+  contagem_modal_or++
+}
+
+
+// --------------------------------------------------------------------------------------------------------
+
+
+      var sql = `Select * From vis_Fechamento_Processo ${where} ORDER BY IdLogistica_House asc`;
+      console.log(sql)
 
         global.conn.request()
         .query(sql)
         .then(result => {
 
-
+// console.log(result.recordset)
+// console.log(filtros)
+// console.log(sql)
 
 
           result.recordset.forEach(e => {
          
-                
-                
+            let Data_Compensacao_Convertido = new Date(e.Data_Compensacao_Convertido)
+          
+            Data_Compensacao_Convertido.setDate(Data_Compensacao_Convertido.getDate() + 1);
+            Data_Compensacao_Convertido = Data_Compensacao_Convertido.toLocaleDateString("pt-US") 
+
+
+          
+           
             var objeto = {
+               check: '',
                Id: e.IdLogistica_House,
                Modalidade: e.Modalidade,
                NumeroProcesso: e.Numero_Processo,
-               DataCompensacao: e.Data_Compensacao,
+               DataCompensacao: Data_Compensacao_Convertido,
                TipoCarga: e.Tipo_Carga,
-               Cliente: e.Cliente,
-               Vendedor: e.Vendedor,
-               InsideSales: e.Inside_Sales,
-               Importador: e.Importador,
-               Exportador: e.Exportador,
-               ComissaoVendedor: e.Comissao_Vendedor_Pago,
-               ComissaoIS: e.Comissao_Inside_Sales_Pago,
-               ValorEstimado: e.Valor_Estimado,
-               ValorEfetivo: e.Valor_Efetivo,
-               Restante: e.Restante
+               Cliente: e.Cliente == '' || e.Cliente == null ? 'Sem Seleção' : titleize(e.Cliente, 'cliente'),
+               Vendedor: e.Vendedor == '' || e.Vendedor == null ? 'Sem Seleção' : titleize(e.Vendedor, 'vendedor'),
+               InsideSales: e.Inside_Sales == '' || e.Inside_Sales == null ? 'Sem Seleção' : titleize(e.Inside_Sales, 'inside'),
+               Importador: e.Importador == '' || e.Importador == null ? 'Sem Seleção' : titleize(e.Importador, 'importador'),
+               Exportador: e.Exportador == '' || e.Exportador == null ? 'Sem Seleção' : titleize(e.Exportador, 'exportador'),
+               ComissaoVendedor: e.Comissao_Vendedor_Pago == 1 ? 'Pago' : 'Pendente',
+               ComissaoIS: e.Comissao_Inside_Sales_Pago == 1 ? 'Pago' : 'Pendente',
+               ValorEstimado: e.Valor_Estimado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
+               ValorEfetivo: e.Valor_Efetivo.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
+               Restante: e.Restante.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
            }
          
 
@@ -245,6 +979,7 @@ app.post('/remove_visita', (req, res) => {
 
 
           res.json(saida)
+          // console.log(saida)
 
       
       
