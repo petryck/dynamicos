@@ -250,7 +250,9 @@ console.log(contagem_selecionados)
 
   });
 
-
+$(document).on('click', '.btn-abrir-tela-teste', function(e){
+  $('.formularioColaborador').css('display', 'block')
+});
 
 
 function lista_vendedores_comissao_comercial(){
