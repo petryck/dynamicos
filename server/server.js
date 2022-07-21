@@ -179,28 +179,79 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
               ValorEfetivo: e.Valor_Efetivo,
               Restante: e.Restante
           }
-
+         
+         
           arrayLiteral2.push(objeto);
           })
 
           const myData = arrayLiteral2;
 
-    const fields = ['Modalidade', 'Processo', 'DataCompensacao', 'TipoCarga',
+    const fields2 = ['Modalidade', 'Processo', 'DataCompensacao', 'TipoCarga',
                     'Cliente', 'Vendedor', 'InsideSales', 'Importador', 'Exportador', 
                     'ComissaoVendedor','ComissaoIS','ValorEstimado',
                     'ValorEfetivo','Restante'];
+
+    const fields = [
+      {
+      label: 'Modalidade',
+      value: 'Modalidade'
+    },{
+      label: 'Processo',
+      value: 'Processo'
+    },{
+      label: 'Data Compensacao',
+      value: 'DataCompensacao'
+    },{
+      label: 'Tipo Carga',
+      value: 'TipoCarga'
+    },{
+      label: 'Cliente',
+      value: 'Cliente'
+    },{
+      label: 'Vendedor',
+      value: 'Vendedor'
+    },{
+      label: 'Inside Sales',
+      value: 'InsideSales'
+    },{
+      label: 'Importador',
+      value: 'Importador'
+    },{
+      label: 'Exportador',
+      value: 'Exportador'
+    },{
+      label: 'Comissao Vendedor',
+      value: 'ComissaoVendedor'
+    },{
+      label: 'Comissao IS',
+      value: 'ComissaoIS'
+    },{
+      label: 'Valor Estimado',
+      value: 'ValorEstimado'
+    },{
+      label: 'Valor Efetivo',
+      value: 'ValorEfetivo'
+    },{
+      label: 'Restante',
+      value: 'Restante'
+    }
+  ];
     
     const opts = { 
       delimiter: ';',
-      fields 
+      encoding: 'ISO 8859-1',
+      excelStrings: true,
+      fields
     };
 
     const parser = new json2csv.Parser(opts);
-    
+  
     const csv = parser.parse(myData);
     console.log(csv);
-    res.setHeader('Content-Length', 5);
-    res.attachment('filename.csv');
+    res.header('Content-type', 'text/csv; charset=utf-8');
+    // res.header('Content-disposition', 'attachment; filename=excel.csv'); 
+    // res.write(Buffer.from('EFBBBF', 'hex')); // BOM header
+    res.attachment((new Date()).getTime()+'.csv');
     res.status(200).send(csv);
 
    })
