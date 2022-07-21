@@ -156,205 +156,212 @@
 <div class="bodyApp">
   
   <div class="barraLateral text-white">
-      <ul class="nav nav-pills flex-column mb-auto nav-tabs" role="tablist">
+      <ul class="nav nav-pills flex-column mb-auto nav-tabs" role="tablist" style="display: grid;position: fixed;height: 100%;">
           <li class="nav-item " role="presentation">
             <input class="inputsearch input_search_comissao_vendedores" type="text" placeholder="Pesquisa">
             <input class="inputsearch input_search_pessoas" style="display:none;" type="text" placeholder="Pesquisa">
           </li>
           <hr>
-          <li class="nav-item" role="presentation" >
+          
+          <li class="nav-item" role="presentation" style="display: none;">
             <a href="#" class="nav-link active text-white"  data-input="input_search_comissao_vendedores" id="home-tab" data-bs-toggle="tab" data-bs-target="#visitantes" >
               Comissão comercial
             </a>
           </li>
-        
+          <center><span style="font-size: 14px;color: #818181;font-weight: 900;">Filtros</span></center>
+          <div class="row" style="position: relative;margin-bottom: 5px;font-size: 12px;overflow-y: scroll;height: 100%;display: block;">
+            <div class="col" style="padding-top: 10px;">
+              De:
+              <input id="startDate_comissoes" class="form-control CampoEscrito" type="date" value="<script> formatDate(new Date()) </script>" style="font-size: 12px;width: 100%;height: 30px;"/>
+              Até:
+              <input id="endDate_comissoes" class="form-control CampoEscrito" type="date" style="font-size: 12px;width: 100%;height: 30px;"/>
+            </div>
+            <div class="col" style="padding-top: 10px;">
+              Vendedor
+              <select style="width: 100%;" id="seleciona_vendedor" class="form-select">
+              
+              </select>
+              Inside sales
+              <select style="width: 100%;" id="seleciona_IS"  class="form-select">
+              
+              </select>
+            </div>
+            <div class="col" style="padding-top: 10px;">
+              Recebimento:
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="checkRec_pendente" value="" checked>
+                <label class="form-check-label" for="check_rec_pendente" >
+                  Pendente
+                </label>
+              </div>
+              <div class="form-check">
+                
+                <input class="form-check-input" type="checkbox" value="" id="checkRec_SemRecebimento" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                  Sem recebimento
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkRec_Recebido" checked>
+                <label class="form-check-label" for="checkRec_recebido">
+                  Recebido
+                </label>
+              </div>
+            </div>
+            <div class="col" style="padding-top: 10px;">
+              Pagamento:
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkPag_Pendente" checked>
+                <label class="form-check-label" for="checkPag_pendente">
+                  Pendente
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkPag_SemPagamento" checked>
+                <label class="form-check-label" for="checkPag_SemPagamento">
+                  Sem pagamento
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkPag_Pago" checked>
+                <label class="form-check-label" for="checkPag_Pago">
+                  Pago
+                </label>
+              </div>
+            </div>
+            <div class="col" style="padding-top: 10px;">
+              Agente:
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkAge_Pendente" checked>
+                <label class="form-check-label" for="checkAge_Pendente">
+                  Pendente
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkAge_SemPagamento" checked> 
+                <label class="form-check-label" for="checkAge_SemPagamento">
+                  Sem pagamento
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkAge_Pago" checked>
+                <label class="form-check-label" for="checkAge_Pago">
+                  Pago
+                </label>
+              </div>
+            </div>
+           
+            <div class="col" style="padding-top: 10px;">
+              Comissão vendedor:
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="1" id="checkComissaoVendedor_Pago" checked>
+                <label class="form-check-label" for="checkComissaoVendedor_Pago">
+                  Pago
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="0" id="checkComissaoVendedor_SemPagamento" checked>
+                <label class="form-check-label" for="checkComissaoVendedor_SemPagamento">
+                  Sem pagamento
+                </label>
+              </div>
+            </div>
+            <div class="col" style="padding-top: 10px;">
+              Comissão IS:
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkComissaoIS_Pago" checked>
+                <label class="form-check-label" for="checkComissaoIS_Pago">
+                  Pago
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkComissaoIS_SemPagamento" checked>
+                <label class="form-check-label" for="checkComissaoIS_SemPagamento">
+                  Sem pagamento
+                </label>
+              </div>
+            </div>
+    
+           <div class="modais" style="display: flex;padding-top: 10px;">
+            <div class="col" style="flex: 0;">
+              Modal:
+              <div class="form-check" style="width: 55px;">
+                <input class="form-check-input" type="checkbox" value="1" id="checkImpoIM" checked>
+                <label class="form-check-label" for="checkImpoIM">
+                  IM
+                </label>
+              </div>
+              <div class="form-check" style="width: 55px;">
+                <input class="form-check-input" type="checkbox" value="2" id="checkImpoIA" checked>
+                <label class="form-check-label" for="checkImpoIA">
+                  IA
+                </label>
+              </div>
+              <div class="form-check" style="width: 55px;">
+                <input class="form-check-input" type="checkbox" value="2" id="checkImpoNA" checked>
+                <label class="form-check-label" for="checkImpoNA">
+                  NA
+                </label>
+              </div>
+              <div class="form-check" style="width: 55px;">
+                <input class="form-check-input" type="checkbox" value="2" id="checkImpoCB" checked>
+                <label class="form-check-label" for="checkImpoCB">
+                  CB
+                </label>
+              </div>
+            </div>
+            <div class="col" style="flex: 0;">
+              <br>
+              <div class="form-check" style="width: 55px;">
+                <input class="form-check-input" type="checkbox" value="3" id="checkImpoEM" checked>
+                <label class="form-check-label" for="checkImpoEM">
+                  EM
+                </label>
+              </div>
+              <div class="form-check" style="width: 55px;">
+                <input class="form-check-input" type="checkbox" value="4" id="checkImpoEA" checked>
+                <label class="form-check-label" for="checkImpoEA">
+                  EA
+                </label>
+              </div>
+              <div class="form-check" style="width: 55px;">
+                <input class="form-check-input" type="checkbox" value="4" id="checkImpoTE" checked>
+                <label class="form-check-label" for="checkImpoTE">
+                  TE
+                </label>
+              </div>
+              <div class="form-check" style="width: 55px;">
+                <input class="form-check-input" type="checkbox" value="4" id="checkImpoTN" checked>
+                <label class="form-check-label" for="checkImpoTN">
+                  TN
+                </label>
+              </div>
+            </div>
+            <div class="col"  style="flex: 0;">
+              <br>
+              <div class="form-check" style="width: 55px;">
+                <input class="form-check-input" type="checkbox" value="3" id="checkImpoTI" checked>
+                <label class="form-check-label" for="checkImpoTI">
+                  TI
+                </label>
+              </div>
+            </div>
+           </div>
+
+            <div class="col-12" style="margin: 0 !important;padding: 0 !important; text-align: center;">
+              <button style="width: 93%;" class="btn-apple btn btn_filtrar_comissoesComerciais">Filtrar</button>
+            </div>
+          </div>
+         
+       
         </ul>
+       
   </div>
 
   <div class="CorpoWin text-white">
     <div class="tab-content" id="myTabContent">
 
-      <div class="row" style="margin-bottom: 5px; font-size: 12px; padding-left: 10px">
-        <div class="col">
-          De:
-          <input id="startDate_comissoes" class="form-control CampoEscrito" type="date" value="<script> formatDate(new Date()) </script>" style="font-size: 12px;width: 165px;"/>
-          Até:
-          <input id="endDate_comissoes" class="form-control CampoEscrito" type="date" style="font-size: 12px;width: 165px;"/>
-        </div>
-        <div class="col">
-          Recebimento:
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkRec_pendente" value="" checked>
-            <label class="form-check-label" for="check_rec_pendente" >
-              Pendente
-            </label>
-          </div>
-          <div class="form-check">
-            
-            <input class="form-check-input" type="checkbox" value="" id="checkRec_SemRecebimento" checked>
-            <label class="form-check-label" for="flexCheckChecked">
-              Sem recebimento
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkRec_Recebido" checked>
-            <label class="form-check-label" for="checkRec_recebido">
-              Recebido
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          Pagamento:
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkPag_Pendente" checked>
-            <label class="form-check-label" for="checkPag_pendente">
-              Pendente
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkPag_SemPagamento" checked>
-            <label class="form-check-label" for="checkPag_SemPagamento">
-              Sem pagamento
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkPag_Pago" checked>
-            <label class="form-check-label" for="checkPag_Pago">
-              Pago
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          Agente:
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkAge_Pendente" checked>
-            <label class="form-check-label" for="checkAge_Pendente">
-              Pendente
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkAge_SemPagamento" checked> 
-            <label class="form-check-label" for="checkAge_SemPagamento">
-              Sem pagamento
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkAge_Pago" checked>
-            <label class="form-check-label" for="checkAge_Pago">
-              Pago
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          Vendedor
-          <select style="width: 100%;" id="seleciona_vendedor" class="form-select">
-          
-          </select>
-          Inside sales
-          <select style="width: 100%;" id="seleciona_IS"  class="form-select">
-          
-          </select>
-        </div>
-        <div class="col">
-          Comissão vendedor:
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="1" id="checkComissaoVendedor_Pago" checked>
-            <label class="form-check-label" for="checkComissaoVendedor_Pago">
-              Pago
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="0" id="checkComissaoVendedor_SemPagamento" checked>
-            <label class="form-check-label" for="checkComissaoVendedor_SemPagamento">
-              Sem pagamento
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          Comissão IS:
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkComissaoIS_Pago" checked>
-            <label class="form-check-label" for="checkComissaoIS_Pago">
-              Pago
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkComissaoIS_SemPagamento" checked>
-            <label class="form-check-label" for="checkComissaoIS_SemPagamento">
-              Sem pagamento
-            </label>
-          </div>
-        </div>
-
-        <div class="col" style="flex: 0;">
-          Modal:
-          <div class="form-check" style="width: 55px;">
-            <input class="form-check-input" type="checkbox" value="1" id="checkImpoIM" checked>
-            <label class="form-check-label" for="checkImpoIM">
-              IM
-            </label>
-          </div>
-          <div class="form-check" style="width: 55px;">
-            <input class="form-check-input" type="checkbox" value="2" id="checkImpoIA" checked>
-            <label class="form-check-label" for="checkImpoIA">
-              IA
-            </label>
-          </div>
-          <div class="form-check" style="width: 55px;">
-            <input class="form-check-input" type="checkbox" value="2" id="checkImpoNA" checked>
-            <label class="form-check-label" for="checkImpoNA">
-              NA
-            </label>
-          </div>
-          <div class="form-check" style="width: 55px;">
-            <input class="form-check-input" type="checkbox" value="2" id="checkImpoCB" checked>
-            <label class="form-check-label" for="checkImpoCB">
-              CB
-            </label>
-          </div>
-        </div>
-        <div class="col" style="flex: 0;">
-          <br>
-          <div class="form-check" style="width: 55px;">
-            <input class="form-check-input" type="checkbox" value="3" id="checkImpoEM" checked>
-            <label class="form-check-label" for="checkImpoEM">
-              EM
-            </label>
-          </div>
-          <div class="form-check" style="width: 55px;">
-            <input class="form-check-input" type="checkbox" value="4" id="checkImpoEA" checked>
-            <label class="form-check-label" for="checkImpoEA">
-              EA
-            </label>
-          </div>
-          <div class="form-check" style="width: 55px;">
-            <input class="form-check-input" type="checkbox" value="4" id="checkImpoTE" checked>
-            <label class="form-check-label" for="checkImpoTE">
-              TE
-            </label>
-          </div>
-          <div class="form-check" style="width: 55px;">
-            <input class="form-check-input" type="checkbox" value="4" id="checkImpoTN" checked>
-            <label class="form-check-label" for="checkImpoTN">
-              TN
-            </label>
-          </div>
-        </div>
-        <div class="col"  style="flex: 0;">
-          <br>
-          <div class="form-check" style="width: 55px;">
-            <input class="form-check-input" type="checkbox" value="3" id="checkImpoTI" checked>
-            <label class="form-check-label" for="checkImpoTI">
-              TI
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="row btn_funcoes" style="margin-right: 0px;margin-left: 0;">
-        <div class="col-12" style="margin: 0 !important;padding: 0 !important; text-align: center;">
-            <button style="width: 30%;" class="btn-apple btn btn_filtrar_comissoesComerciais">Filtrar</button>
-        </div>
-    </div>
+  
    
       
 
@@ -393,7 +400,7 @@
       </div>
       <div class="row btn_funcoes_fim" style="margin-right: 0px;margin-left: 0;">
         <div class="col-12" style="margin: 0 !important;padding: 0 !important;">
-            <button style="width: 100%;border-radius: 0px 0px 0px 0px;" class="btn-apple btn btn_envia_para_pagamento">Enviar para pagamento</button>
+            <button style="width: 100%;border-radius: 0px 0px 0px 0px;" class="btn-apple btn btn_envia_para_pagamento">Gerar</button>
         </div>
       </div>
     </div>    
