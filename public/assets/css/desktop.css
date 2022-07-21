@@ -704,5 +704,26 @@ background-color: #0a85ff;
     position: absolute;
 }
 
+.formularioColaborador{
+    display: none;
+    right: 50%;
+    margin-right: -171px;
+    top: 50%;
+    margin-top: -199px;
+    border-radius: 10px;
+    z-index: 9999999999999999;
+    width: 342px;
+    height: 170px;
+    position: absolute;
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.formularioColaborador .close{
+    color: white;
+    right: 10px;
+    position: absolute;
+}
+
 
   
