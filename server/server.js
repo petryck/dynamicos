@@ -1466,6 +1466,31 @@ if(filtros.modal.TI == true && contagem_modal == 0){
     })
   })
 
+  app.post('/remove_comissionado', (req, res) => {
+  var id = req.body.id;
+
+    var sql = `DELETE FROM Comissoes WHERE idComissoes = ${id}`;
+    console.log(sql)
+    connection.query(sql, function(err2, results){
+      res.json(results);
+    })
+  })
+  
+
+
+  app.post('/lista_colaboradores_comissao', (req, res) => {
+  
+    var sql = `SELECT nome,id_colaboradores FROM SIRIUS.colaboradores
+    JOIN Comissoes ON colaboradores.id_colaboradores = Comissoes.IdColaborador
+    GROUP BY id_colaboradores`;
+    connection.query(sql, function(err2, results){
+      res.json(results);
+    })
+  })
+
+
+  
+
   app.post('/lista_filial', (req, res) => {
   
     var sql = `SELECT * FROM SIRIUS.filial`;
@@ -1491,6 +1516,29 @@ if(filtros.modal.TI == true && contagem_modal == 0){
       res.json(results);
     })
   })
+
+
+
+  
+  app.post('/cad_comissionado', (req, res) => {
+   
+    var IdColaborador_com = req.body.colaboradores;
+    var ValorMin_com = req.body.ValorMin;
+    var ValorMax_com = req.body.ValorMax;
+    var Porcentagem_com = req.body.Porcentagem;
+
+
+    var sql = `INSERT INTO Comissoes (IdColaborador, ValorInicio, ValorFinal, Porcentagem) 
+    VALUES (${parseInt(IdColaborador_com)},${parseFloat(ValorMin_com)},${parseFloat(ValorMax_com)},${parseFloat(Porcentagem_com)})`;
+
+    connection.query(sql, function(err2, results){
+
+      res.json('sucesso');
+    })
+
+
+  })
+
 
   app.post('/cad_visitante', (req, res) => {
 
@@ -1662,8 +1710,46 @@ if(filtros.modal.TI == true && contagem_modal == 0){
   
   })
 
+  app.post('/QueryTabelaConfComissoes', function (req, res) {
+    var arrayLiteral2 = [];
 
-  
+
+    var sql = `SELECT * FROM SIRIUS.Comissoes
+               JOIN colaboradores ON Comissoes.IdColaborador = colaboradores.id_colaboradores`;
+
+    connection.query(sql, function(err2, results){
+          results.forEach(e => {
+            
+                    
+                    
+            var objeto = {
+              id: e.idComissoes,
+              foto:'<img src="'+e.img_sistema+'" style="width: 45px;border-radius: 17%; max-height: 45px;background: white;">',
+              nome: '<span style="white-space: nowrap;">'+capitalizeFirst(e.nome)+'</span>',
+              ValorMinimo:e.ValorInicio.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
+              ValorMaximo:e.ValorFinal.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
+              Porcentagem:e.Porcentagem+'%'
+          }
+        
+
+
+          arrayLiteral2.push(objeto);
+          })
+
+          let saida = {
+            "draw": 1,
+            "recordsTotal": results.length,
+            "recordsFiltered": results.length,
+            "data": arrayLiteral2
+          } 
+
+
+          res.json(saida)
+
+
+    })
+
+  })
   app.post('/QueryTabelaColaboradoresRH', function (req, res) {
     var arrayLiteral2 = [];
     

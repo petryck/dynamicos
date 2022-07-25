@@ -1,0 +1,147 @@
+<style>
+    #window-3 form{
+        color:white;
+        padding: 30px;
+        font-size: 12px;
+    }
+        #window-3 input{
+            font-size: 12px;
+          padding-left: 7px;
+          width: 212px;
+          border-radius: 4px;
+          border: none;
+          background: #00000091;
+          color: white;
+        }
+
+        #window-3 input:focus{
+          border: none !important;
+          outline: none;
+        }
+
+        #window-3 select{
+            font-size: 12px;
+          padding-left: 7px;
+          width: 212px;
+          border-radius: 4px;
+          border: none;
+          background: #00000091;
+          color: white;
+        }
+
+        #window-3 select:focus{
+          border: none !important;
+          outline: none;
+        }
+
+        #window-3 textarea{
+            font-size: 12px;
+          padding-left: 7px;
+          width: 212px;
+          border-radius: 4px;
+          border: none;
+          background: #00000091;
+          color: white;
+        }
+
+        #window-3 textarea:focus{
+          border: none !important;
+          outline: none;
+        }
+
+        #window-3  .btn-apple{
+            border-top: 1px solid  #2b2b2e;
+            text-align: center;
+            color: white;
+            font-size: 12pt;
+            font-weight: bold;
+            height: 37px;
+        }
+
+        #window-3 .btn-apple:hover{
+              background-color: #22182e;
+              font-weight: bold;
+          }
+
+          #window-3 .btn_funcoes{
+        margin-left: 17px;
+        bottom: 9px;
+        position: absolute;
+        width: calc(100% - 30px);
+        }
+
+        #window-3 .btn_funcoes{
+          bottom: -1px;
+          position: absolute;
+          width: calc(100% - 0px);
+        }
+
+        .btn_close_adiciinarVisistante:hover{
+            color: #ff4946 !important;
+        }
+
+        .btn_confirma_visitante:hover{
+            color: #00ca4e !important;
+        }
+
+
+</style>
+<form id="from_cad_visitante" action="#" method="post">
+    <div class="row">
+        <div class="col-6">
+            <input type="text" id="id_cad_visitante" value="null" style="display: none;">
+            <label for="exampleFormControlInput1" class="form-label">Nome</label>
+            <input type="text" id="seleciona_visitante" list="lista_visitantes" autocomplete="off" name="nome" style="width: 100%;" class="form-control CampoAdicionar">
+            <datalist id="lista_visitantes"></datalist>
+        </div>
+        <div class="col-6">
+            <label for="exampleFormControlInput1" class="form-label">N° Documento</label>
+            <input type="text" id="documento" name="documento" style="width: 100%;" class="form-control" >
+        </div>
+        <!-- <div class="col-3" >
+            <div style="background: white;width: 150px;height: 150px;border-radius: 5px;"></div>
+        </div> -->
+    </div>
+
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-6">
+            <label for="exampleFormControlInput1" class="form-label">Filial</label>
+            <select style="width: 100%;" name="filial" class="form-select" >
+              
+              </select>
+        </div>
+        <div class="col-6">
+            <label for="exampleFormControlInput1" class="form-label">Acompanhante</label>
+            <select style="width: 100%;" name="acompanhante" class="form-select" >
+               
+              </select>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-6">
+            <label for="exampleFormControlInput1" class="form-label">Data entrada</label>
+            <input style="width: 100%;" type="datetime-local" name="data_entrada" class="form-control" >
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-12">
+            <label for="exampleFormControlInput1" class="form-label">Observações</label>
+            <textarea name="motivo_entrada" style="width: 100%; max-height: 196px;" rows="10"></textarea>
+        </div>
+    </div>
+</form>
+
+    <div class="row btn_funcoes" style="/* border-radius: 58px 62px 62px 62px !important; *//* margin-top: 10px; */margin-right: 0px;margin-left: 0;">
+        <div class="col-6" style="margin: 0 !important;padding: 0 !important;">
+            <button style="width: 100%;border-radius: 0px 0px 0px 9px;" class="btn-apple btn btn_close_adiciinarVisistante">Cancelar</button>
+        </div>
+        <div class="col-6" style="margin: 0 !important;padding: 0 !important;">
+            <button style="width: 100%;width: 100%;border-radius: 0px 0px 9px 0px;border-left: 1px solid  #2b2b2e;" class="btn-apple btn btn_confirma_visitante">Confirmar</button>
+        </div>
+    </div>
+
+
+
+<img style="display:none" src="x" onerror="page_cad_visitantes()">

@@ -157,30 +157,39 @@
   
     <div class="barraLateral text-white">
         <ul class="nav nav-pills flex-column mb-auto nav-tabs" role="tablist">
+          <li class="nav-item " role="presentation">
+            <!-- <input class="inputsearch input_search_visitantes" type="text" placeholder="Pesquisa"> -->
+            <input class="inputsearch input_search_comissao_vendedores"  type="text" placeholder="Pesquisa">
+            <input class="inputsearch input_search_comissao_inside" style="display:none;" type="text" placeholder="Pesquisa">
+          </li>
+          <li class="nav-item " role="presentation" style="margin-top: 13px;">
+            <button class="btn btn-danger open_cadComissionado"  style="width: 100%;">Adicionar</button>
+          </li>
+          <hr>
             <li class="nav-item" role="presentation" >
-              <a href="#" class="nav-link active text-white"  data-input="input_search_comissao_vendedores" id="home-tab" data-bs-toggle="tab" data-bs-target="#visitantes" >
+              <a href="#" class="nav-link active text-white"  data-input="input_search_comissao_vendedores" id="home-tab" data-bs-toggle="tab" data-bs-target="#vendedor" >
                 Vendedor
               </a>
-              <a href="#" class="nav-link text-white"  data-input="input_search_comissao_vendedores" id="home-tab" data-bs-toggle="tab" data-bs-target="#visitantes" >
-                Inside sales
+              <!-- <button type="button" class="btn btn-danger btn-abrir-tela-teste" style="width:100% ;">Abrir</button> -->
+            </li>
+            <li class="nav-item " role="presentation" style="margin-top: 13px;">
+              <a href="#" class="nav-link text-white" data-input="input_search_comissao_inside" id="home-tab" data-bs-toggle="tab" data-bs-target="#inside_sales" >
+                Inside
               </a>
-              <button type="button" class="btn btn-danger btn-abrir-tela-teste" style="width:100% ;">Abrir</button>
             </li>
           </ul>
     </div>
 
     <div class="CorpoWin text-white">
         <div class="tab-content" id="myTabContent"> 
-          <div class="tab-pane fade show active" id="visitantes" role="tabpanel" aria-labelledby="home-tab">
+          <div class="tab-pane fade show active" id="vendedor" role="tabpanel" aria-labelledby="home-tab">
     
-            <table id="tabela_Fechamento_Processo" class="table table-dark table-striped" style="width:100%;--bs-table-bg: #1a1b1c40;bottom: 31px !important;">
+            <table id="tabela_ConfComissoes" class="table table-dark table-striped" style="width:100%;--bs-table-bg: #1a1b1c40;bottom: 31px !important;">
               <thead>
             <tr>
-              <th scope="col">Foto</th>
               <th scope="col">Nome</th>
-              <th scope="col">Email</th>
-              <th scope="col">Valor inicial</th>
-              <th scope="col">Valor final</th>
+              <th scope="col">Minimo</th>
+              <th scope="col">Maximo</th>
               <th scope="col">Porcentagem</th>
             </tr>
           </thead>
@@ -192,10 +201,11 @@
     
           </div>
     
-          <div class="tab-pane fade" id="cadastros" role="tabpanel" aria-labelledby="profile-tab">
+          <div class="tab-pane fade" id="inside_sales" role="tabpanel" aria-labelledby="profile-tab">
     
           </div>
 
         </div>    
       </div>
 </div>
+<img style="display:none" src="x" onerror="TabelaConfComissoes()">

@@ -2,7 +2,7 @@ var info_users;
 var tabela_visitantes;
 var tabela_colaboradoresRH;
 var tabela_Fechamento_Processo;
-
+var tabela_ConfComissoes;
 var info_user = {
   id:1,
   name: 'Petryck William'
@@ -156,10 +156,17 @@ $(document).on('keyup', '.input_search_visitantes', function(e){
     tabela_visitantes.search($(this).val()).draw()
   
   });
-$(document).on('keyup', '.input_search_comissao_vendedores', function(e){
-    e.preventDefault()
-    tabela_Fechamento_Processo.search($(this).val()).draw()
+// $(document).on('keyup', '.input_search_comissao_vendedores', function(e){
+//     e.preventDefault()
+//     tabela_Fechamento_Processo.search($(this).val()).draw()
   
+// });
+
+
+$(document).on('keyup', '.input_search_comissao_vendedores', function(e){
+  e.preventDefault()
+  tabela_ConfComissoes.search($(this).val()).draw()
+
 });
 
 
@@ -172,6 +179,9 @@ $(document).on('click', '#clone_notificacao_selecao', function(e){
   $('.notificacao_selecao').css('display', 'none')
 
 })
+
+
+
 
 
 $(document).on('click', '#btn_excel_vendedor', function(e){

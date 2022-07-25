@@ -43,7 +43,6 @@ function TabelaColaboradoresRH(){
         "lengthChange": false,
         "rowId": "id",
         "columns": [
-            {"data": "foto"},
             {"data": "nome"},
             {"data": "cpf"},
             {"data": "filial"},
@@ -121,11 +120,5 @@ tabela_Fechamento_Processo = $('#tabela_Fechamento_Processo').DataTable({
             "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json"
        }
   })
-
-           
-
-                
-
-
 
 }
