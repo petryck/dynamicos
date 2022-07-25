@@ -14,6 +14,13 @@ $(document).on('click', '.open_cadComissionado', function(e){
 //   })
 
 
+  $(document).on('click', '.btn_confirmarPgtos', function(e){
+    e.preventDefault()
+ 
+    open_app('12', 'Confirmar pagamentos', '1500px', '700px', )
+  
+  })
+
   $(document).on('click', '.btn_close_comissionado', function(e){
     e.preventDefault()
  
