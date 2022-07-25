@@ -206,10 +206,89 @@ $('body').append(`<iframe src="/export_csv?processos=${contagem_selecionados}" s
 
 });
 
-$(document).on('click', '#btn_pagar_inside', function(e){
-  e.preventDefault()
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-alert('pagar inside')
+
+$(document).on('click', '#btn_email_vendedor', function(e){
+
+  $(this).attr('disabled', true)
+  $('#btn_email_inside').attr('disabled', true)
+  var lista_selecionados = tabela_Fechamento_Processo.rows({
+    selected: true
+    }).ids()
+
+    var contagem_selecionados = [];
+    for (let index = 0; index < lista_selecionados.length; index++) {
+    contagem_selecionados.push(lista_selecionados[index])
+
+
+    }
+ 
+
+  var now = new Date();
+  var codigo = now.getDay()+''+now.getDate()+''+now.getMonth()+''+now.getFullYear()+''+now.getMinutes()+''+now.getSeconds()
+  var responsavel = info_users[0]['nome'];
+ 
+
+ $.ajax({
+    type: 'POST',
+    url: '/send_mail_comissoes',
+    data:{processos:JSON.stringify(contagem_selecionados), codigo:codigo, responsavel:responsavel,tipo:1},
+    success: function (data) {
+      console.info(data)
+  // console.log(data)
+  $('#btn_email_vendedor').attr('disabled', false)
+  $('#btn_email_inside').attr('disabled', false)
+  macOSNotif({autoDismiss:5,title:'Sucesso',subtitle:'Email de comissão enviado.', btn2Text:null})
+    
+
+    }
+
+  })
+
+});
+
+
+$(document).on('click', '#btn_email_inside', function(e){
+
+  $(this).attr('disabled', true)
+  $('#btn_email_vendedor').attr('disabled', true)
+
+  var lista_selecionados = tabela_Fechamento_Processo.rows({
+    selected: true
+    }).ids()
+
+    var contagem_selecionados = [];
+    for (let index = 0; index < lista_selecionados.length; index++) {
+    contagem_selecionados.push(lista_selecionados[index])
+
+
+    }
+ 
+
+  var now = new Date();
+  var codigo = now.getDay()+''+now.getDate()+''+now.getMonth()+''+now.getFullYear()+''+now.getMinutes()+''+now.getSeconds()
+  var responsavel = info_users[0]['nome'];
+ 
+
+ $.ajax({
+    type: 'POST',
+    url: '/send_mail_comissoes',
+    data:{processos:JSON.stringify(contagem_selecionados), codigo:codigo, responsavel:responsavel,tipo:2},
+    success: function (data) {
+      console.info(data)
+  // console.log(data)
+  $('#btn_email_inside').attr('disabled', false)
+  $('#btn_email_vendedor').attr('disabled', false)
+  macOSNotif({autoDismiss:5,title:'Sucesso',subtitle:'Email de comissão enviado.', btn2Text:null})
+
+    }
+
+  })
 
 });
 
