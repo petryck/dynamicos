@@ -352,15 +352,10 @@ function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
 
 
                       
-                                var sql = `INSERT INTO Relatorio_comissoes (Codigo, IdProcesso, Comissao, Data, Vendedor, Inside, Profit, Porcentagem, Comissao) 
+                                var sql = `INSERT INTO Relatorio_comissoes (Codigo, IdProcesso, Comissao, Data, Vendedor, Inside, Profit, Porcentagem, Comissao_valor) 
                                             VALUES
-                                           ('${codigo}', '${e.Numero_Processo}', ${tipo}, '${data}', 
-                                           '${e.Vendedor == '' || e.Vendedor == null ? 'Sem Seleção' : titleize(e.Vendedor, 'vendedor')}', 
-                                           '${e.Inside_Sales == '' || e.Inside_Sales == null ? 'Sem Seleção' : titleize(e.Inside_Sales, 'inside')}',
-                                           '${e.Valor_Estimado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}',
-                                           '${element.Porcentage}',
-                                           '${comissao.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}' )`
-                                           
+                                           ('${codigo}', '${e.Numero_Processo}', ${tipo}, '${data}', '${e.Vendedor == '' || e.Vendedor == null ? 'Sem Seleção' : titleize(e.Vendedor, 'vendedor')}', '${e.Inside_Sales == '' || e.Inside_Sales == null ? 'Sem Seleção' : titleize(e.Inside_Sales, 'inside')}','${e.Valor_Estimado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}','${element.Porcentagem}','${comissao.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}' )`
+
                                           connection.query(sql, function(err2, results){
                                             if(err2){
                                               console.log(err2)
