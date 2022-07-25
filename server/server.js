@@ -267,7 +267,7 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
 })
 var Row_process = 'dsa';
 var mensagem_email_comissao = ``;
-function CREATETABLE_COMISSOES(processos, tipo, mensagem){
+function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
   return new Promise((resolve,reject)=>{
     var valor_total = 0;
     mensagem_email_comissao = mensagem;
@@ -349,6 +349,24 @@ function CREATETABLE_COMISSOES(processos, tipo, mensagem){
                               </tr>`;
 
                               valor_total = valor_total+comissao;
+
+
+                      
+                                var sql = `INSERT INTO Relatorio_comissoes (Codigo, IdProcesso, Comissao, Data, Vendedor, Inside, Profit, Porcentagem, Comissao) 
+                                            VALUES
+                                           ('${codigo}', '${e.Numero_Processo}', ${tipo}, '${data}', 
+                                           '${e.Vendedor == '' || e.Vendedor == null ? 'Sem Seleção' : titleize(e.Vendedor, 'vendedor')}', 
+                                           '${e.Inside_Sales == '' || e.Inside_Sales == null ? 'Sem Seleção' : titleize(e.Inside_Sales, 'inside')}',
+                                           '${e.Valor_Estimado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}',
+                                           '${element.Porcentage}',
+                                           '${comissao.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}' )`
+                                           
+                                          connection.query(sql, function(err2, results){
+                                            if(err2){
+                                              console.log(err2)
+                                            }
+                                          })
+                             
                             }
 
                           });
@@ -414,9 +432,12 @@ app.post('/send_mail_comissoes', async (req, res) => {
     var mensagem_email = `Olá, segue processos para pagamento de comissão <strong>Inside</strong>.`;
   }
 
-await CREATETABLE_COMISSOES(processos, tipo, mensagem_email);
+await CREATETABLE_COMISSOES(processos, tipo, mensagem_email, codigo, data);
 
 
+
+
+             
 
    ejs.renderFile(path.join(__dirname, '../public/Apps/TemplatesEmail/Comissaos_VendedorInside.ejs'), { responsavel:responsavel, texto: mensagem_email_comissao, processos: Row_process, codigo: codigo }, function (err, data) {
     if (err) {
@@ -429,6 +450,9 @@ await CREATETABLE_COMISSOES(processos, tipo, mensagem_email);
                 html: data
               };
               send_email(mailOptions)
+
+
+              
               res.send('ok')
     }
     
@@ -1478,15 +1502,15 @@ if(filtros.modal.TI == true && contagem_modal == 0){
   
 
 
-  app.post('/lista_colaboradores_comissao', (req, res) => {
+  // app.post('/lista_colaboradores_comissao', (req, res) => {
   
-    var sql = `SELECT nome,id_colaboradores FROM SIRIUS.colaboradores
-    JOIN Comissoes ON colaboradores.id_colaboradores = Comissoes.IdColaborador
-    GROUP BY id_colaboradores`;
-    connection.query(sql, function(err2, results){
-      res.json(results);
-    })
-  })
+  //   var sql = `SELECT nome,id_colaboradores FROM SIRIUS.colaboradores
+  //   JOIN Comissoes ON colaboradores.id_colaboradores = Comissoes.IdColaborador
+  //   GROUP BY id_colaboradores`;
+  //   connection.query(sql, function(err2, results){
+  //     res.json(results);
+  //   })
+  // })
 
 
   
