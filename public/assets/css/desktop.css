@@ -736,7 +736,7 @@ background-color: #0a85ff;
     background-color: #22182e;
 }
 
-.formularioColaborador.btn-apple:hover{
+.formularioColaborador .btn-apple:hover{
     background-color: #3b007e;
     font-weight: bold;
 }  
