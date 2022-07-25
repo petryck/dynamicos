@@ -197,7 +197,7 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
       value: 'Modalidade'
     },{
       label: 'Processo',
-      value: 'Processo'
+      value: 'NumeroProcesso'
     },{
       label: 'Data Compensacao',
       value: 'DataCompensacao'
