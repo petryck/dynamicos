@@ -719,10 +719,10 @@ background-color: #0a85ff;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.formularioColaborador .close{
-    color: white;
-    right: 10px;
+.formularioColaborador .btn_funcoes{
+    bottom: -1px;
     position: absolute;
+    width: calc(100% - 0px);
 }
 
 .formularioColaborador .btn-apple{
