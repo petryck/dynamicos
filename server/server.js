@@ -85,24 +85,32 @@ var connection = mysql.createConnection({
 
 
   function send_email(mailOptions){
+  
 
-    var remetente = nodemailer.createTransport({
-      name: 'marketing@conline-news.com',
-      host: 'mail.conline-news.com',
-      service:'mail.conline-news.com',
-      port: 465,
-      maxMessages: 10,
-      secure: true,
-      pool:true,
-      rateDelta:1000,
-      rateLimit: 1000,
+    // var remetente = nodemailer.createTransport({
+    //   name: 'sirius@conlinebr.com.br',
+    //   host: 'smtp.gmail.com',
+    //   service:'gmail',
+    //   port: 587,
+    //   maxMessages: 10000,
+    //   secure: true,
+    //   pool:true,
+    //   rateDelta:1000,
+    //   rateLimit: 1000,
+    //   auth:{
+    //   user: 'sirius@conlinebr.com.br',
+    //   pass: 'lock2510' },
+    //   tls: {
+    //     rejectUnauthorized: false
+    //   },
+    //   debug : true
+    //   });
+
+       var remetente = nodemailer.createTransport({
+      service:'gmail',
       auth:{
-      user: 'marketing@conline-news.com',
-      pass: 'conline191919aA@' },
-      tls: {
-        rejectUnauthorized: false
-      },
-      debug : true
+      user: 'sirius@conlinebr.com.br',
+      pass: 'lock2510' }
       });
 
   //  var mailOptions = {
@@ -114,6 +122,7 @@ var connection = mysql.createConnection({
 
 
   remetente.sendMail(mailOptions, function(error, info){
+
     if (error) {
     // console.log(error);
     console.log('erro ao enviar email para: '+element.Email)
@@ -145,8 +154,6 @@ function formatDate(date) {
 
 app.get('/export_csv', (req, res) => {
 
-console.log(req.query.processos)
-
 var arrayLiteral2 = [];
 var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${req.query.processos}) ORDER BY IdLogistica_House asc`;
       console.log(sql)
@@ -175,9 +182,9 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
               Exportador: e.Exportador == '' || e.Exportador == null ? 'Sem Seleção' : titleize(e.Exportador, 'exportador'),
               ComissaoVendedor: e.Comissao_Vendedor_Pago == 1 ? 'Pago' : 'Pendente',
               ComissaoIS: e.Comissao_Inside_Sales_Pago == 1 ? 'Pago' : 'Pendente',
-              ValorEstimado: e.Valor_Estimado,
-              ValorEfetivo: e.Valor_Efetivo,
-              Restante: e.Restante
+              ValorEstimado: e.Valor_Estimado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
+              ValorEfetivo: e.Valor_Efetivo.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
+              Restante: e.Restante.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
           }
          
          
@@ -186,10 +193,7 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
 
           const myData = arrayLiteral2;
 
-    const fields2 = ['Modalidade', 'Processo', 'DataCompensacao', 'TipoCarga',
-                    'Cliente', 'Vendedor', 'InsideSales', 'Importador', 'Exportador', 
-                    'ComissaoVendedor','ComissaoIS','ValorEstimado',
-                    'ValorEfetivo','Restante'];
+  
 
     const fields = [
       {
@@ -240,18 +244,19 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
     const opts = { 
       delimiter: ';',
       encoding: 'ISO 8859-1',
-      excelStrings: true,
-      fields
+      fields,
+      excelStrings:true, 
+      withBOM: true
     };
 
     const parser = new json2csv.Parser(opts);
   
     const csv = parser.parse(myData);
-    console.log(csv);
+
     res.header('Content-type', 'text/csv; charset=utf-8');
     // res.header('Content-disposition', 'attachment; filename=excel.csv'); 
     // res.write(Buffer.from('EFBBBF', 'hex')); // BOM header
-    res.attachment((new Date()).getTime()+'.csv');
+    res.attachment(req.query.nome_doc+(new Date()).getTime()+'.csv');
     res.status(200).send(csv);
 
    })
@@ -285,7 +290,6 @@ function CREATETABLE_COMISSOES(processos, tipo, mensagem){
           
           Row_process = `<tr>
           <td style="border-color:black;border-style:solid;border-width:1px;font-weight: 900;text-align: center">REFERENCIA</td>
-          <td style="border-color:black;border-style:solid;border-width:1px;font-weight: 900;text-align: center">CLIENTE</td>
           <td style="border-color:black;border-style:solid;border-width:1px;font-weight: 900;text-align: center">VENDEDOR</td>
           <td style="border-color:black;border-style:solid;border-width:1px;font-weight: 900;text-align: center">INSIDE</td>
           <td style="border-color:black;border-style:solid;border-width:1px;font-weight: 900;text-align: center">PROFIT</td>
@@ -325,9 +329,18 @@ function CREATETABLE_COMISSOES(processos, tipo, mensagem){
                                 var comissao = (e.Valor_Estimado / 100) * 1;
                               }
 
+                              // Row_process += `<tr>
+                              // <td style="border-color:black;border-style:solid;border-width:1px;white-space: nowrap;">${e.Numero_Processo}</td>
+                              // <td style="border-color:black;border-style:solid;border-width:1px;">${e.Cliente == '' || e.Cliente == null ? 'Sem Seleção' : titleize(e.Cliente, 'cliente')}</td>
+                              // <td style="border-color:black;border-style:solid;border-width:1px;white-space: nowrap;padding: 8px;">${e.Vendedor == '' || e.Vendedor == null ? 'Sem Seleção' : titleize(e.Vendedor, 'vendedor')}</td>
+                              // <td style="border-color:black;border-style:solid;border-width:1px;white-space: nowrap;padding: 8px;">${e.Inside_Sales == '' || e.Inside_Sales == null ? 'Sem Seleção' : titleize(e.Inside_Sales, 'inside')}</td>
+                              // <td style="border-color:black;border-style:solid;border-width:1px;text-align: right;white-space: nowrap;">${e.Valor_Estimado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</td>
+                              // <td style="border-color:black;border-style:solid;border-width:1px;text-align: center;white-space: nowrap;padding: 8px;">${element.Porcentagem}%</td>
+                              // <td style="border-color:black;border-style:solid;border-width:1px;text-align: right;white-space: nowrap;padding: 8px;"><strong>${comissao.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</strong></td>
+                              // </tr>`;
+
                               Row_process += `<tr>
                               <td style="border-color:black;border-style:solid;border-width:1px;white-space: nowrap;">${e.Numero_Processo}</td>
-                              <td style="border-color:black;border-style:solid;border-width:1px;">${e.Cliente == '' || e.Cliente == null ? 'Sem Seleção' : titleize(e.Cliente, 'cliente')}</td>
                               <td style="border-color:black;border-style:solid;border-width:1px;white-space: nowrap;padding: 8px;">${e.Vendedor == '' || e.Vendedor == null ? 'Sem Seleção' : titleize(e.Vendedor, 'vendedor')}</td>
                               <td style="border-color:black;border-style:solid;border-width:1px;white-space: nowrap;padding: 8px;">${e.Inside_Sales == '' || e.Inside_Sales == null ? 'Sem Seleção' : titleize(e.Inside_Sales, 'inside')}</td>
                               <td style="border-color:black;border-style:solid;border-width:1px;text-align: right;white-space: nowrap;">${e.Valor_Estimado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</td>
@@ -340,7 +353,7 @@ function CREATETABLE_COMISSOES(processos, tipo, mensagem){
 
                           });
 
-                          console.log(result.recordset.length, conut_row)
+                      
                           if(result.recordset.length == conut_row){
                             if(tipo == 1){
                               var nome = result.recordset[0]['Vendedor'];
@@ -351,9 +364,9 @@ function CREATETABLE_COMISSOES(processos, tipo, mensagem){
                                 mensagem_email_comissao += `<br> Comissionado: <strong> ${titleize(nome, 'cliente')}<strong>`;
                               }
 
-                            console.log(mensagem_email_comissao)
+                       
                             Row_process += `<tr>
-                              <td colspan="6" style="border-color:black;border-style:solid;border-width:1px;text-align: right;padding-right:8px;">COMISSÃO TOTAL</td>
+                              <td colspan="5" style="border-color:black;border-style:solid;border-width:1px;text-align: right;padding-right:8px;">COMISSÃO TOTAL</td>
                               <td style="border-color:black;border-style:solid;border-width:1px;text-align: right;white-space: nowrap;padding: 8px;"><strong>${valor_total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</strong></td>
                               </tr>`;
           
@@ -410,8 +423,8 @@ await CREATETABLE_COMISSOES(processos, tipo, mensagem_email);
         console.log(err);
     } else {
         var mailOptions = {
-                from: 'Sirius OS <marketing@conline-news.com>',
-                to: 'petryck.leite@conlinebr.com.br',
+                from: 'Sirius OS <sirius@conlinebr.com.br>',
+                to: 'comissao-adm@conlinebr.com.br',
                 subject: assunto,
                 html: data
               };
