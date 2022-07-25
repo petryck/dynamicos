@@ -174,7 +174,7 @@ $(document).on('click', '#clone_notificacao_selecao', function(e){
 })
 
 
-$(document).on('click', '#btn_pagar_vendedor', function(e){
+$(document).on('click', '#btn_excel_vendedor', function(e){
   e.preventDefault()
   var lista_selecionados = tabela_Fechamento_Processo.rows({
     selected: true
