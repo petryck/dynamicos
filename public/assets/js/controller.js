@@ -214,6 +214,14 @@ function getRandomInt(min, max) {
 
 
 $(document).on('click', '#btn_email_vendedor', function(e){
+  e.preventDefault()
+
+  if($('#seleciona_vendedor').val() == 0){
+    alert('Selecione o vendedor nos filtros')
+    return false;
+
+  }
+
 
   $(this).attr('disabled', true)
   $('#btn_email_inside').attr('disabled', true)
@@ -254,6 +262,12 @@ $(document).on('click', '#btn_email_vendedor', function(e){
 
 
 $(document).on('click', '#btn_email_inside', function(e){
+  e.preventDefault()
+  if($('#seleciona_IS').val() == 0){
+    alert('Selecione o Inside Sales nos filtros')
+    return false;
+
+  }
 
   $(this).attr('disabled', true)
   $('#btn_email_vendedor').attr('disabled', true)
@@ -284,6 +298,7 @@ $(document).on('click', '#btn_email_inside', function(e){
   // console.log(data)
   $('#btn_email_inside').attr('disabled', false)
   $('#btn_email_vendedor').attr('disabled', false)
+
   macOSNotif({autoDismiss:5,title:'Sucesso',subtitle:'Email de comissão enviado.', btn2Text:null})
 
     }
