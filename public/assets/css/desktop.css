@@ -713,7 +713,7 @@ background-color: #0a85ff;
     border-radius: 10px;
     z-index: 9999999999999999;
     width: 556px;
-    height: 322px;
+    height: 395px;
     position: absolute;
     backdrop-filter: blur(10px);
     background-color: rgba(0, 0, 0, 0.5);
@@ -740,3 +740,13 @@ background-color: #0a85ff;
     background-color: #3b007e;
     font-weight: bold;
 }  
+
+.formularioColaborador .textComissao{
+    font-size: 12px;
+    padding-left: 7px;
+    width: 150px;
+    border-radius: 4px;
+    border: none;
+    background: #00000091;
+    color: white;
+}
