@@ -15,6 +15,9 @@ import * as compressImage from '../server/src/imgcompress.js';
 import nodemailer from 'nodemailer'
 import * as json2csv  from 'json2csv';
 
+
+var lista_email = '';
+
 // compressImage
 
 app.use(cors());
@@ -309,6 +312,7 @@ function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
 
           connection.query(sql, function(err2, resultsColaborador){
                   var id = resultsColaborador[0]['id_colaboradores'];
+                  lista_email = 'comissao-adm@conlinebr.com.br;'+resultsColaborador[0]['email_corporativo'];
                  
 
                       var sql = `SELECT * FROM Comissoes WHERE IdColaborador = ${id}`;
@@ -430,8 +434,6 @@ app.post('/send_mail_comissoes', async (req, res) => {
 await CREATETABLE_COMISSOES(processos, tipo, mensagem_email, codigo, data);
 
 
-
-
              
 
    ejs.renderFile(path.join(__dirname, '../public/Apps/TemplatesEmail/Comissaos_VendedorInside.ejs'), { responsavel:responsavel, texto: mensagem_email_comissao, processos: Row_process, codigo: codigo }, function (err, data) {
@@ -440,7 +442,7 @@ await CREATETABLE_COMISSOES(processos, tipo, mensagem_email, codigo, data);
     } else {
         var mailOptions = {
                 from: 'Sirius OS <sirius@conlinebr.com.br>',
-                to: 'comissao-adm@conlinebr.com.br',
+                to: lista_email,
                 subject: assunto,
                 html: data
               };
