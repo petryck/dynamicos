@@ -143,13 +143,7 @@ $(document).on('click', '.open_cadComissionado', function(e){
   }
 
 
-  $(document).on('click', '.btn_PesquisaCodigo', function(e){
-    e.preventDefault()
-    var referencia = $('.input_search_CodigoComissao').val();
-    console.log(referencia)
-    TabelaHistoricoComissoes(referencia)
-  
-  })
+
 
   function TabelaConfComissoes(filtros){
     
@@ -183,40 +177,104 @@ tabela_ConfComissoes = $('#tabela_ConfComissoes').DataTable({
 }
 
 
-function TabelaHistoricoComissoes(id){
-    
-  // $('#tabela_Fechamento_Processo').dataTable().fnClearTable();
-  $('#tabela_ConfComissoes').dataTable().fnDestroy();
 
 
-  TabelaHistoricoComissoes = $('#TabelaHistoricoComissoes').DataTable({
-      "paging":   false,
-      "ordering": true,
-      "info":     false,
-      "lengthChange": false,
-      "rowId": "id",
-      "columns": [
-          {"data": "Codigo"},
-          {"data": "Processo"},
-          {"data": "Data"},
-          {"data": "Vendedor"},
-          {"data": "Inside"},
-          {"data": "Profit"},
-          {"data": "Porcentagem"},
-          {"data": "Comissao_valor"},
-          {"data": "Data"},
+function TabelaHistoricoComissoes_funcao(id){
+  console.log('dsadsa')
+$('#TabelaHistoricoComissoes').dataTable().fnClearTable();
+$('#TabelaHistoricoComissoes').dataTable().fnDestroy();
 
-       ],
-      "order": [ 0, "desc"],
-      "ajax": {
-          "url": "/QueryTabelaHistoricoComissao",
-          "type": "POST",
-          "data":{codigo:id}
-      },
-  "language": {
-          "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json"
-     }
+TabelaHistoricoComissoes = $('#TabelaHistoricoComissoes').DataTable({
+    "paging":   false,
+    "ordering": true,
+    "info":     false,
+    "lengthChange": false,
+    "rowId": "id",
+    "columns": [
+        {"data": "Data"},
+        {"data": "Codigo"},
+        {"data": "Processo"},
+        {"data": "Comissionado"},
+        {"data": "Vendedor"},
+        {"data": "Inside"},
+        {"data": "Profit"},
+        {"data": "Porcentagem"},
+        {"data": "Comissao_valor"},
+        {"data": "Status"},
+        
+
+     ],
+    "order": [ 0, "desc"],
+    "ajax": {
+        "url": "/QueryTabelaHistoricoComissao",
+        "type": "POST",
+        "data":{codigo:id},
+        "dataSrc": function ( json ) {
+  
+   
+       if(json.recordsTotal > 0){
+        $('.btn_Realiza_Pagamento').attr('disabled', false)
+       }else{
+        $('.btn_Realiza_Pagamento').attr('disabled', true)
+       }
+          return json.data;
+      }  
+    },
+"language": {
+        "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json"
+   }
 })
 
+
+
+
+setTimeout(() => {
+  console.log()
+}, 3000);
+
+
 }
+
+
+$(document).on('click', '.btn_PesquisaCodigo', function(e){
+e.preventDefault()
+var referencia = $('.input_search_CodigoComissao').val();
+console.log(referencia)
+
+TabelaHistoricoComissoes_funcao(referencia)
+
+
+
+
+})
+
+
+$(document).on('click', '.btn_Realiza_Pagamento', function(e){
+  e.preventDefault()
+  var codigo = $('.input_search_CodigoComissao').val();
+  $('.btn_Realiza_Pagamento').attr('disabled', true);
+
+  $.ajax({
+    type: 'POST',
+    url: '/BaixaComissao_relatorio',
+    data:{codigo:codigo},
+    success: function (data) {
+      if(data == 'sucesso'){
+        macOSNotif({autoDismiss:5,title:'Sucesso',subtitle:'Baixas confirmadas.', btn2Text:null})
+
+        console.log('foi')
+        
+        setTimeout(() => {
+          TabelaHistoricoComissoes.ajax.reload();
+        }, 3000);
+      }
+      
+    }
+
+  })
+
+  
+
+  
+  })
 

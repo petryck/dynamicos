@@ -128,7 +128,7 @@ var connection = mysql.createConnection({
 
     if (error) {
     // console.log(error);
-    console.log('erro ao enviar email para: '+element.Email)
+    console.log(error)
   
     } else {
 
@@ -1240,6 +1240,53 @@ if(filtros.modal.TI == true && contagem_modal == 0){
 
   })
 
+
+  app.post('/BaixaComissao_relatorio', function (req, res) {
+  
+    var codigo = req.body.codigo;
+
+    var sql = `SELECT * FROM SIRIUS.Relatorio_comissoes WHERE Codigo = ${codigo}`;
+
+    connection.query(sql, function(err2, results){
+
+      results.forEach(element => {
+
+        if(element.Comissao == 1){
+          var sql = `update
+          mov_Logistica_House
+        Set
+          Comissao_Vendedor_Pago = 1
+        Where
+        IdLogistica_house = ${element.IdProcesso}`;
+        }else{
+          var sql = `update
+          mov_Logistica_House
+        Set
+        Comissao_Inside_Sales_Pago = 1
+        Where
+        IdLogistica_house = ${element.IdProcesso}`;
+           
+        }
+        
+              global.conn.request()
+              .query(sql)
+              .then(result_head => {
+
+                var sql_2 = `UPDATE SIRIUS.Relatorio_comissoes SET Status = 1 WHERE IdProcesso = ${element.IdProcesso}`;
+
+                  connection.query(sql_2, function(err2, results){
+                    
+                  })
+                
+              })
+
+      });
+
+      res.send('sucesso')
+     
+    })
+ 
+  })
   app.post('/QueryTabelaHistoricoComissao', function (req, res) {
     var arrayLiteral2 = [];
     var codigo = req.body.codigo;
@@ -1257,12 +1304,14 @@ if(filtros.modal.TI == true && contagem_modal == 0){
               id: e.IdRelatorio_comissoes,
               Codigo:e.Codigo,
               Processo: e.Referencia,
+              Comissionado: (e.Comissao == 1) ? 'Vendedor' : 'Inside',
               Profit:e.Profit,
               Data:e.Data,
               Vendedor:e.Vendedor,
               Inside:e.Inside,
               Porcentagem:e.Porcentagem+'%',
-              Comissao_valor:e.Comissao_valor
+              Comissao_valor:e.Comissao_valor,
+              Status:(e.status == 1) ? 'Pago' : 'Pendente'
           }
         
 
