@@ -85,7 +85,6 @@ $.ajax({
             html: ""+retorno+"",
             id: "window-"+id,
             top:28.8,
-            bottom: 30,
             background: "#120d19fc",
             max: false,
             class: classes2,
