@@ -442,6 +442,8 @@ right: 90px;
 
 
 #top-bar{
+    position: absolute;
+    z-index: 999999999999;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -466,6 +468,7 @@ right: 90px;
 .menu_box{
     position: absolute;
     margin-top: 6px;
+    z-index: 999999999999999;
 }
 .container_menu{
     position: absolute;
@@ -476,7 +479,8 @@ right: 90px;
     padding: 0.5rem;
     position: relative;
     user-select: none;
-    background-color: hsla(240,3%,11%,.3);
+    background-color: hsl(250deg 14% 8% / 53%);
+    /* background-color: hsla(240,3%,11%,.3); */
     backdrop-filter: blur(25px);
     border-radius: 0.5rem;
     box-shadow: rgba(0,0,0,.3) 0 0 11px 0,inset 0 0 0 0.9px hsla(240,24%,100%, 0.3),0 0 0 1.2px hsla(240,3%,11%, 0.3);;
