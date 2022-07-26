@@ -352,9 +352,9 @@ function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
 
 
                       
-                                var sql = `INSERT INTO Relatorio_comissoes (Codigo, IdProcesso, Comissao, Data, Vendedor, Inside, Profit, Porcentagem, Comissao_valor) 
+                                var sql = `INSERT INTO Relatorio_comissoes (Codigo, IdProcesso, Referencia, Comissao, Data, Vendedor, Inside, Profit, Porcentagem, Comissao_valor) 
                                             VALUES
-                                           ('${codigo}', '${e.Numero_Processo}', ${tipo}, '${data}', '${e.Vendedor == '' || e.Vendedor == null ? 'Sem Seleção' : titleize(e.Vendedor, 'vendedor')}', '${e.Inside_Sales == '' || e.Inside_Sales == null ? 'Sem Seleção' : titleize(e.Inside_Sales, 'inside')}','${e.Valor_Estimado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}','${element.Porcentagem}','${comissao.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}' )`
+                                           ('${codigo}', '${e.IdLogistica_House}','${e.Numero_Processo}', ${tipo}, '${data}', '${e.Vendedor == '' || e.Vendedor == null ? 'Sem Seleção' : titleize(e.Vendedor, 'vendedor')}', '${e.Inside_Sales == '' || e.Inside_Sales == null ? 'Sem Seleção' : titleize(e.Inside_Sales, 'inside')}','${e.Valor_Estimado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}','${element.Porcentagem}','${comissao.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}' )`
 
                                           connection.query(sql, function(err2, results){
                                             if(err2){
@@ -1238,6 +1238,50 @@ if(filtros.modal.TI == true && contagem_modal == 0){
 
   })
 
+  app.post('/QueryTabelaHistoricoComissao', function (req, res) {
+    var arrayLiteral2 = [];
+    var codigo = req.body.codigo;
+    console.log(codigo)
+
+
+    var sql = `SELECT * FROM SIRIUS.Relatorio_comissoes WHERE Codigo = ${codigo}`;
+
+    connection.query(sql, function(err2, results){
+          results.forEach(e => {
+            
+                    
+                    
+            var objeto = {
+              id: e.IdRelatorio_comissoes,
+              Codigo:e.Codigo,
+              Processo: e.Referencia,
+              Profit:e.Profit,
+              Data:e.Data,
+              Vendedor:e.Vendedor,
+              Inside:e.Inside,
+              Porcentagem:e.Porcentagem+'%',
+              Comissao_valor:e.Comissao_valor
+          }
+        
+
+
+          arrayLiteral2.push(objeto);
+          })
+
+          let saida = {
+            "draw": 1,
+            "recordsTotal": results.length,
+            "recordsFiltered": results.length,
+            "data": arrayLiteral2
+          } 
+
+
+          res.json(saida)
+
+
+    })
+
+  })
 
 
   app.post('/edita_visita', (req, res) => {

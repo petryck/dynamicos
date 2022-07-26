@@ -3,6 +3,7 @@ var tabela_visitantes;
 var tabela_colaboradoresRH;
 var tabela_Fechamento_Processo;
 var tabela_ConfComissoes;
+var TabelaHistoricoComissoes;
 var info_user = {
   id:1,
   name: 'Petryck William'

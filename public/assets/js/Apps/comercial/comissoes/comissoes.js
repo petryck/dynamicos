@@ -142,10 +142,19 @@ $(document).on('click', '.open_cadComissionado', function(e){
 
   }
 
+
+  $(document).on('click', '.btn_PesquisaCodigo', function(e){
+    e.preventDefault()
+    var referencia = $('.input_search_CodigoComissao').val();
+    console.log(referencia)
+    TabelaHistoricoComissoes(referencia)
+  
+  })
+
   function TabelaConfComissoes(filtros){
     
     // $('#tabela_Fechamento_Processo').dataTable().fnClearTable();
-    // $('#tabela_ConfComissoes').dataTable().fnDestroy();
+    $('#tabela_ConfComissoes').dataTable().fnDestroy();
 
 
 tabela_ConfComissoes = $('#tabela_ConfComissoes').DataTable({
@@ -172,4 +181,42 @@ tabela_ConfComissoes = $('#tabela_ConfComissoes').DataTable({
   })
 
 }
-  
+
+
+function TabelaHistoricoComissoes(id){
+    
+  // $('#tabela_Fechamento_Processo').dataTable().fnClearTable();
+  $('#tabela_ConfComissoes').dataTable().fnDestroy();
+
+
+  TabelaHistoricoComissoes = $('#TabelaHistoricoComissoes').DataTable({
+      "paging":   false,
+      "ordering": true,
+      "info":     false,
+      "lengthChange": false,
+      "rowId": "id",
+      "columns": [
+          {"data": "Codigo"},
+          {"data": "Processo"},
+          {"data": "Data"},
+          {"data": "Vendedor"},
+          {"data": "Inside"},
+          {"data": "Profit"},
+          {"data": "Porcentagem"},
+          {"data": "Comissao_valor"},
+          {"data": "Data"},
+
+       ],
+      "order": [ 0, "desc"],
+      "ajax": {
+          "url": "/QueryTabelaHistoricoComissao",
+          "type": "POST",
+          "data":{codigo:id}
+      },
+  "language": {
+          "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json"
+     }
+})
+
+}
+
