@@ -717,6 +717,10 @@ processos.forEach(element => {
     res.sendFile(path.join(__dirname, '../public/login.html'))
   })
 
+  app.get('/loading', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/loading.html'))
+  })
+
 
 
   app.get('/OpenApp', (req, res) => {
