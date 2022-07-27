@@ -118,6 +118,7 @@ body {
 }
 
 .cancel{
+  -webkit-app-region: no-drag;
   position: absolute;
   bottom: 60px;
   display: flex;
@@ -125,11 +126,13 @@ body {
   align-items: center;
   left: 50%;
   transform: translate(-50%, -50%);
-  cursor: pointer;
+  
 
 }
 
 .cancel .button{
+  cursor: pointer;
+  -webkit-app-region: no-drag;
   width: 40px;
   height: 40px;
   background: rgb(82, 82, 82);
@@ -137,10 +140,12 @@ body {
 }
 
 .cancel img{
+  -webkit-app-region: no-drag;
   transform: scale(.8);
 }
 
 .cancel span{
+
   font-size: 14px;
   padding: 4px;
 }
@@ -166,8 +171,8 @@ body {
   <h1 id="welcome"></h1>
 </div>
 
-<div class="cancel" style="z-index: 999999;">
-  <div class="button">
+<div class="cancel"  style="z-index: 999999;">
+  <div class="button" id="cancel_login" onclick="window.close();"> 
     <img src="assets/img/SVG/delete-button.svg" alt="delete button"/>
   </div>
  <span>Sair</span> 
