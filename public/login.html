@@ -116,6 +116,34 @@ body {
 .login {
             -webkit-app-region: no-drag;
 }
+
+.cancel{
+  position: absolute;
+  bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+
+}
+
+.cancel .button{
+  width: 40px;
+  height: 40px;
+  background: rgb(82, 82, 82);
+  border-radius: 150%;
+}
+
+.cancel img{
+  transform: scale(.8);
+}
+
+.cancel span{
+  font-size: 14px;
+  padding: 4px;
+}
     </style>
 
 
@@ -136,6 +164,13 @@ body {
   <input autocomplete="off" type="password" placeholder="Sua senha" id="password">
   <img style="display: none; width: 30px; filter: blur(1px); margin-top: 25px;" src="https://www.easypdfcloud.com/Images/loading-256-0001.gif" id="loading-pass">
   <h1 id="welcome"></h1>
+</div>
+
+<div class="cancel" style="z-index: 999999;">
+  <div class="button">
+    <img src="assets/img/SVG/delete-button.svg" alt="delete button"/>
+  </div>
+ <span>Sair</span> 
 </div>
 
 
