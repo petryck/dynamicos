@@ -26,7 +26,7 @@
     <title>SiriusOS</title>
 </head>
 <body>
-    <body background="assets/img/wallpapper.jpg">
+    <body background="assets/img/wallpapper.jpg" onload="$('#max_Screnn').click()">
         
         <div class="notificacao_selecao">
             <a href="#" class="close" id="clone_notificacao_selecao">
@@ -111,7 +111,11 @@
                         <div class="container_menu">
                             <button>Sobre</button>
                             <button onclick="window.location.replace('/login');">Trocar de Usuário</button>
+                          
                             <button id="fechar_windows">Sair</button>
+                            <button style="display: none;" id="max_Screnn">fullscrenn</button>
+
+                            
                         </div>
                     </div>
             </div>
@@ -392,7 +396,7 @@
 
 
  <script>
-    window.maximize();
+    $('#max_Screnn').click()
  </script>
 
  
