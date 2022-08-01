@@ -1996,9 +1996,9 @@ if(filtros.modal.TI == true && contagem_modal == 0){
 
     var options = {
       format: "A3",
-      childProcessOptions: { env: 
-        { OPENSSL_CONF: '/dev/null', }, 
-      },
+      // childProcessOptions: { env: 
+      //   { OPENSSL_CONF: '/dev/null', }, 
+      // },
       orientation: "portrait",
       border: "20mm",
       header: {
