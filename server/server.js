@@ -1995,7 +1995,7 @@ if(filtros.modal.TI == true && contagem_modal == 0){
     
 
     var options = {
-      format: "A3",
+      format: "A2",
       orientation: "portrait",
       border: "20mm",
       header: {
