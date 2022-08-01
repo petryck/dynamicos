@@ -14,7 +14,7 @@ import sql from 'mssql'
 import * as compressImage from '../server/src/imgcompress.js';
 import nodemailer from 'nodemailer'
 import * as json2csv  from 'json2csv';
-import pdf from 'pdf-creator-node';
+import * as pdf from 'pdf-creator-node';
 
 
 var lista_email = '';
@@ -2108,7 +2108,7 @@ JOIN SIRIUS.filial ON SIRIUS.filial.id_filial = SIRIUS.visitas.filial ${WHERE}`;
             data: {
               users: arrayLiteral2,
             },
-            path: "./public/Apps/administrativo/visitantes/UltimoRelatorioVisitante.pdf",
+            path: path.join(__dirname, '../public/Apps/administrativo/visitantes/UltimoRelatorioVisitante.pdf'),
             type: "buffer",
           };
         
