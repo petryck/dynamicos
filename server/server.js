@@ -1996,6 +1996,9 @@ if(filtros.modal.TI == true && contagem_modal == 0){
 
     var options = {
       format: "A3",
+      childProcessOptions: { env: 
+        { OPENSSL_CONF: '/dev/null', }, 
+      },
       orientation: "portrait",
       border: "20mm",
       header: {
@@ -2105,9 +2108,6 @@ JOIN SIRIUS.filial ON SIRIUS.filial.id_filial = SIRIUS.visitas.filial ${WHERE}`;
           
           var document = {
             html: html,
-            childProcessOptions: { env: 
-              { OPENSSL_CONF: '/dev/null', }, 
-            },
             data: {
               users: arrayLiteral2,
             },
