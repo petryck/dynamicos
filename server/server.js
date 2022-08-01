@@ -1996,9 +1996,6 @@ if(filtros.modal.TI == true && contagem_modal == 0){
 
     var options = {
       format: "A3",
-      childProcessOptions: { env: 
-        { OPENSSL_CONF: '/dev/null', }, 
-      },
       orientation: "portrait",
       border: "20mm",
       header: {
@@ -2009,7 +2006,10 @@ if(filtros.modal.TI == true && contagem_modal == 0){
           contents: {
               first: 'Documento gerado por SiriusOS - ConLine Serviço de Logística',
           }
-      }
+      },
+      childProcessOptions: { env: 
+        { OPENSSL_CONF: '/dev/null', }, 
+      },
   };
 
 //------
