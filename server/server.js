@@ -14,6 +14,7 @@ import sql from 'mssql'
 import * as compressImage from '../server/src/imgcompress.js';
 import nodemailer from 'nodemailer'
 import * as json2csv  from 'json2csv';
+import pdf from 'pdf-creator-node';
 
 
 var lista_email = '';
@@ -1868,6 +1869,264 @@ if(filtros.modal.TI == true && contagem_modal == 0){
     })
 
   })
+ 
+
+
+  app.post('/QueryRelatorioVisitantes', function (req, res) {
+    var arrayLiteral2 = [];
+
+
+    if(req.body.filtro){
+      var filtros = JSON.parse(req.body.filtro)
+  
+    }
+
+
+    if(filtros.acompanhante != 0){
+      var WHERE = `WHERE data_entrada between '${filtros.de}' and '${filtros.ate}' `;
+    }else{
+      filtros.de = new Date(filtros.de+'Z').getTime();
+      filtros.ate = new Date(filtros.ate+'Z').getTime();
+
+      // var data_saida = req.body.data+'Z';
+  
+      // var data_daisa_convert = new Date(data_saida).getTime();
+      var WHERE = `WHERE data_entrada between '${filtros.de}' and '${filtros.ate}' `;
+    }
+
+    
+
+    var sql = `SELECT *, 
+    SIRIUS.colaboradores.nome as nome_acompanhante, 
+    SIRIUS.cad_visitantes.nome as nome_visitantes,
+    SIRIUS.filial.nome as nome_filial
+    FROM SIRIUS.visitas 
+    JOIN SIRIUS.cad_visitantes ON SIRIUS.cad_visitantes.id_cad_visitantes = SIRIUS.visitas.visitante
+    JOIN SIRIUS.colaboradores ON SIRIUS.colaboradores.id_colaboradores = SIRIUS.visitas.acompanhante
+    JOIN SIRIUS.filial ON SIRIUS.filial.id_filial = SIRIUS.visitas.filial ${WHERE}`;
+
+
+  
+  
+  
+    
+            connection.query(sql, function(err2, results){
+                
+              results.forEach(e => {
+  
+           
+  
+               var data_entrou = new Date(parseInt(e.data_entrada));
+        
+                var dia  = data_entrou.getDate().toString().padStart(2, '0');
+                var mes  = (data_entrou.getMonth()+1).toString().padStart(2, '0'); //+1 pois no getMonth Janeiro começa com zero.
+                var ano  = data_entrou.getFullYear();
+  
+                var hour   = data_entrou.getUTCHours();
+                var minute = data_entrou.getUTCMinutes();
+                // var ap = "AM";
+                // if (hour   > 11) { ap = "PM";             }
+                // if (hour   > 12) { hour = hour - 12;      }
+                // if (hour   == 0) { hour = 12;             }
+                if (hour   < 10) { hour   = "0" + hour;   }
+                if (minute < 10) { minute = "0" + minute; }
+              
+                
+              
+              
+                var data_entrada = dia+'-'+mes+'-'+ano;
+                var hora_entrada = hour + ':' + minute + ' ';
+  
+                if(e.data_saida != null && e.data_saida != ''){
+                  var data_saida = new Date(parseInt(e.data_saida));
+                  var hour_saida   = data_saida.getUTCHours();
+                  var minute_saida = data_saida.getUTCMinutes();
+                  var ap_saida = "AM";
+                  // if (hour_saida   > 11) { ap_saida = "PM";             }
+                  // if (hour_saida   > 12) { hour_saida = hour_saida - 12;      }
+                  // if (hour_saida   == 0) { hour_saida = 12;             }
+                  if (hour_saida   < 10) { hour_saida   = "0" + hour_saida;   }
+                  if (minute_saida < 10) { minute_saida = "0" + minute_saida; }
+                  var hora_saida = hour_saida + ':' + minute_saida + ' ';
+                }else{
+                  var hora_saida = '';  
+                }
+                
+                
+                
+               var objeto = {
+                  data: '<span style="display:none">'+ano+'-'+mes+'-'+' '+dia+e.data_entrada+'</span><span style="white-space: nowrap;">'+data_entrada+'</span>',
+                  visitante: '<span style="white-space: nowrap;">'+capitalizeFirst(e.nome_visitantes)+'</span>',
+                  documento: e.documento,
+                  acompanhante: e.nome_acompanhante,
+                  filial: e.nome_filial,
+                  motivo: '<span style="white-space: nowrap;width: 12em;overflow: hidden;text-overflow: ellipsis;">'+e.motivo+'</span>',
+                  hora_entrada: '<span style="white-space: nowrap;">'+hora_entrada+'</span>',
+                  hora_saida:'<span style="white-space: nowrap;">'+hora_saida+'</span>'
+              }
+            
+  
+  
+              arrayLiteral2.push(objeto);
+              })
+              
+              
+              
+              let saida = {
+                "draw": 1,
+                "recordsTotal": results.length,
+                "recordsFiltered": results.length,
+                "data": arrayLiteral2
+              } 
+  
+  
+              res.json(saida)
+            })
+  })
+
+
+
+
+  app.get('/Gerar_PDF_relatorio_visitante', function (req, res) {
+
+
+    var html = fs.readFileSync(path.join(__dirname, '../public/Apps/relatorios/PDFvisitantes.html'), "utf8");
+
+    
+
+    var options = {
+      format: "A3",
+      orientation: "portrait",
+      border: "20mm",
+      header: {
+          height: "10mm",
+      },
+      footer: {
+          height: "10mm",
+          contents: {
+              first: 'Documento gerado por SiriusOS - ConLine Serviço de Logística',
+          }
+      }
+  };
+
+//------
+
+var arrayLiteral2 = [];
+
+
+
+
+
+if(req.query.acompanhante != 0){
+  var WHERE = `WHERE data_entrada between '${req.query.de}' and '${req.query.ate}' `;
+}else{
+  req.query.de = new Date(req.query.de+'Z').getTime();
+  req.query.ate = new Date(req.query.ate+'Z').getTime();
+
+  // var data_saida = req.body.data+'Z';
+
+  // var data_daisa_convert = new Date(data_saida).getTime();
+  var WHERE = `WHERE data_entrada between '${req.query.de}' and '${req.query.ate}' `;
+}
+
+
+
+var sql = `SELECT *, 
+SIRIUS.colaboradores.nome as nome_acompanhante, 
+SIRIUS.cad_visitantes.nome as nome_visitantes,
+SIRIUS.filial.nome as nome_filial
+FROM SIRIUS.visitas 
+JOIN SIRIUS.cad_visitantes ON SIRIUS.cad_visitantes.id_cad_visitantes = SIRIUS.visitas.visitante
+JOIN SIRIUS.colaboradores ON SIRIUS.colaboradores.id_colaboradores = SIRIUS.visitas.acompanhante
+JOIN SIRIUS.filial ON SIRIUS.filial.id_filial = SIRIUS.visitas.filial ${WHERE}`;
+
+
+
+        connection.query(sql, function(err2, results){
+            
+          results.forEach(e => {
+
+       
+
+           var data_entrou = new Date(parseInt(e.data_entrada));
+    
+            var dia  = data_entrou.getDate().toString().padStart(2, '0');
+            var mes  = (data_entrou.getMonth()+1).toString().padStart(2, '0'); //+1 pois no getMonth Janeiro começa com zero.
+            var ano  = data_entrou.getFullYear();
+
+            var hour   = data_entrou.getUTCHours();
+            var minute = data_entrou.getUTCMinutes();
+            // var ap = "AM";
+            // if (hour   > 11) { ap = "PM";             }
+            // if (hour   > 12) { hour = hour - 12;      }
+            // if (hour   == 0) { hour = 12;             }
+            if (hour   < 10) { hour   = "0" + hour;   }
+            if (minute < 10) { minute = "0" + minute; }
+          
+            
+          
+          
+            var data_entrada = dia+'-'+mes+'-'+ano;
+            var hora_entrada = hour + ':' + minute + ' ';
+
+            if(e.data_saida != null && e.data_saida != ''){
+              var data_saida = new Date(parseInt(e.data_saida));
+              var hour_saida   = data_saida.getUTCHours();
+              var minute_saida = data_saida.getUTCMinutes();
+              var ap_saida = "AM";
+              // if (hour_saida   > 11) { ap_saida = "PM";             }
+              // if (hour_saida   > 12) { hour_saida = hour_saida - 12;      }
+              // if (hour_saida   == 0) { hour_saida = 12;             }
+              if (hour_saida   < 10) { hour_saida   = "0" + hour_saida;   }
+              if (minute_saida < 10) { minute_saida = "0" + minute_saida; }
+              var hora_saida = hour_saida + ':' + minute_saida + ' ';
+            }else{
+              var hora_saida = '';  
+            }
+            
+            
+            
+            var objeto = {
+              nome: capitalizeFirst(e.nome_visitantes),
+              documento:e.documento,
+              acompanhante:e.nome_acompanhante,
+              filial:e.nome_filial,
+              data:data_entrada,
+              entrada:hora_entrada,
+              saida:hora_saida
+              }
+        
+
+
+          arrayLiteral2.push(objeto);
+          })
+          
+          
+          
+          var document = {
+            html: html,
+            data: {
+              users: arrayLiteral2,
+            },
+            path: "./public/Apps/administrativo/visitantes/UltimoRelatorioVisitante.pdf",
+            type: "buffer",
+          };
+        
+          pdf.create(document, options)
+          .then((ret) => {
+            res.attachment('Relatorio de Visitantes.pdf')
+            res.status(200).send(ret);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        })
+
+
+
+  })
+
+
   app.post('/QueryTabelaColaboradoresRH', function (req, res) {
     var arrayLiteral2 = [];
     
