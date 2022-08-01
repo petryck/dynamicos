@@ -2105,6 +2105,9 @@ JOIN SIRIUS.filial ON SIRIUS.filial.id_filial = SIRIUS.visitas.filial ${WHERE}`;
           
           var document = {
             html: html,
+            childProcessOptions: { env: 
+              { OPENSSL_CONF: '/dev/null', }, 
+            },
             data: {
               users: arrayLiteral2,
             },
