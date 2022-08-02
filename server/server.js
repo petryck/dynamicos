@@ -1999,10 +1999,10 @@ if(filtros.modal.TI == true && contagem_modal == 0){
       orientation: "portrait",
       border: "20mm",
       header: {
-          height: "10mm",
+          height: "0mm",
       },
       footer: {
-          height: "10mm",
+          height: "0mm",
           contents: {
               first: 'Documento gerado por SiriusOS - ConLine Serviço de Logística',
           }
