@@ -347,7 +347,7 @@ $(document).on('click', '#btn_email_inside', function(e){
   $('#btn_email_inside').attr('disabled', false)
   $('#btn_email_vendedor').attr('disabled', false)
 
-  macOSNotif({autoDismiss:5,title:'Sucesso',subtitle:'Email de comissão enviado.', btn2Text:null})
+    macOSNotif({autoDismiss:5,title:'Sucesso',subtitle:'Email de comissão enviado.', btn2Text:null})
 
     }
 

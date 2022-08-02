@@ -91,31 +91,27 @@ var connection = mysql.createConnection({
   function send_email(mailOptions){
   
 
-    // var remetente = nodemailer.createTransport({
-    //   name: 'sirius@conlinebr.com.br',
-    //   host: 'smtp.gmail.com',
-    //   service:'gmail',
-    //   port: 587,
-    //   maxMessages: 10000,
-    //   secure: true,
-    //   pool:true,
-    //   rateDelta:1000,
-    //   rateLimit: 1000,
-    //   auth:{
-    //   user: 'sirius@conlinebr.com.br',
-    //   pass: 'lock2510' },
-    //   tls: {
-    //     rejectUnauthorized: false
-    //   },
-    //   debug : true
-    //   });
-
-       var remetente = nodemailer.createTransport({
-      service:'gmail',
+    var remetente = nodemailer.createTransport({
+      name: 'no-reply@conline-news.com',
+      host:'mail.conline-news.com',
+      service:'mail.conline-news.com',
+      port: 465,
+      secure: true,
+      pool:false,
+      rateDelta:1000,
+      rateLimit: 1000,
       auth:{
-      user: 'sirius@conlinebr.com.br',
-      pass: 'mce191919aA' }
+      user: 'sirius@conline-news.com',
+      pass: 'mce191919aA' },
+      debug : true
       });
+
+      //  var remetente = nodemailer.createTransport({
+      // service:'gmail',
+      // auth:{
+      // user: 'sirius@conline-news.com',
+      // pass: 'mce191919aA' }
+      // });
 
   //  var mailOptions = {
   //         from: 'Marketing ConLine <marketing@conline-news.com>',
@@ -126,6 +122,7 @@ var connection = mysql.createConnection({
 
 
   remetente.sendMail(mailOptions, function(error, info){
+ 
 
     if (error) {
     // console.log(error);
@@ -442,7 +439,7 @@ await CREATETABLE_COMISSOES(processos, tipo, mensagem_email, codigo, data);
         console.log(err);
     } else {
         var mailOptions = {
-                from: 'Sirius OS <sirius@conlinebr.com.br>',
+                from: 'Sirius OS <sirius@conline-news.com>',
                 to: lista_email,
                 subject: assunto,
                 html: data
