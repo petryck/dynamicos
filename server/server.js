@@ -1882,7 +1882,10 @@ if(filtros.modal.TI == true && contagem_modal == 0){
     }
 
 
-    if(filtros.acompanhante != 0){
+    if(filtros.acompanhante == 0){
+      filtros.de = new Date(filtros.de+'Z').getTime();
+      filtros.ate = new Date(filtros.ate+'Z').getTime();
+
       var WHERE = `WHERE data_entrada between '${filtros.de}' and '${filtros.ate}' `;
     }else{
       filtros.de = new Date(filtros.de+'Z').getTime();
@@ -1891,7 +1894,7 @@ if(filtros.modal.TI == true && contagem_modal == 0){
       // var data_saida = req.body.data+'Z';
   
       // var data_daisa_convert = new Date(data_saida).getTime();
-      var WHERE = `WHERE data_entrada between '${filtros.de}' and '${filtros.ate}' `;
+      var WHERE = `WHERE data_entrada between '${filtros.de}' and '${filtros.ate}' AND acompanhante = ${filtros.acompanhante}`;
     }
 
     
@@ -1905,7 +1908,7 @@ if(filtros.modal.TI == true && contagem_modal == 0){
     JOIN SIRIUS.colaboradores ON SIRIUS.colaboradores.id_colaboradores = SIRIUS.visitas.acompanhante
     JOIN SIRIUS.filial ON SIRIUS.filial.id_filial = SIRIUS.visitas.filial ${WHERE}`;
 
-
+console.log(sql)
   
   
   
@@ -2020,7 +2023,9 @@ var arrayLiteral2 = [];
 
 
 
-if(req.query.acompanhante != 0){
+if(req.query.acompanhante == 0){
+  req.query.de = new Date(req.query.de+'Z').getTime();
+  req.query.ate = new Date(req.query.ate+'Z').getTime();
   var WHERE = `WHERE data_entrada between '${req.query.de}' and '${req.query.ate}' `;
 }else{
   req.query.de = new Date(req.query.de+'Z').getTime();
@@ -2029,7 +2034,7 @@ if(req.query.acompanhante != 0){
   // var data_saida = req.body.data+'Z';
 
   // var data_daisa_convert = new Date(data_saida).getTime();
-  var WHERE = `WHERE data_entrada between '${req.query.de}' and '${req.query.ate}' `;
+  var WHERE = `WHERE data_entrada between '${req.query.de}' and '${req.query.ate}' AND acompanhante = ${req.query.acompanhante}`;
 }
 
 
