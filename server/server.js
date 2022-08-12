@@ -15,6 +15,7 @@ import * as compressImage from '../server/src/imgcompress.js';
 import nodemailer from 'nodemailer'
 import * as json2csv  from 'json2csv';
 import * as pdf from 'pdf-creator-node';
+import { table } from 'console'
 
 
 var lista_email = '';
@@ -268,11 +269,14 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
 })
 var Row_process = 'dsa';
 var mensagem_email_comissao = ``;
-function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
+async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
+  
+
   return new Promise((resolve,reject)=>{
     var valor_total = 0;
     mensagem_email_comissao = mensagem;
     var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${processos}) ORDER BY IdLogistica_House asc`;
+   
     
 
         global.conn.request()
@@ -298,7 +302,12 @@ function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
           <td style="border-color:black;border-style:solid;border-width:1px;font-weight: 900;text-align: center">COMISSÃO</td>
           </tr>`;
           var conut_row = 0;
+
+        
+          // LISTA PROCESSOS DO HEADCARGO
           result.recordset.forEach(e => {
+            
+    
             
             let Data_Compensacao_Convertido = new Date(e.Data_Compensacao_Convertido)
           
@@ -310,25 +319,39 @@ function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
 
           connection.query(sql, function(err2, resultsColaborador){
                   var id = resultsColaborador[0]['id_colaboradores'];
-                  lista_email = 'comissao-adm@conlinebr.com.br;'+resultsColaborador[0]['email_corporativo'];
+                  lista_email = 'petryck.leite@conlinebr.com.br'
+                  // lista_email = 'comissao-adm@conlinebr.com.br;'+resultsColaborador[0]['email_corporativo'];
                  
 
                       var sql = `SELECT * FROM Comissoes WHERE IdColaborador = ${id}`;
+                      console.log(sql)
                         connection.query(sql, function(err2, resultsComissoes){
-                          conut_row++
-                          resultsComissoes[0]['id_colaboradores']
-
+                    
+             
+                          
+                          // resultsComissoes[0]['id_colaboradores']
+                        
                           resultsComissoes.forEach(element => {
+                            
+                            // console.log(e.Valor_Estimado, element.ValorInicio)
+                            //   console.log(e.Valor_Estimado, element.ValorFinal)
 
-                            if(e.Valor_Estimado > element.ValorInicio && e.Valor_Estimado < element.ValorFinal){
+                            if(e.Valor_Estimado < 0){
+                              var real_estimado = 0
+                            }else{
+                              var real_estimado = e.Valor_Estimado
+                            }
 
+                            if(real_estimado >= element.ValorInicio && real_estimado < element.ValorFinal ){
+                              conut_row++
                               
 
+
                               if(tipo == 1){
-                                var comissao = (e.Valor_Estimado / 100) * element.Porcentagem;
+                                var comissao = (real_estimado / 100) * element.Porcentagem;
                               }else if(tipo == 2){
                                 element.Porcentagem = 1;
-                                var comissao = (e.Valor_Estimado / 100) * 1;
+                                var comissao = (real_estimado / 100) * 1;
                               }
 
                               // Row_process += `<tr>
@@ -340,6 +363,8 @@ function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
                               // <td style="border-color:black;border-style:solid;border-width:1px;text-align: center;white-space: nowrap;padding: 8px;">${element.Porcentagem}%</td>
                               // <td style="border-color:black;border-style:solid;border-width:1px;text-align: right;white-space: nowrap;padding: 8px;"><strong>${comissao.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</strong></td>
                               // </tr>`;
+                              
+                     
 
                               Row_process += `<tr>
                               <td style="border-color:black;border-style:solid;border-width:1px;white-space: nowrap;">${e.Numero_Processo}</td>
@@ -349,6 +374,7 @@ function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
                               <td style="border-color:black;border-style:solid;border-width:1px;text-align: center;white-space: nowrap;padding: 8px;">${element.Porcentagem}%</td>
                               <td style="border-color:black;border-style:solid;border-width:1px;text-align: right;white-space: nowrap;padding: 8px;"><strong>${comissao.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</strong></td>
                               </tr>`;
+                             
 
                               valor_total = valor_total+comissao;
 
@@ -364,12 +390,16 @@ function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
                                             }
                                           })
                              
+
+
+                                          
                             }
 
                           });
 
-                      
+                     
                           if(result.recordset.length == conut_row){
+                       
                             if(tipo == 1){
                               var nome = result.recordset[0]['Vendedor'];
                               mensagem_email_comissao += `<br> Comissionado: <strong> ${titleize(nome, 'cliente')}<strong>`;
@@ -384,8 +414,11 @@ function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
                               <td colspan="5" style="border-color:black;border-style:solid;border-width:1px;text-align: right;padding-right:8px;">COMISSÃO TOTAL</td>
                               <td style="border-color:black;border-style:solid;border-width:1px;text-align: right;white-space: nowrap;padding: 8px;"><strong>${valor_total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</strong></td>
                               </tr>`;
-          
-                            resolve();
+
+                        console.log('ainda to carregando os dados')
+                              // return Row_process;
+                              // console.table(e)
+                              resolve(); 
                            }
                       
                         })
@@ -396,10 +429,11 @@ function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
           // console.log(result.recordset.length, conut_row)
         
 
-         
+          
+     
           })
 
-          // console.log(Row_process)
+         
           // // return Row_process;
 
           
@@ -407,7 +441,7 @@ function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
           
 
 
-         
+             
    })
    
 
@@ -431,8 +465,9 @@ app.post('/send_mail_comissoes', async (req, res) => {
 
 await CREATETABLE_COMISSOES(processos, tipo, mensagem_email, codigo, data);
 
+console.log('ja enviei o email')
 
-             
+    
 
    ejs.renderFile(path.join(__dirname, '../public/Apps/TemplatesEmail/Comissaos_VendedorInside.ejs'), { responsavel:responsavel, texto: mensagem_email_comissao, processos: Row_process, codigo: codigo }, function (err, data) {
     if (err) {
@@ -976,7 +1011,7 @@ if(filtros.calaborador.vendedor != 0){
 }
 
 if(filtros.calaborador.inside != 0){
-  where += `AND IdInsideSales = ${filtros.calaborador.inside} `
+  where += `AND IdInsideSales = ${filtros.calaborador.inside} AND IdVendedor not in (${filtros.calaborador.inside})`
 }
 
 // --------------------------------------------------------------------------------------------------------

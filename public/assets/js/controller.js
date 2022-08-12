@@ -217,6 +217,38 @@ $('body').append(`<iframe src="/export_csv?processos=${contagem_selecionados}&no
 
 });
 
+$(document).on('click', '#btn_excel_inside', function(e){
+  e.preventDefault()
+  var lista_selecionados = tabela_Fechamento_Processo.rows({
+    selected: true
+}).ids()
+
+
+var contagem_selecionados = [];
+for (let index = 0; index < lista_selecionados.length; index++) {
+contagem_selecionados.push(lista_selecionados[index])
+
+
+}
+
+
+$('body').append(`<iframe src="/export_csv?processos=${contagem_selecionados}&nome_doc=ComissaoInside" style="display:none;"></iframe>`);
+  // $.ajax({
+  //   type: 'POST',
+  //   url: '/export_csv',
+  //   data:{processos:JSON.stringify(contagem_selecionados)},
+  //   success: function (data) {
+  //     console.info(data)
+  // // console.log(data)
+         
+    
+
+  //   }
+
+  // })
+
+});
+
 
 $(document).on('click', '#btn_excel_inside', function(e){
   e.preventDefault()
