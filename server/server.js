@@ -319,8 +319,8 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
 
           connection.query(sql, function(err2, resultsColaborador){
                   var id = resultsColaborador[0]['id_colaboradores'];
-                  lista_email = 'petryck.leite@conlinebr.com.br'
-                  // lista_email = 'comissao-adm@conlinebr.com.br;'+resultsColaborador[0]['email_corporativo'];
+                  // lista_email = 'petryck.leite@conlinebr.com.br'
+                  lista_email = 'comissao-adm@conlinebr.com.br;'+resultsColaborador[0]['email_corporativo'];
                  
 
                       var sql = `SELECT * FROM Comissoes WHERE IdColaborador = ${id}`;
@@ -348,10 +348,10 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
 
 
                               if(tipo == 1){
-                                var comissao = (real_estimado / 100) * element.Porcentagem;
+                                var comissao = (e.Valor_Estimado / 100) * element.Porcentagem;
                               }else if(tipo == 2){
                                 element.Porcentagem = 1;
-                                var comissao = (real_estimado / 100) * 1;
+                                var comissao = (e.Valor_Estimado / 100) * 1;
                               }
 
                               // Row_process += `<tr>
