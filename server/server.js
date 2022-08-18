@@ -322,7 +322,7 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
 
           connection.query(sql, function(err2, resultsColaborador){
                   var id = resultsColaborador[0]['id_colaboradores'];
-                  // lista_email = 'petryck.leite@conlinebr.com.br'
+                  //  lista_email = 'petryck.leite@conlinebr.com.br'
                   lista_email = 'comissao-adm@conlinebr.com.br;'+resultsColaborador[0]['email_corporativo'];
                  
 
@@ -401,7 +401,7 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
                                           
                             }else{
                              
-                              console.log(e.Numero_Processo, real_estimado, element.ValorInicio, element.ValorFinal)
+                              // console.log(e.Numero_Processo, real_estimado, element.ValorInicio, element.ValorFinal)
                             }
 
                           });
@@ -460,6 +460,7 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
 }
 
 
+
 app.post('/send_mail_comissoes', async (req, res) => {
   var data = formatDate(new Date())
   var processos = JSON.parse(req.body.processos);
@@ -469,10 +470,10 @@ app.post('/send_mail_comissoes', async (req, res) => {
 
 
 
-  var de_new = new Date(req.body.de)
-  var ate_new = new Date(req.body.ate)
-  var new_data_de = padTo2Digits(de_new.getDate() + 1)+'/'+padTo2Digits(de_new.getMonth() + 1)+'/'+de_new.getFullYear();
-  var new_data_ate = padTo2Digits(ate_new.getDate() + 1)+'/'+padTo2Digits(ate_new.getMonth() + 1)+'/'+ate_new.getFullYear();
+  var de_new = new Date(req.body.de+'T00:00:00')
+  var ate_new = new Date(req.body.ate+'T00:00:00')
+  var new_data_de = padTo2Digits(de_new.getDate())+'/'+padTo2Digits(de_new.getMonth() + 1)+'/'+de_new.getFullYear();
+  var new_data_ate = padTo2Digits(ate_new.getDate())+'/'+padTo2Digits(ate_new.getMonth() + 1)+'/'+ate_new.getFullYear();
     
 
 
