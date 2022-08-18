@@ -376,7 +376,7 @@ $(document).on('click', '#btn_email_inside', function(e){
  $.ajax({
     type: 'POST',
     url: '/send_mail_comissoes',
-    data:{processos:JSON.stringify(contagem_selecionados), codigo:codigo, responsavel:responsavel,tipo:2},
+    data:{processos:JSON.stringify(contagem_selecionados), codigo:codigo, responsavel:responsavel,tipo:2, de:$('#startDate_comissoes').val(), ate:$('#endDate_comissoes').val()},
     success: function (data) {
       console.info(data)
   // console.log(data)

@@ -16,6 +16,7 @@ import nodemailer from 'nodemailer'
 import * as json2csv  from 'json2csv';
 import * as pdf from 'pdf-creator-node';
 import { table } from 'console'
+import { clearScreenDown } from 'readline'
 
 
 var lista_email = '';
@@ -283,6 +284,7 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
         .query(sql)
         .then(result => {
           
+          
           if(tipo == 1){
             var id_pessoa = result.recordset[0]['IdVendedor']
 
@@ -325,10 +327,10 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
                  
 
                       var sql = `SELECT * FROM Comissoes WHERE IdColaborador = ${id}`;
-                      console.log(sql)
+                  
                         connection.query(sql, function(err2, resultsComissoes){
                     
-             
+                         
                           
                           // resultsComissoes[0]['id_colaboradores']
                         
@@ -342,6 +344,9 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
                             }else{
                               var real_estimado = e.Valor_Estimado
                             }
+
+                           
+                            console.log(e.Numero_Processo, real_estimado, element.ValorInicio, element.ValorFinal)
 
                             if(real_estimado >= element.ValorInicio && real_estimado < element.ValorFinal ){
                               conut_row++
@@ -394,11 +399,14 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
 
 
                                           
+                            }else{
+                             
+                              console.log(e.Numero_Processo, real_estimado, element.ValorInicio, element.ValorFinal)
                             }
 
                           });
 
-                     
+                        
                           if(result.recordset.length == conut_row){
                        
                             if(tipo == 1){
@@ -420,6 +428,7 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
                         console.log('ainda to carregando os dados')
                               // return Row_process;
                               // console.table(e)
+                              
                               resolve(); 
                            }
                       
