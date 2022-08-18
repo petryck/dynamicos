@@ -295,6 +295,7 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
           
           Row_process = `<tr>
           <td style="border-color:black;border-style:solid;border-width:1px;font-weight: 900;text-align: center">REFERENCIA</td>
+          <td style="border-color:black;border-style:solid;border-width:1px;font-weight: 900;text-align: center">CLIENTE</td>
           <td style="border-color:black;border-style:solid;border-width:1px;font-weight: 900;text-align: center">VENDEDOR</td>
           <td style="border-color:black;border-style:solid;border-width:1px;font-weight: 900;text-align: center">INSIDE</td>
           <td style="border-color:black;border-style:solid;border-width:1px;font-weight: 900;text-align: center">PROFIT</td>
@@ -365,9 +366,9 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
                               // </tr>`;
                               
                      
-
                               Row_process += `<tr>
                               <td style="border-color:black;border-style:solid;border-width:1px;white-space: nowrap;">${e.Numero_Processo}</td>
+                              <td style="border-color:black;border-style:solid;border-width:1px;white-space: nowrap;">${e.Cliente == '' || e.Cliente == null ? 'Sem Seleção' : titleize(e.Cliente.slice(0, 20), 'cliente')}</td>
                               <td style="border-color:black;border-style:solid;border-width:1px;white-space: nowrap;padding: 8px;">${e.Vendedor == '' || e.Vendedor == null ? 'Sem Seleção' : titleize(e.Vendedor, 'vendedor')}</td>
                               <td style="border-color:black;border-style:solid;border-width:1px;white-space: nowrap;padding: 8px;">${e.Inside_Sales == '' || e.Inside_Sales == null ? 'Sem Seleção' : titleize(e.Inside_Sales, 'inside')}</td>
                               <td style="border-color:black;border-style:solid;border-width:1px;text-align: right;white-space: nowrap;">${e.Valor_Estimado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</td>
@@ -403,6 +404,7 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
                             if(tipo == 1){
                               var nome = result.recordset[0]['Vendedor'];
                               mensagem_email_comissao += `<br> Comissionado: <strong> ${titleize(nome, 'cliente')}<strong>`;
+                              
                     
                               }else if(tipo == 2){
                                 var nome = result.recordset[0]['Inside_Sales'];
@@ -411,7 +413,7 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
 
                        
                             Row_process += `<tr>
-                              <td colspan="5" style="border-color:black;border-style:solid;border-width:1px;text-align: right;padding-right:8px;">COMISSÃO TOTAL</td>
+                              <td colspan="6" style="border-color:black;border-style:solid;border-width:1px;text-align: right;padding-right:8px;">COMISSÃO TOTAL</td>
                               <td style="border-color:black;border-style:solid;border-width:1px;text-align: right;white-space: nowrap;padding: 8px;"><strong>${valor_total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</strong></td>
                               </tr>`;
 
@@ -455,12 +457,24 @@ app.post('/send_mail_comissoes', async (req, res) => {
   var codigo = req.body.codigo;
   var responsavel = req.body.responsavel;
   var tipo = req.body.tipo;
+
+
+
+  var de_new = new Date(req.body.de)
+  var ate_new = new Date(req.body.ate)
+  var new_data_de = padTo2Digits(de_new.getDate() + 1)+'/'+padTo2Digits(de_new.getMonth() + 1)+'/'+de_new.getFullYear();
+  var new_data_ate = padTo2Digits(ate_new.getDate() + 1)+'/'+padTo2Digits(ate_new.getMonth() + 1)+'/'+ate_new.getFullYear();
+    
+
+
  
   var assunto = `[ConLine]- Pagamento Comissões`;
   if(tipo == 1){
     var mensagem_email = `Olá, segue processos para pagamento de comissão <strong>Vendedor</strong>.`;
+        mensagem_email += `<br> De: <strong> ${new_data_de}</strong> Até: <strong> ${new_data_ate}</strong>`;
   }else if(tipo == 2){
     var mensagem_email = `Olá, segue processos para pagamento de comissão <strong>Inside</strong>.`;
+        mensagem_email += `<br> De: <strong> ${new_data_de}</strong> Até: <strong> ${new_data_ate}</strong>`;
   }
 
 await CREATETABLE_COMISSOES(processos, tipo, mensagem_email, codigo, data);

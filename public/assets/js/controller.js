@@ -295,6 +295,9 @@ function getRandomInt(min, max) {
 
 $(document).on('click', '#btn_email_vendedor', function(e){
   e.preventDefault()
+  
+
+  
 
   if($('#seleciona_vendedor').val() == 0){
     alert('Selecione o vendedor nos filtros')
@@ -320,12 +323,13 @@ $(document).on('click', '#btn_email_vendedor', function(e){
   var now = new Date();
   var codigo = now.getDay()+''+now.getDate()+''+now.getMonth()+''+now.getFullYear()+''+now.getMinutes()+''+now.getSeconds()
   var responsavel = info_users[0]['nome'];
+
  
 
  $.ajax({
     type: 'POST',
     url: '/send_mail_comissoes',
-    data:{processos:JSON.stringify(contagem_selecionados), codigo:codigo, responsavel:responsavel,tipo:1},
+    data:{processos:JSON.stringify(contagem_selecionados), codigo:codigo, responsavel:responsavel,tipo:1, de:$('#startDate_comissoes').val(), ate:$('#endDate_comissoes').val()},
     success: function (data) {
       console.info(data)
   // console.log(data)
