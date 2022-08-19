@@ -326,7 +326,7 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
                   lista_email = 'comissao-adm@conlinebr.com.br;'+resultsColaborador[0]['email_corporativo'];
                  
 
-                      var sql = `SELECT * FROM Comissoes WHERE IdColaborador = ${id}`;
+                      var sql = `SELECT * FROM Comissoes WHERE IdColaborador = ${id} AND Tipo = ${tipo}`;
                   
                         connection.query(sql, function(err2, resultsComissoes){
                     
@@ -1887,10 +1887,13 @@ if(filtros.modal.TI == true && contagem_modal == 0){
 
   app.post('/QueryTabelaConfComissoes', function (req, res) {
     var arrayLiteral2 = [];
+    console.log(req.body.tipo)
+    console.log(req.query)
+    
 
 
     var sql = `SELECT * FROM SIRIUS.Comissoes
-               JOIN colaboradores ON Comissoes.IdColaborador = colaboradores.id_colaboradores`;
+               JOIN colaboradores ON Comissoes.IdColaborador = colaboradores.id_colaboradores WHERE Tipo = ${req.body.tipo}`;
 
     connection.query(sql, function(err2, results){
           results.forEach(e => {

@@ -5,6 +5,7 @@ var tabela_Fechamento_Processo;
 var tabela_ConfComissoes;
 var TabelaHistoricoComissoes;
 var tabela_visitantes_relatorio;
+var tabela_ConfComissoes_inside;
 var info_user = {
   id:1,
   name: 'Petryck William'

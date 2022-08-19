@@ -168,11 +168,44 @@ tabela_ConfComissoes = $('#tabela_ConfComissoes').DataTable({
         "ajax": {
             "url": "/QueryTabelaConfComissoes",
             "type": "POST",
+            "data": {tipo:1}
         },
     "language": {
             "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json"
        }
   })
+
+}
+
+function TabelaConfComissoes_inside(filtros){
+    
+  // $('#tabela_Fechamento_Processo').dataTable().fnClearTable();
+  $('#tabela_ConfComissoes_inside').dataTable().fnDestroy();
+
+
+tabela_ConfComissoes_inside = $('#tabela_ConfComissoes_inside').DataTable({
+      "paging":   false,
+      "ordering": true,
+      "info":     false,
+      "lengthChange": false,
+      "rowId": "id",
+      "columns": [
+          {"data": "nome"},
+          {"data": "ValorMinimo"},
+          {"data": "ValorMaximo"},
+          {"data": "Porcentagem"},
+
+       ],
+      "order": [ 0, "desc"],
+      "ajax": {
+          "url": "/QueryTabelaConfComissoes",
+          "type": "POST",
+          "data": {tipo:2}
+      },
+  "language": {
+          "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json"
+     }
+})
 
 }
 
