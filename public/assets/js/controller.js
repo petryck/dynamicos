@@ -158,6 +158,14 @@ $(document).on('keyup', '.input_search_visitantes', function(e){
     tabela_visitantes.search($(this).val()).draw()
   
   });
+
+  $(document).on('keyup', '.input_search_comissao_vendedores_filtro', function(e){
+    e.preventDefault()
+
+    tabela_Fechamento_Processo.search($(this).val()).draw()
+  
+  });
+  
 // $(document).on('keyup', '.input_search_comissao_vendedores', function(e){
 //     e.preventDefault()
 //     tabela_Fechamento_Processo.search($(this).val()).draw()
@@ -170,6 +178,12 @@ $(document).on('keyup', '.input_search_comissao_vendedores', function(e){
   tabela_ConfComissoes.search($(this).val()).draw()
 
 });
+$(document).on('keyup', '.input_search_comissao_inside', function(e){
+  e.preventDefault()
+  tabela_ConfComissoes_inside.search($(this).val()).draw()
+
+});
+
 
 
 

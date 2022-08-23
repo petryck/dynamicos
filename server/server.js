@@ -352,13 +352,14 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
                               conut_row++
                               
 
+                              var comissao = (e.Valor_Estimado / 100) * element.Porcentagem;
 
-                              if(tipo == 1){
-                                var comissao = (e.Valor_Estimado / 100) * element.Porcentagem;
-                              }else if(tipo == 2){
-                                element.Porcentagem = 1;
-                                var comissao = (e.Valor_Estimado / 100) * 1;
-                              }
+                              // if(tipo == 1){
+                              //   var comissao = (e.Valor_Estimado / 100) * element.Porcentagem;
+                              // }else if(tipo == 2){
+                              //   element.Porcentagem = 1;
+                              //   var comissao = (e.Valor_Estimado / 100) * 1;
+                              // }
 
                               // Row_process += `<tr>
                               // <td style="border-color:black;border-style:solid;border-width:1px;white-space: nowrap;">${e.Numero_Processo}</td>
@@ -1692,21 +1693,32 @@ if(filtros.modal.TI == true && contagem_modal == 0){
     })
   })
 
+  app.post('/open_config_comissoes', (req, res) => {
+    var id = req.body.id;
+    console.log('dsadsa')
 
+    var sql = `SELECT * FROM Comissoes WHERE idComissoes = ${id}`;
+    connection.query(sql, function(err2, results){
+      res.json(results);
+    })
 
-  
+  })
   app.post('/cad_comissionado', (req, res) => {
    
     var IdColaborador_com = req.body.colaboradores;
     var ValorMin_com = req.body.ValorMin;
     var ValorMax_com = req.body.ValorMax;
     var Porcentagem_com = req.body.Porcentagem;
+    var Tipo = req.body.tipo;
 
 
-    var sql = `INSERT INTO Comissoes (IdColaborador, ValorInicio, ValorFinal, Porcentagem) 
-    VALUES (${parseInt(IdColaborador_com)},${parseFloat(ValorMin_com)},${parseFloat(ValorMax_com)},${parseFloat(Porcentagem_com)})`;
+
+
+    var sql = `INSERT INTO Comissoes (IdColaborador, ValorInicio, ValorFinal, Porcentagem, Tipo) 
+    VALUES (${parseInt(IdColaborador_com)},${parseFloat(ValorMin_com)},${parseFloat(ValorMax_com)},${parseFloat(Porcentagem_com)}, ${Tipo})`;
 
     connection.query(sql, function(err2, results){
+    
 
       res.json('sucesso');
     })
@@ -1887,8 +1899,8 @@ if(filtros.modal.TI == true && contagem_modal == 0){
 
   app.post('/QueryTabelaConfComissoes', function (req, res) {
     var arrayLiteral2 = [];
-    console.log(req.body.tipo)
-    console.log(req.query)
+    // console.log(req.body.tipo)
+    // console.log(req.query)
     
 
 

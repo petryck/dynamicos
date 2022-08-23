@@ -38,6 +38,7 @@ $(document).on('click', '.open_cadComissionado', function(e){
         url: '/remove_comissionado',
         data:{id:id},
         success: function (data) {
+          tabela_ConfComissoes_inside.ajax.reload();
             tabela_ConfComissoes.ajax.reload();
          
         }
@@ -61,6 +62,7 @@ $(document).on('click', '.open_cadComissionado', function(e){
         
         
               if(data == 'sucesso'){
+                tabela_ConfComissoes_inside.ajax.reload();
                 tabela_ConfComissoes.ajax.reload();
                 $('#from_cad_comissionado #colaboradores').val('')
                 $('#from_cad_comissionado #ValorMin').val('')
@@ -80,8 +82,27 @@ $(document).on('click', '.open_cadComissionado', function(e){
   
   })
 
-
+  $(document).on('click', '.abrir_comissionado', function(e){
+    e.preventDefault()
+    var id = $(this).attr('data-id')
+    console.log(id)
   
+    $.ajax({
+        type: 'POST',
+        url: '/open_config_comissoes',
+        data:{id:id},
+        success: function (data) {
+
+          open_app('11', 'Adicionar Comissionado', '460px', '250px', )
+
+            // tabela_ConfComissoes.ajax.reload();
+         
+        }
+    
+      })
+  
+  })
+
 
   //ativa o menu alternativo para o aplicativo
   $(document).on('mousedown', '#tabela_ConfComissoes tr', function(e){
@@ -103,8 +124,45 @@ $(document).on('click', '.open_cadComissionado', function(e){
         if(id){
 
           
+            // var btn = `
+            // <button class="menu-item abrir_comissionado" data-id="${id}">Abrir</button>
+            // <button class="menu-item btn_excluir_comissionado" data-id="${id}">Excluir</button>
+            // `
+          var btn = `
+                      <button class="menu-item btn_excluir_comissionado" data-id="${id}">Excluir</button>
+                      `
+
+        $(menu).append(btn)
+        $(menu).css({"position":"absolute", "top":posY-(H+H/2),"left":posX,"display":'block',"z-index":"9999"});
+        }
+        
+        
+       
+    }
+  
+});
+
+  //ativa o menu alternativo para o aplicativo
+  $(document).on('mousedown', '#tabela_ConfComissoes_inside tr', function(e){
+    var saida = $(this).find('td')[7];
+   
+    
+    $(document).find('.window_opt').css('display', 'none');
+
+  var el = $(this);
+      menu = 'div.window_opt';
+      H = el.height()-40;
+      posX = e.pageX;
+      posY = e.pageY;
+
+    if( e.button == 2 ) {
+      var id = $(this).attr('id')
+        $(menu).html('')
+
+        if(id){
+
+          
             var btn = `
-            <button class="menu-item abrir_comissionado" data-id="${id}">Abrir</button>
             <button class="menu-item btn_excluir_comissionado" data-id="${id}">Excluir</button>
             `
 
