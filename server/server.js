@@ -322,8 +322,8 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
 
           connection.query(sql, function(err2, resultsColaborador){
                   var id = resultsColaborador[0]['id_colaboradores'];
-                   lista_email = 'petryck.leite@conlinebr.com.br'
-                  // lista_email = 'comissao-adm@conlinebr.com.br;'+resultsColaborador[0]['email_corporativo'];
+                  //  lista_email = 'petryck.leite@conlinebr.com.br'
+                  lista_email = 'comissao-adm@conlinebr.com.br;'+resultsColaborador[0]['email_corporativo'];
                  
 
                       var sql = `SELECT * FROM Comissoes WHERE IdColaborador = ${id} AND Tipo = ${tipo}`;
