@@ -322,8 +322,8 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
 
           connection.query(sql, function(err2, resultsColaborador){
                   var id = resultsColaborador[0]['id_colaboradores'];
-                  //  lista_email = 'petryck.leite@conlinebr.com.br'
-                  lista_email = 'comissao-adm@conlinebr.com.br;'+resultsColaborador[0]['email_corporativo'];
+                   lista_email = 'petryck.leite@conlinebr.com.br'
+                  // lista_email = 'comissao-adm@conlinebr.com.br;'+resultsColaborador[0]['email_corporativo'];
                  
 
                       var sql = `SELECT * FROM Comissoes WHERE IdColaborador = ${id} AND Tipo = ${tipo}`;
@@ -830,21 +830,26 @@ app.post('/remove_visita', (req, res) => {
 })
 
 
-function titleize(text, onde) {
+// function titleize(text, onde) {
   
-  var loweredText = text.toLowerCase();
-  var words = loweredText.split(" ");
-  var words = loweredText.split("  ");
-  for (var a = 0; a < words.length; a++) {
-      var w = words[a];
+//   var loweredText = text.toLowerCase();
+//   var words = loweredText.split(" ");
+//   var words = loweredText.split("  ");
+//   for (var a = 0; a < words.length; a++) {
+//       var w = words[a];
 
-      var firstLetter = w[0];
+//       var firstLetter = w[0];
+//       console.log(firstLetter)
+//       w = firstLetter + w.slice(1);
 
-      w = firstLetter.toUpperCase() + w.slice(1);
+//       words[a] = w;
+//   }
+//   return words.join(" ");
+// }
 
-      words[a] = w;
-  }
-  return words.join(" ");
+function titleize(str) {
+  var subst = str.toLowerCase().replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+  return subst;
 }
 
 app.post('/lista_vendedores', (req, res) => {
