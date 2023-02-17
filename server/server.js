@@ -72,7 +72,7 @@ sql.connect(connStr).then(conn => {
 
     // conexao banco de dados
 var connection = mysql.createConnection({
-    host: "144.22.225.253",
+    host: "sirius-db.ddns.net",
     user: "aplicacao",
     port: "3306",
     password: "conline@2510A",
