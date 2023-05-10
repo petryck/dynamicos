@@ -166,6 +166,7 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
         .then(result => {
 
 
+
           result.recordset.forEach(e => {
 
             let Data_Compensacao_Convertido = new Date(e.Data_Compensacao_Convertido)
@@ -175,9 +176,16 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
             // let numero = e.Valor_Estimado;
             // let numeroFormatado = parseFloat(numero.toString().replace(".", ",")).toFixed(2);
             // console.log(numeroFormatado)
+            const data = new Date(e.Abertura_Processo);
+            const opcoes = { timeZone: "UTC", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" };
+            const DataberturaProcesso = data.toLocaleString("pt-BR", opcoes);
+
+
+
             var objeto = {
               Modalidade: e.Modalidade,
               NumeroProcesso: e.Numero_Processo,
+              AberturaProcesso: DataberturaProcesso,
               DataCompensacao: Data_Compensacao_Convertido,
               TipoCarga: e.Tipo_Carga,
               Cliente: e.Cliente == '' || e.Cliente == null ? 'Sem Seleção' : titleize(e.Cliente, 'cliente'),
@@ -209,6 +217,9 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
     },{
       label: 'Processo',
       value: 'NumeroProcesso'
+    },{
+      label: 'Data Aberura',
+      value: 'AberturaProcesso'
     },{
       label: 'Data Compensacao',
       value: 'DataCompensacao'
