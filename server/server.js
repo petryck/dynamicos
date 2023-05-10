@@ -187,7 +187,8 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
               ComissaoIS: e.Comissao_Inside_Sales_Pago == 1 ? 'Pago' : 'Pendente',
               ValorEstimado: e.Valor_Estimado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
               ValorEfetivo: e.Valor_Efetivo.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
-              Restante: e.Restante.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+              Restante: e.Restante.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
+              CalculoComissao: e.Valor_Estimado
           }
          
          
@@ -241,7 +242,11 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
     },{
       label: 'Restante',
       value: 'Restante'
+    },{
+      label: 'Calculo Para Comissao',
+      value: 'CalculoComissao'
     }
+    
   ];
     
     const opts = { 
