@@ -170,8 +170,11 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
 
             let Data_Compensacao_Convertido = new Date(e.Data_Compensacao_Convertido)
           
-            Data_Compensacao_Convertido.setDate(Data_Compensacao_Convertido.getDate() + 1);
-            Data_Compensacao_Convertido = Data_Compensacao_Convertido.toLocaleDateString("pt-US") 
+  
+
+            let numero = e.Valor_Estimado;
+            let numeroFormatado = parseFloat(numero.toString().replace(",", ".")).toFixed(2);
+            console.log(numeroFormatado); // -120,12
 
             var objeto = {
               Modalidade: e.Modalidade,
@@ -188,7 +191,8 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
               ValorEstimado: e.Valor_Estimado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
               ValorEfetivo: e.Valor_Efetivo.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
               Restante: e.Restante.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
-              CalculoComissao: e.Valor_Estimado
+              CalculoComissao: numeroFormatado
+              
           }
          
          
