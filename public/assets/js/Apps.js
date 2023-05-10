@@ -78,6 +78,7 @@ tabela_Fechamento_Processo = $('#tabela_Fechamento_Processo').DataTable({
             {"data": "check"},
             {"data": "Modalidade"},
             {"data": "NumeroProcesso"},
+            {"data": "AberturaProcesso"},
             {"data": "DataCompensacao"},
             {"data": "TipoCarga"},
             {"data": "Cliente"},

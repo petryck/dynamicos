@@ -169,7 +169,11 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
 
           result.recordset.forEach(e => {
 
-            let Data_Compensacao_Convertido = new Date(e.Data_Compensacao_Convertido)
+      
+            let Data_Compensacao_Convertido = new Date(e.Data_Compensacao_Convertido);
+            const opcoes2 = { timeZone: "UTC", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"};
+            Data_Compensacao_Convertido = Data_Compensacao_Convertido.toLocaleString("pt-BR", opcoes2);
+
           
   
             // decimal
@@ -177,7 +181,7 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
             // let numeroFormatado = parseFloat(numero.toString().replace(".", ",")).toFixed(2);
             // console.log(numeroFormatado)
             const data = new Date(e.Abertura_Processo);
-            const opcoes = { timeZone: "UTC", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" };
+            const opcoes = { timeZone: "UTC", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"};
             const DataberturaProcesso = data.toLocaleString("pt-BR", opcoes);
 
 
@@ -1278,14 +1282,29 @@ if(filtros.modal.TI == true && contagem_modal == 0){
             Data_Compensacao_Convertido = Data_Compensacao_Convertido.toLocaleDateString("pt-US") 
 
 
-          
-           
+            var Data_Abertura_Convertido = new Date(e.Abertura_Processo);
+             Data_Abertura_Convertido = Data_Abertura_Convertido.toISOString().replace("T", " ").replace("Z", "");
+
+             var Data_Compensacao_ConvertidoNew = new Date(e.Data_Compensacao_Convertido);
+             Data_Compensacao_ConvertidoNew = Data_Compensacao_ConvertidoNew.toISOString().replace("T", " ").replace("Z", "");
+
+
+
+
+
+            const data = new Date(e.Abertura_Processo);
+            const opcoes = { timeZone: "UTC", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" };
+            const dataFormatada = data.toLocaleString("pt-BR", opcoes);
+            
+            // console.log(dataFormatada); // 13/05/2023 00:00:00
+        
             var objeto = {
                check: '',
                Id: e.IdLogistica_House,
                Modalidade: e.Modalidade,
                NumeroProcesso: e.Numero_Processo,
-               DataCompensacao: Data_Compensacao_Convertido,
+               AberturaProcesso: '<span style="display:none;"> '+Data_Abertura_Convertido+'</span>'+dataFormatada,
+               DataCompensacao: '<span style="display:none;"> '+Data_Compensacao_ConvertidoNew+'</span>'+Data_Compensacao_Convertido,
                TipoCarga: e.Tipo_Carga,
                Cliente: e.Cliente == '' || e.Cliente == null ? 'Sem Seleção' : titleize(e.Cliente, 'cliente'),
                Vendedor: e.Vendedor == '' || e.Vendedor == null ? 'Sem Seleção' : titleize(e.Vendedor, 'vendedor'),
