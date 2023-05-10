@@ -171,11 +171,10 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
             let Data_Compensacao_Convertido = new Date(e.Data_Compensacao_Convertido)
           
   
-
-            let numero = e.Valor_Estimado;
-            let numeroFormatado = parseFloat(numero.toString().replace(",", ".")).toFixed(2);
-            console.log(numeroFormatado); // -120,12
-
+            // decimal
+            // let numero = e.Valor_Estimado;
+            // let numeroFormatado = parseFloat(numero.toString().replace(".", ",")).toFixed(2);
+            // console.log(numeroFormatado)
             var objeto = {
               Modalidade: e.Modalidade,
               NumeroProcesso: e.Numero_Processo,
@@ -191,7 +190,7 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
               ValorEstimado: e.Valor_Estimado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
               ValorEfetivo: e.Valor_Efetivo.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
               Restante: e.Restante.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
-              CalculoComissao: numeroFormatado
+              CalculoComissao: e.Valor_Estimado.toLocaleString('pt-br',{style: 'decimal'})
               
           }
          
@@ -257,7 +256,7 @@ var sql = `Select * From vis_Fechamento_Processo WHERE IdLogistica_House IN (${r
       delimiter: ';',
       encoding: 'ISO 8859-1',
       fields,
-      excelStrings:true, 
+      excelStrings:false, 
       withBOM: true
     };
 
