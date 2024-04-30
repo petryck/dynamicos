@@ -2,6 +2,12 @@
 
 function TabelaVisitantes(){
 
+           // Verifique se a tabela já existe
+ if ($.fn.DataTable.isDataTable("#tabela_visitantes")) {
+    // Se existir, destrua a tabela
+    $("#tabela_visitantes").DataTable().destroy();
+  }
+
   tabela_visitantes = $('#tabela_visitantes').DataTable({
         "paging":   false,
         "ordering": true,
@@ -35,6 +41,12 @@ function TabelaVisitantes(){
 
 function TabelaColaboradoresRH(){
 
+       // Verifique se a tabela já existe
+ if ($.fn.DataTable.isDataTable("#tabela_colaboradoresRH")) {
+    // Se existir, destrua a tabela
+    $("#tabela_colaboradoresRH").DataTable().destroy();
+  }
+
 
   tabela_colaboradoresRH = $('#tabela_colaboradoresRH').DataTable({
         "paging":   false,
@@ -65,7 +77,11 @@ function TabelaColaboradoresRH(){
 function TabelaFechamentoProcesso(filtros){
     
     // $('#tabela_Fechamento_Processo').dataTable().fnClearTable();
-    $('#tabela_Fechamento_Processo').dataTable().fnDestroy();
+    // $('#tabela_Fechamento_Processo').dataTable().fnDestroy();
+    if ($.fn.DataTable.isDataTable("#tabela_Fechamento_Processo")) {
+        // Se existir, destrua a tabela
+        $("#tabela_Fechamento_Processo").DataTable().destroy();
+      }
 
 
 tabela_Fechamento_Processo = $('#tabela_Fechamento_Processo').DataTable({

@@ -373,6 +373,7 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
                             console.log(e.Numero_Processo, real_estimado, element.ValorInicio, element.ValorFinal)
 
                             if(real_estimado >= element.ValorInicio && real_estimado < element.ValorFinal ){
+                         
                               conut_row++
                               
 
@@ -425,13 +426,13 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
 
                                           
                             }else{
-                             
+                              conut_row++
                               // console.log(e.Numero_Processo, real_estimado, element.ValorInicio, element.ValorFinal)
                             }
 
                           });
 
-                        
+                          console.log(result.recordset.length, conut_row)
                           if(result.recordset.length == conut_row){
                        
                             if(tipo == 1){
@@ -545,6 +546,7 @@ app.post('/send_mail_comissoes_nao_usar', (req, res) => {
   var processos = JSON.parse(req.body.processos);
 
 // console.log(processos)
+
 
 processos.forEach(element => {
 
