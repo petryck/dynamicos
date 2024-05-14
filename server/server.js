@@ -374,7 +374,7 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
 
                             if(real_estimado >= element.ValorInicio && real_estimado < element.ValorFinal ){
                          
-                              conut_row++
+                              // conut_row++
                               
 
                               var comissao = (e.Valor_Estimado / 100) * element.Porcentagem;
@@ -426,9 +426,11 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
 
                                           
                             }else{
-                              conut_row++
+                              
                               // console.log(e.Numero_Processo, real_estimado, element.ValorInicio, element.ValorFinal)
                             }
+
+                            conut_row++
 
                           });
 
