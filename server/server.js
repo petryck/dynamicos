@@ -357,7 +357,8 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
                          
                           
                           // resultsComissoes[0]['id_colaboradores']
-                        
+
+                    
                           resultsComissoes.forEach(element => {
                             
                             // console.log(e.Valor_Estimado, element.ValorInicio)
@@ -430,11 +431,13 @@ async function CREATETABLE_COMISSOES(processos, tipo, mensagem, codigo, data){
                               // console.log(e.Numero_Processo, real_estimado, element.ValorInicio, element.ValorFinal)
                             }
 
-                            conut_row++
+                            
 
                           });
 
-                          console.log(result.recordset.length, conut_row)
+                          conut_row++
+
+                          console.log('>'+result.recordset.length, conut_row)
                           if(result.recordset.length == conut_row){
                        
                             if(tipo == 1){
